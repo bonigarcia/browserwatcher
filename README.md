@@ -1,3 +1,4 @@
+[![Build Status](https://github.com/bonigarcia/cbwatcher/workflows/build/badge.svg)](https://github.com/bonigarcia/cbwatcher/actions)
 [![License badge](https://img.shields.io/badge/license-Apache2-green.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 [![Twitter Follow](https://img.shields.io/twitter/follow/boni_gg.svg?style=social)](https://twitter.com/boni_gg)
 
