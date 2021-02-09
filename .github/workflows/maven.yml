@@ -20,12 +20,12 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 1.8
-    - name: Install Chrome and Firefox
+    - name: Install browsers
       run: |
         sudo apt install google-chrome-stable
         sudo apt-get install firefox
         sudo apt-get install xvfb
-        Xvfb -ac :99 -screen 0 1280x1024x16 &
         export DISPLAY=:99
+        sudo /usr/bin/Xvfb -ac $DISPLAY -screen 0 1280x1024x24 &
     - name: Build with Maven
       run: mvn -B package --file pom.xml
