@@ -92,14 +92,19 @@ public class CBWatcherTest {
 
     private Object readJsVariable(String variable) {
         Object value = null;
-        for (int i = 0; i < 10; i++) {
-            value = executeScript("return " + variable + ";");
-            if (value != null) {
-                break;
-            } else {
-                log.debug("{} still not present... waiting {} ms", variable,
-                        POLL_TIME_MS);
-                waitMilliSeconds(POLL_TIME_MS);
+        for (int i = 0; i < 30; i++) {
+            try {
+                value = executeScript("return " + variable + ";");
+            } catch (Exception e) {
+                log.trace("Exception reding {}: {}", variable, e.getMessage());
+            } finally {
+                if (value != null) {
+                    break;
+                } else {
+                    log.debug("{} still not present... waiting {} ms", variable,
+                            POLL_TIME_MS);
+                    waitMilliSeconds(POLL_TIME_MS);
+                }
             }
         }
         String clazz = value != null ? value.getClass().getName() : "";
