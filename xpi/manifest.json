@@ -1,0 +1,24 @@
+{
+    "description": "Cross Browser Watcher",
+    "manifest_version": 2,
+    "name": "cbwatcher",
+    "version": "1.0.0",
+    "homepage_url": "https://github.com/bonigarcia/cbwatcher",
+    "icons": {
+        "80": "icons/cbwatcher-logo.png"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "run_at": "document_start",
+            "js": [
+                "cbwatcher_cs.js"
+            ]
+        }
+    ],
+    "web_accessible_resources": [
+        "cbwatcher.js"
+    ]
+}
