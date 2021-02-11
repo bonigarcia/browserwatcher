@@ -17,6 +17,7 @@
 package io.github.bonigarcia.cbwatcher.test;
 
 import static java.lang.invoke.MethodHandles.lookup;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
 import static org.slf4j.LoggerFactory.getLogger;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
@@ -63,6 +64,7 @@ public class ParentSpringBootTest {
         }
 
         assertFalse(logMessages.isEmpty());
+        assertTrue(logMessages.size() == 4);
 
     }
 
