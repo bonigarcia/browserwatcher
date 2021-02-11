@@ -21,49 +21,28 @@ import static org.junit.Assert.assertFalse;
 import static org.slf4j.LoggerFactory.getLogger;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
-import java.io.File;
 import java.util.List;
 import java.util.Map;
 
 import org.junit.After;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.slf4j.Logger;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
-
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = RANDOM_PORT)
-public class SimpleSpringBootTest {
+public class ParentSpringBootTest {
 
     static final Logger log = getLogger(lookup().lookupClass());
 
     @LocalServerPort
-    int serverPort;
+    public int serverPort;
 
-    private WebDriver driver;
-
-    @BeforeClass
-    public static void setupClass() {
-        WebDriverManager.chromedriver().setup();
-    }
-
-    @Before
-    public void setup() {
-        ChromeOptions options = new ChromeOptions();
-        File extSrc = new File("ext");
-        options.addArguments("load-extension=" + extSrc.getAbsolutePath());
-        driver = new ChromeDriver(options);
-    }
+    public WebDriver driver;
 
     @After
     public void teardown() {
@@ -72,8 +51,7 @@ public class SimpleSpringBootTest {
         }
     }
 
-    @Test
-    public void test() {
+    public void localhostTest() {
         driver.get("http://localhost:" + serverPort);
 
         List<Map<String, String>> logMessages = readLogs();
@@ -93,7 +71,6 @@ public class SimpleSpringBootTest {
         List<Map<String, String>> logMessages = (List<Map<String, String>>) ((JavascriptExecutor) driver)
                 .executeScript("return console._cbwatcherLogs;");
         return logMessages;
-
     }
 
 }
