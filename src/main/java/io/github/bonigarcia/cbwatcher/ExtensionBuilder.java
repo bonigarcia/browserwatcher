@@ -30,26 +30,32 @@ import java.util.zip.ZipOutputStream;
 import org.slf4j.Logger;
 
 /**
- * Cross Browser Watcher extension builder (XPI file).
+ * Cross Browser Watcher extension builder (typically XPI or CRC file).
  *
  * @author Boni Garcia (boni.gg@gmail.com)
  * @since 1.0.0
  */
-public class XpiBuilder {
+public class ExtensionBuilder {
 
     static final Logger log = getLogger(lookup().lookupClass());
 
-    static final String SOURCE_FOLDER = "xpi";
+    static final String SOURCE_FOLDER = "ext";
     static final String TARGET_FOLDER = "target";
-    static final String CBEXTENSION_NAME = "cbwatcher.xpi";
+    static final String CBEXTENSION_NAME = "cbwatcher";
+    static final String DEFAULT_EXTENSION = "xpi";
 
     public File build() throws FileNotFoundException, IOException {
+        return build(DEFAULT_EXTENSION);
+    }
+
+    public File build(String extension)
+            throws FileNotFoundException, IOException {
         log.debug("Building Cross Browser Watcher (source folder: {})",
                 SOURCE_FOLDER);
-        File targetFile = new File(TARGET_FOLDER, CBEXTENSION_NAME);
+        String extensionName = CBEXTENSION_NAME + "." + extension;
+        File targetFile = new File(TARGET_FOLDER, extensionName);
         zipFolder(new File(SOURCE_FOLDER), targetFile);
-        log.debug("Extension available on {}/{}", TARGET_FOLDER,
-                CBEXTENSION_NAME);
+        log.debug("Extension available on {}/{}", TARGET_FOLDER, extensionName);
 
         return targetFile;
     }
@@ -90,8 +96,8 @@ public class XpiBuilder {
 
     public static void main(String[] args)
             throws FileNotFoundException, IOException {
-        XpiBuilder xpiBuilder = new XpiBuilder();
-        xpiBuilder.build();
+        ExtensionBuilder extensionBuilder = new ExtensionBuilder();
+        extensionBuilder.build();
     }
 
 }

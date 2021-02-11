@@ -36,7 +36,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.slf4j.Logger;
 
-import io.github.bonigarcia.cbwatcher.XpiBuilder;
+import io.github.bonigarcia.cbwatcher.ExtensionBuilder;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class CBWatcherTest {
@@ -55,9 +55,9 @@ public class CBWatcherTest {
     @Before
     public void setup() throws FileNotFoundException, IOException {
         ChromeOptions options = new ChromeOptions();
-        XpiBuilder xpiBuilder = new XpiBuilder();
-        File xpiFile = xpiBuilder.build();
-        options.addExtensions(xpiFile);
+        ExtensionBuilder extensionBuilder = new ExtensionBuilder();
+        File extensionFile = extensionBuilder.build();
+        options.addExtensions(extensionFile);
         driver = new ChromeDriver(options);
     }
 
