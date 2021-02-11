@@ -14,39 +14,46 @@
  * limitations under the License.
  *
  */
-console.log("* * * Loading Cross Browser Watcher * * *");
 
-var logMessages = [];
-const consoleMethodNames = ["log", "warn", "error", "info"];
-const eventListenerNames = ["error", "unhandledrejection"];
+let injectedCode = '(' + function() {
+    console.log("* * * Loading Cross Browser Watcher * * *");
 
+    console._cbwatcherLogs = [];
+    const consoleMethodNames = ["log", "warn", "error", "info"];
+    const eventListenerNames = ["error", "unhandledrejection"];
 
-consoleMethodNames.forEach(methodName => {
-    let originalMethod = console[methodName]
+    consoleMethodNames.forEach(methodName => {
+        let originalMethod = console[methodName]
 
-    console[methodName] = function() {
-        let params = Array.prototype.slice.call(arguments, 1);
-        let message = params.length ? util.format(arguments[0], ...params) : arguments[0];
-        logMessages.push({ datetime: getDateTime(), type: methodName, message });
+        console[methodName] = function() {
+            let params = Array.prototype.slice.call(arguments, 1);
+            let message = params.length ? util.format(arguments[0], ...params) : arguments[0];
+            console._cbwatcherLogs.push({ datetime: getDateTime(), type: methodName, message });
 
-        originalMethod.apply(console, arguments);
-    }
-});
-
-eventListenerNames.forEach(listenerName => {
-    window.addEventListener(listenerName, function(e) {
-        let errorMessage = e.error ? `${e.error.stack}` : `${e.type} ${e.reason}`;
-        console.error(errorMessage);
-        e.preventDefault();
+            originalMethod.apply(console, arguments);
+        }
     });
-});
 
-function getDateTime() {
-    let now = new Date();
-    let day = now.getDate().toString().padStart(2, "0");
-    let month = (now.getMonth() + 1).toString().padStart(2, "0");
-    let year = now.getFullYear();
-    let time = now.toLocaleTimeString();
-    let millis = now.getMilliseconds().toString().padStart(3, "0");
-    return `${day}-${month}-${year} ${time}.${millis}`;
-}
+    eventListenerNames.forEach(listenerName => {
+        window.addEventListener(listenerName, function(e) {
+            let errorMessage = e.error ? `${e.error.stack}` : `${e.type} ${e.reason}`;
+            console.error(errorMessage);
+            e.preventDefault();
+        });
+    });
+
+    function getDateTime() {
+        let now = new Date();
+        let day = now.getDate().toString().padStart(2, "0");
+        let month = (now.getMonth() + 1).toString().padStart(2, "0");
+        let year = now.getFullYear();
+        let time = now.toLocaleTimeString();
+        let millis = now.getMilliseconds().toString().padStart(3, "0");
+        return `${day}-${month}-${year} ${time}.${millis}`;
+    }
+
+} + ')();';
+
+var script = document.createElement("script");
+script.textContent = injectedCode;
+(document.head || document.documentElement).appendChild(script);

@@ -14,11 +14,8 @@
             ],
             "run_at": "document_start",
             "js": [
-                "cbwatcher_cs.js"
+                "cbwatcher.js"
             ]
         }
-    ],
-    "web_accessible_resources": [
-        "cbwatcher.js"
     ]
 }

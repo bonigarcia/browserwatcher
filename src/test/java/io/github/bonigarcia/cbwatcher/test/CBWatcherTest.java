@@ -85,7 +85,7 @@ public class CBWatcherTest {
     @SuppressWarnings("unchecked")
     private List<Map<String, String>> readLogs() {
         List<Map<String, String>> logMessages = (List<Map<String, String>>) readJsVariable(
-                "logMessages");
+                "console._cbwatcherLogs");
         return logMessages;
 
     }
