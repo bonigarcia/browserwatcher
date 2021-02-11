@@ -52,7 +52,7 @@ public class ParentSpringBootTest {
         }
     }
 
-    public void localhostTest() {
+    public void executeLogTest() {
         driver.get("http://localhost:" + serverPort);
 
         List<Map<String, String>> logMessages = readLogs();
@@ -64,7 +64,7 @@ public class ParentSpringBootTest {
         }
 
         assertFalse(logMessages.isEmpty());
-        assertTrue(logMessages.size() == 4);
+        assertTrue(logMessages.size() == 5);
 
     }
 

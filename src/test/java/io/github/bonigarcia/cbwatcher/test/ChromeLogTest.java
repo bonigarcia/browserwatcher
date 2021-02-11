@@ -43,7 +43,7 @@ public class ChromeLogTest extends ParentSpringBootTest {
 
     @Test
     public void test() {
-        localhostTest();
+        executeLogTest();
     }
 
 }
