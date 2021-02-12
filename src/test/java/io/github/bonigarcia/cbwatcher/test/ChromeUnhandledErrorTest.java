@@ -20,11 +20,11 @@ import org.junit.Test;
 
 import io.github.bonigarcia.cbwatcher.test.parent.ChromeParentTest;
 
-public class ChromeForceErrorTest extends ChromeParentTest {
+public class ChromeUnhandledErrorTest extends ChromeParentTest {
 
     @Test
     public void test() {
-        opentLocalHost("forced_error.html", 1);
+        opentLocalHost("unhandled_error.html", 1);
     }
 
 }
