@@ -14,7 +14,7 @@
  * limitations under the License.
  *
  */
-package io.github.bonigarcia.cbwatcher.test;
+package io.github.bonigarcia.cbwatcher.test.parent;
 
 import static java.lang.invoke.MethodHandles.lookup;
 import static org.junit.Assert.assertTrue;

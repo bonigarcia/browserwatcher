@@ -18,6 +18,8 @@ package io.github.bonigarcia.cbwatcher.test;
 
 import org.junit.Test;
 
+import io.github.bonigarcia.cbwatcher.test.parent.ChromeParentTest;
+
 public class ChromeLogTest extends ChromeParentTest {
 
     @Test
