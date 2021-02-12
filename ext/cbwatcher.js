@@ -77,7 +77,7 @@ chrome.storage.sync.get("_cbwatcherLogGathering", function(data) {
 
 chrome.storage.sync.get("_cbwatcherJavaScript", function(data) {
     if (data["_cbwatcherJavaScript"]) {
-        console.log("* * * Injecting customg JavaScript * * *\n" + data["_cbwatcherJavaScript"]);
+        console.log("* * * Injecting custom JavaScript * * *\n" + data["_cbwatcherJavaScript"]);
         let injectJsScript = document.createElement("script");
         injectJsScript.textContent = data["_cbwatcherJavaScript"];
         (document.head || document.documentElement).appendChild(injectJsScript);

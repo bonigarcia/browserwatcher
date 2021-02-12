@@ -14,3 +14,15 @@ function saveOptions(e) {
 }
 
 document.querySelector("form").addEventListener("submit", saveOptions);
+
+chrome.storage.sync.get("_cbwatcherLogGathering", function(data) {
+    if (data["_cbwatcherLogGathering"] && data["_cbwatcherLogGathering"] == "false") {
+        document.querySelector("#logfalse").checked = "checked";
+    }
+});
+
+chrome.storage.sync.get("_cbwatcherJavaScript", function(data) {
+    if (data["_cbwatcherJavaScript"]) {
+        document.querySelector('textarea[name="js"]').value = data["_cbwatcherJavaScript"];
+    }
+});
