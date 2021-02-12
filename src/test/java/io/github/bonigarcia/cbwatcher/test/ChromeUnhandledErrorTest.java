@@ -16,7 +16,7 @@
  */
 package io.github.bonigarcia.cbwatcher.test;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import io.github.bonigarcia.cbwatcher.test.parent.ChromeParentTest;
 

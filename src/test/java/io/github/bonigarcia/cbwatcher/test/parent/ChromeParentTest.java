@@ -18,8 +18,8 @@ package io.github.bonigarcia.cbwatcher.test.parent;
 
 import java.io.File;
 
-import org.junit.Before;
-import org.junit.BeforeClass;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
@@ -27,12 +27,12 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class ChromeParentTest extends ParentSpringBootTest {
 
-    @BeforeClass
+    @BeforeAll
     public static void setupClass() {
         WebDriverManager.chromedriver().setup();
     }
 
-    @Before
+    @BeforeEach
     public void setup() {
         ChromeOptions options = new ChromeOptions();
         File extSrc = new File("ext");
