@@ -15,15 +15,15 @@
  *
  */
 
-let logGatheringCode = "(" + function() {
-    console.log("* * * Cross Browser Watcher (loading log gathering) * * *");
+let logGatheringCode = "var originalConsole = {}; (" + function() {
+    console.log("* * * Cross Browser Watcher * * *");
 
     console._cbwatcherLogs = [];
     const consoleMethodNames = ["log", "warn", "error", "info", "dir", "time", "timeEnd", "table", "count"];
     const eventListenerNames = ["error", "unhandledrejection"];
 
     consoleMethodNames.forEach(methodName => {
-        let originalMethod = console[methodName]
+        let originalMethod = (originalConsole[methodName] = console[methodName]);
 
         console[methodName] = function() {
             let params = Array.prototype.slice.call(arguments, 1);
@@ -54,10 +54,23 @@ let logGatheringCode = "(" + function() {
 
 } + ")();";
 
+let logGatheringScript = document.createElement("script");
+logGatheringScript.textContent = logGatheringCode;
+(document.head || document.documentElement).appendChild(logGatheringScript);
+
+
+let restoreLogCode = "(" + function() {
+    console.log("Using original console for logging");
+    Object.keys(originalConsole).forEach(methodName => {
+        console[methodName] = originalConsole[methodName]
+    })
+    delete console._cbwatcherLogs;
+} + ")();";
+
 chrome.storage.sync.get("_cbwatcherLogGathering", function(data) {
-    if (!data["_cbwatcherLogGathering"] || data["_cbwatcherLogGathering"] == "true") {
-        let logGatheringScript = document.createElement("script");
-        logGatheringScript.textContent = logGatheringCode;
-        (document.head || document.documentElement).appendChild(logGatheringScript);
+    if (data["_cbwatcherLogGathering"] && data["_cbwatcherLogGathering"] == "false") {
+        let restoreLogScript = document.createElement("script");
+        restoreLogScript.textContent = restoreLogCode;
+        (document.head || document.documentElement).appendChild(restoreLogScript);
     }
 });
