@@ -6,10 +6,18 @@
     console.info("This a call to 'console.info'");
     console.warn("This a call to 'console.warn'");
     console.error("This a call to 'console.error'");
+
+    console.time("Timer");
+    console.dir("This a call to 'console.dir'");
+    console.table({a: 1, b: 2, c: 3});
+    for(let i=0; i<3; i++){
+        console.count(i);
+    }
+    console.timeEnd("Timer");
 </script>
 </head>
 <body>
     <h1>Console log test</h1>
-    <p>This page makes call to JavaScript's console (log, info, warn, error).</p>
+    <p>This page makes call to JavaScript's console (log, info, warn, error, time, timeend, dir, table, count).</p>
 </body>
 </html>

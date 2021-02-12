@@ -15,11 +15,11 @@
  *
  */
 
-let injectedCode = '(' + function() {
+let injectedCode = "(" + function() {
     console.log("* * * Loading Cross Browser Watcher * * *");
 
     console._cbwatcherLogs = [];
-    const consoleMethodNames = ["log", "warn", "error", "info"];
+    const consoleMethodNames = ["log", "warn", "error", "info", "dir", "time", "timeEnd", "table", "count"];
     const eventListenerNames = ["error", "unhandledrejection"];
 
     consoleMethodNames.forEach(methodName => {
@@ -52,7 +52,7 @@ let injectedCode = '(' + function() {
         return `${day}-${month}-${year} ${time}.${millis}`;
     }
 
-} + ')();';
+} + ")();";
 
 var script = document.createElement("script");
 script.textContent = injectedCode;

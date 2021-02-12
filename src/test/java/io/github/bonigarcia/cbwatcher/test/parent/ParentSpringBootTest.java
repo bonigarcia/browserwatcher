@@ -59,7 +59,7 @@ public class ParentSpringBootTest {
 
         for (Map<String, String> map : logMessages) {
             log.debug("[{}] {} {}", map.get("datetime"),
-                    String.format("%1$-5s", map.get("type").toUpperCase()),
+                    String.format("%1$-7s", map.get("type").toUpperCase()),
                     map.get("message"));
         }
 

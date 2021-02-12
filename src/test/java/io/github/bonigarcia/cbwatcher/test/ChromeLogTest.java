@@ -24,7 +24,7 @@ public class ChromeLogTest extends ChromeParentTest {
 
     @Test
     public void test() {
-        opentLocalHost("index.html", 4);
+        opentLocalHost("index.html", 11);
     }
 
 }
