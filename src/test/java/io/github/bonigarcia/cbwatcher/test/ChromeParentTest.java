@@ -16,13 +16,28 @@
  */
 package io.github.bonigarcia.cbwatcher.test;
 
-import org.junit.Test;
+import java.io.File;
 
-public class ChromeLogTest extends ChromeParentTest {
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 
-    @Test
-    public void test() {
-        opentLocalHost("index.html", 4);
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class ChromeParentTest extends ParentSpringBootTest {
+
+    @BeforeClass
+    public static void setupClass() {
+        WebDriverManager.chromedriver().setup();
+    }
+
+    @Before
+    public void setup() {
+        ChromeOptions options = new ChromeOptions();
+        File extSrc = new File("ext");
+        options.addArguments("load-extension=" + extSrc.getAbsolutePath());
+        this.driver = new ChromeDriver(options);
     }
 
 }
