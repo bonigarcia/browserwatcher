@@ -31,7 +31,7 @@ import io.github.bonigarcia.wdm.config.DriverManagerType;
 public class UnhandledRejectionTest extends BrowserParentTest {
 
     @ParameterizedTest
-    @EnumSource(names = { "CHROME" })
+    @EnumSource(names = { "CHROME", "OPERA" })
     public void unhandledRejectionTest(DriverManagerType browserType) {
         openLocalHost("unhandled_rejection.html", 1);
     }
