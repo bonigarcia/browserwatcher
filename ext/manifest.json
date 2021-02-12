@@ -7,6 +7,12 @@
     "icons": {
         "80": "icons/cbwatcher-logo.png"
     },
+    "permissions": [
+        "storage"
+    ],
+    "options_ui": {
+        "page": "options.html"
+    },
     "content_scripts": [
         {
             "matches": [

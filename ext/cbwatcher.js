@@ -15,8 +15,8 @@
  *
  */
 
-let injectedCode = "(" + function() {
-    console.log("* * * Loading Cross Browser Watcher * * *");
+let logGatheringCode = "(" + function() {
+    console.log("* * * Cross Browser Watcher (loading log gathering) * * *");
 
     console._cbwatcherLogs = [];
     const consoleMethodNames = ["log", "warn", "error", "info", "dir", "time", "timeEnd", "table", "count"];
@@ -54,6 +54,10 @@ let injectedCode = "(" + function() {
 
 } + ")();";
 
-var script = document.createElement("script");
-script.textContent = injectedCode;
-(document.head || document.documentElement).appendChild(script);
+chrome.storage.sync.get("_cbwatcherLogGathering", function(data) {
+    if (!data["_cbwatcherLogGathering"] || data["_cbwatcherLogGathering"] == "true") {
+        let logGatheringScript = document.createElement("script");
+        logGatheringScript.textContent = logGatheringCode;
+        (document.head || document.documentElement).appendChild(logGatheringScript);
+    }
+});
