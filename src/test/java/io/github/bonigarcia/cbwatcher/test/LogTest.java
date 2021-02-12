@@ -16,21 +16,24 @@
  */
 package io.github.bonigarcia.cbwatcher.test;
 
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 
-import io.github.bonigarcia.cbwatcher.test.parent.ChromeParentTest;
+import io.github.bonigarcia.cbwatcher.test.parent.BrowserParentTest;
+import io.github.bonigarcia.wdm.config.DriverManagerType;
 
 /**
- * Test checking unhandled errors.
+ * Test log messages.
  *
  * @author Boni Garcia (boni.gg@gmail.com)
  * @since 1.0.0
  */
-public class ChromeUnhandledErrorTest extends ChromeParentTest {
+public class LogTest extends BrowserParentTest {
 
-    @Test
-    public void test() {
-        opentLocalHost("unhandled_error.html", 1);
+    @ParameterizedTest
+    @EnumSource(names = { "CHROME" })
+    public void logTest(DriverManagerType browserType) {
+        openLocalHost("index.html", 11);
     }
 
 }

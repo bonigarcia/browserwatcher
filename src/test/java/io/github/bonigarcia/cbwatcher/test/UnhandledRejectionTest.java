@@ -16,21 +16,24 @@
  */
 package io.github.bonigarcia.cbwatcher.test;
 
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 
-import io.github.bonigarcia.cbwatcher.test.parent.ChromeParentTest;
+import io.github.bonigarcia.cbwatcher.test.parent.BrowserParentTest;
+import io.github.bonigarcia.wdm.config.DriverManagerType;
 
 /**
- * Test checking the log messages.
+ * Test unhandled rejections.
  *
  * @author Boni Garcia (boni.gg@gmail.com)
  * @since 1.0.0
  */
-public class ChromeLogTest extends ChromeParentTest {
+public class UnhandledRejectionTest extends BrowserParentTest {
 
-    @Test
-    public void test() {
-        opentLocalHost("index.html", 11);
+    @ParameterizedTest
+    @EnumSource(names = { "CHROME" })
+    public void unhandledRejectionTest(DriverManagerType browserType) {
+        openLocalHost("unhandled_rejection.html", 1);
     }
 
 }
