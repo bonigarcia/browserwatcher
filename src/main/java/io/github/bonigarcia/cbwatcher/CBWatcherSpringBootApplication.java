@@ -23,12 +23,18 @@ import org.slf4j.Logger;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+/**
+ * Web application based on sprin-boot used for testing.
+ *
+ * @author Boni Garcia (boni.gg@gmail.com)
+ * @since 1.0.0
+ */
 @SpringBootApplication
-public class MySpringBootApplication {
+public class CBWatcherSpringBootApplication {
 
     static final Logger log = getLogger(lookup().lookupClass());
 
     public static void main(String[] args) throws Exception {
-        new SpringApplication(MySpringBootApplication.class).run(args);
+        new SpringApplication(CBWatcherSpringBootApplication.class).run(args);
     }
 }
