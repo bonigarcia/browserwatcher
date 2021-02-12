@@ -34,6 +34,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+/**
+ * Parent for tests using a spring-boot web application.
+ *
+ * @author Boni Garcia (boni.gg@gmail.com)
+ * @since 1.0.0
+ */
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 public class ParentSpringBootTest {

@@ -20,6 +20,12 @@ import org.junit.jupiter.api.Test;
 
 import io.github.bonigarcia.cbwatcher.test.parent.ChromeParentTest;
 
+/**
+ * Test checking unhandled errors.
+ *
+ * @author Boni Garcia (boni.gg@gmail.com)
+ * @since 1.0.0
+ */
 public class ChromeUnhandledErrorTest extends ChromeParentTest {
 
     @Test

@@ -25,6 +25,12 @@ import org.openqa.selenium.chrome.ChromeOptions;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
+/**
+ * Parent for browser tests.
+ *
+ * @author Boni Garcia (boni.gg@gmail.com)
+ * @since 1.0.0
+ */
 public class ChromeParentTest extends ParentSpringBootTest {
 
     @BeforeAll

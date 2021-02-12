@@ -20,6 +20,12 @@ import org.junit.jupiter.api.Test;
 
 import io.github.bonigarcia.cbwatcher.test.parent.ChromeParentTest;
 
+/**
+ * Test checking the log messages.
+ *
+ * @author Boni Garcia (boni.gg@gmail.com)
+ * @since 1.0.0
+ */
 public class ChromeLogTest extends ChromeParentTest {
 
     @Test
