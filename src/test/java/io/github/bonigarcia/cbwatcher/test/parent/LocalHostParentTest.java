@@ -50,13 +50,17 @@ public class LocalHostParentTest extends BrowserParentTest {
 
         List<Map<String, String>> logMessages = readLogs();
 
-        for (Map<String, String> map : logMessages) {
-            log.debug("[{}] {} {}", map.get("datetime"),
-                    String.format("%1$-7s", map.get("type").toUpperCase()),
-                    map.get("message"));
-        }
+        if (logMessagesSize == 0) {
+            assertThat(logMessages).isNull();
+        } else {
+            for (Map<String, String> map : logMessages) {
+                log.debug("[{}] {} {}", map.get("datetime"),
+                        String.format("%1$-7s", map.get("type").toUpperCase()),
+                        map.get("message"));
+            }
 
-        assertThat(logMessages.size()).isEqualTo(logMessagesSize);
+            assertThat(logMessages.size()).isEqualTo(logMessagesSize);
+        }
     }
 
 }
