@@ -16,7 +16,9 @@
  */
 package io.github.bonigarcia.cbwatcher.test.parent;
 
+import static java.lang.Thread.sleep;
 import static java.lang.invoke.MethodHandles.lookup;
+import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.slf4j.LoggerFactory.getLogger;
 
 import java.io.File;
@@ -75,6 +77,8 @@ public class BrowserParentTest {
             ChromeOptions chromeOptions = new ChromeOptions();
             chromeOptions
                     .addArguments("load-extension=" + extSrc.getAbsolutePath());
+            chromeOptions.addArguments("--use-fake-ui-for-media-stream");
+            chromeOptions.addArguments("--use-fake-device-for-media-stream");
             this.driver = new ChromeDriver(chromeOptions);
             break;
         }
@@ -90,9 +94,32 @@ public class BrowserParentTest {
 
     @SuppressWarnings("unchecked")
     public List<Map<String, String>> readLogs() {
-        List<Map<String, String>> logMessages = (List<Map<String, String>>) ((JavascriptExecutor) driver)
-                .executeScript("return console._cbwatcherLogs;");
+        List<Map<String, String>> logMessages = (List<Map<String, String>>) readJavaScriptVariable(
+                "console._cbwatcherLogs");
         return logMessages;
+    }
+
+    public Object readJavaScriptVariable(String jsVariable) {
+        return ((JavascriptExecutor) driver)
+                .executeScript("return " + jsVariable + ";");
+    }
+
+    public void waitSeconds(int seconds) {
+        waitMilliSeconds(SECONDS.toMillis(seconds));
+    }
+
+    public void waitMilliSeconds(long milliseconds) {
+        try {
+            sleep(milliseconds);
+        } catch (InterruptedException e) {
+            log.warn("Exception waiting {} ms", milliseconds, e);
+        }
+    }
+
+    public void injectJavaScript(String jsCode) {
+        ((JavascriptExecutor) driver).executeScript(
+                "window.postMessage({" + "    type: \"injectJavaScript\","
+                        + "    javascript: \"" + jsCode + ";\"" + "}, \"*\");");
     }
 
 }
