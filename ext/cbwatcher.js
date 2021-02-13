@@ -27,7 +27,7 @@ let logGatheringCode = "var originalConsole = {}; (" + function() {
 
         console[methodName] = function() {
             let params = Array.prototype.slice.call(arguments, 1);
-            let message = params.length ? util.format(arguments[0], ...params) : arguments[0];
+            let message = params.length ? Array.from(arguments) : arguments[0];
             console._cbwatcherLogs.push({ datetime: getDateTime(), type: methodName, message });
 
             originalMethod.apply(console, arguments);
