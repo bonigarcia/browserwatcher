@@ -16,9 +16,8 @@
  */
 package io.github.bonigarcia.cbwatcher.test.parent;
 
+import static com.google.common.truth.Truth.assertThat;
 import static java.lang.invoke.MethodHandles.lookup;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.slf4j.LoggerFactory.getLogger;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
@@ -57,9 +56,7 @@ public class LocalHostParentTest extends BrowserParentTest {
                     map.get("message"));
         }
 
-        assertFalse(logMessages.isEmpty());
-        assertTrue(logMessages.size() == logMessagesSize);
-
+        assertThat(logMessages.size()).isEqualTo(logMessagesSize);
     }
 
 }

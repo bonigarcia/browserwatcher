@@ -17,6 +17,7 @@
 
     <properties>
         <wdm.version>4.3.1</wdm.version>
+        <truth.version>1.1.2</truth.version>
 
         <java.version>1.8</java.version>
         <maven.compiler.target>${java.version}</maven.compiler.target>
@@ -63,6 +64,12 @@
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.truth</groupId>
+            <artifactId>truth</artifactId>
+            <version>${truth.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
