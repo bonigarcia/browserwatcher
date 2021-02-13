@@ -17,10 +17,7 @@
 package io.github.bonigarcia.cbwatcher.test.parent;
 
 import static java.lang.invoke.MethodHandles.lookup;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.slf4j.LoggerFactory.getLogger;
-import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
 import java.io.File;
 import java.util.List;
@@ -29,7 +26,6 @@ import java.util.Map;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestInfo;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -37,9 +33,6 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.opera.OperaDriver;
 import org.openqa.selenium.opera.OperaOptions;
 import org.slf4j.Logger;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.github.bonigarcia.wdm.config.DriverManagerType;
@@ -50,14 +43,9 @@ import io.github.bonigarcia.wdm.config.DriverManagerType;
  * @author Boni Garcia (boni.gg@gmail.com)
  * @since 1.0.0
  */
-@ExtendWith(SpringExtension.class)
-@SpringBootTest(webEnvironment = RANDOM_PORT)
 public class BrowserParentTest {
 
     static final Logger log = getLogger(lookup().lookupClass());
-
-    @LocalServerPort
-    public int serverPort;
 
     public WebDriver driver;
 
@@ -100,24 +88,8 @@ public class BrowserParentTest {
         }
     }
 
-    public void openLocalHost(String testPage, int logMessagesSize) {
-        driver.get("http://localhost:" + serverPort + "/" + testPage);
-
-        List<Map<String, String>> logMessages = readLogs();
-
-        for (Map<String, String> map : logMessages) {
-            log.debug("[{}] {} {}", map.get("datetime"),
-                    String.format("%1$-7s", map.get("type").toUpperCase()),
-                    map.get("message"));
-        }
-
-        assertFalse(logMessages.isEmpty());
-        assertTrue(logMessages.size() == logMessagesSize);
-
-    }
-
     @SuppressWarnings("unchecked")
-    private List<Map<String, String>> readLogs() {
+    public List<Map<String, String>> readLogs() {
         List<Map<String, String>> logMessages = (List<Map<String, String>>) ((JavascriptExecutor) driver)
                 .executeScript("return console._cbwatcherLogs;");
         return logMessages;

@@ -19,7 +19,7 @@ package io.github.bonigarcia.cbwatcher.test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 
-import io.github.bonigarcia.cbwatcher.test.parent.BrowserParentTest;
+import io.github.bonigarcia.cbwatcher.test.parent.LocalHostParentTest;
 import io.github.bonigarcia.wdm.config.DriverManagerType;
 
 /**
@@ -28,7 +28,7 @@ import io.github.bonigarcia.wdm.config.DriverManagerType;
  * @author Boni Garcia (boni.gg@gmail.com)
  * @since 1.0.0
  */
-public class UnhandledRejectionTest extends BrowserParentTest {
+public class UnhandledRejectionTest extends LocalHostParentTest {
 
     @ParameterizedTest
     @EnumSource(names = { "CHROME" })
