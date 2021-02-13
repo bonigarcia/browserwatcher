@@ -5,7 +5,11 @@ function saveOptions(e) {
     });
 
     chrome.storage.sync.set({
-        _cbwatcherJavaScript: document.querySelector('textarea[name="js"]').value
+        _cbwatcherJavaScriptCode: document.querySelector('textarea[name="js"]').value
+    });
+
+    chrome.storage.sync.set({
+        _cbwatcherJavaScriptLibs: document.querySelector('textarea[name="libs"]').value
     });
 
     document.querySelector("#saved").style.display = "inline";
@@ -21,8 +25,14 @@ chrome.storage.sync.get("_cbwatcherLogGathering", function(data) {
     }
 });
 
-chrome.storage.sync.get("_cbwatcherJavaScript", function(data) {
-    if (data["_cbwatcherJavaScript"]) {
-        document.querySelector('textarea[name="js"]').value = data["_cbwatcherJavaScript"];
+chrome.storage.sync.get("_cbwatcherJavaScriptCode", function(data) {
+    if (data["_cbwatcherJavaScriptCode"]) {
+        document.querySelector('textarea[name="js"]').value = data["_cbwatcherJavaScriptCode"];
+    }
+});
+
+chrome.storage.sync.get("_cbwatcherJavaScriptLibs", function(data) {
+    if (data["_cbwatcherJavaScriptLibs"]) {
+        document.querySelector('textarea[name="libs"]').value = data["_cbwatcherJavaScriptLibs"];
     }
 });

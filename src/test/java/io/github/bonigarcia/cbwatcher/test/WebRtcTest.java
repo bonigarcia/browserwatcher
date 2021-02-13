@@ -41,7 +41,7 @@ public class WebRtcTest extends BrowserParentTest {
         driver.get(
                 "https://webrtc.github.io/samples/src/content/peerconnection/pc1/");
 
-        injectJavaScript("var peerConnections = [];"
+        injectJavaScriptCode("var peerConnections = [];"
                 + "var origPeerConnection = window.RTCPeerConnection;"
                 + "window.RTCPeerConnection = function(pcConfig, pcConstraints) {"
                 + "    var pc = new origPeerConnection(pcConfig, pcConstraints);"

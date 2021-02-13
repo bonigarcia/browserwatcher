@@ -116,9 +116,9 @@ public class BrowserParentTest {
         }
     }
 
-    public void injectJavaScript(String jsCode) {
+    public void injectJavaScriptCode(String jsCode) {
         ((JavascriptExecutor) driver).executeScript(
-                "window.postMessage({" + "    type: \"injectJavaScript\","
+                "window.postMessage({" + "    type: \"injectJavaScriptCode\","
                         + "    javascript: \"" + jsCode + ";\"" + "}, \"*\");");
     }
 

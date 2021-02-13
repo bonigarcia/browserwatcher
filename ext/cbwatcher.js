@@ -75,21 +75,47 @@ chrome.storage.sync.get("_cbwatcherLogGathering", function(data) {
     }
 });
 
-chrome.storage.sync.get("_cbwatcherJavaScript", function(data) {
-    if (data["_cbwatcherJavaScript"]) {
-        injectJs(data["_cbwatcherJavaScript"]);
+chrome.storage.sync.get("_cbwatcherJavaScriptCode", function(data) {
+    if (data["_cbwatcherJavaScriptCode"]) {
+        injectJsCode(data["_cbwatcherJavaScriptCode"]);
+    }
+});
+
+chrome.storage.sync.get("_cbwatcherJavaScriptLibs", function(data) {
+    if (data["_cbwatcherJavaScriptLibs"]) {
+        injectJsLibs(data["_cbwatcherJavaScriptLibs"]);
     }
 });
 
 window.addEventListener("message", function(event) {
-    if (event.source == window && event.data.type == "injectJavaScript") {
-        injectJs(event.data.javascript);
+    if (event.source == window && event.data.type == "injectJavaScriptCode") {
+        injectJsCode(event.data.javascript);
     }
 });
 
-function injectJs(code) {
-    console.log("* * * Injecting custom JavaScript * * *\n" + code);
+window.addEventListener("message", function(event) {
+    if (event.source == window && event.data.type == "injectJavaScriptLibs") {
+        injectJsLibs(event.data.javascript);
+    }
+});
+
+function injectJsCode(code) {
+    console.log("* * * Injecting custom JavaScript code * * *\n" + code);
     let injectJsScript = document.createElement("script");
     injectJsScript.textContent = code;
     (document.head || document.documentElement).appendChild(injectJsScript);
+}
+
+function injectJsLibs(libs) {
+    console.log("* * * Injecting custom JavaScript libraries * * * " + libs);
+    let arrayOfLibs = libs.split(/[\r\n]+/g);
+    arrayOfLibs.forEach(function(lib) {
+        console.log("Injecting: " + lib);
+        var s = document.createElement("script");
+        s.src = lib;
+        s.onload = function() {
+            this.remove();
+        };
+        (document.head || document.documentElement).appendChild(s);
+    });
 }
