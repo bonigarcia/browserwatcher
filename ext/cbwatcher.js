@@ -77,9 +77,19 @@ chrome.storage.sync.get("_cbwatcherLogGathering", function(data) {
 
 chrome.storage.sync.get("_cbwatcherJavaScript", function(data) {
     if (data["_cbwatcherJavaScript"]) {
-        console.log("* * * Injecting custom JavaScript * * *\n" + data["_cbwatcherJavaScript"]);
-        let injectJsScript = document.createElement("script");
-        injectJsScript.textContent = data["_cbwatcherJavaScript"];
-        (document.head || document.documentElement).appendChild(injectJsScript);
+        injectJs(data["_cbwatcherJavaScript"]);
     }
 });
+
+window.addEventListener("message", function(event) {
+    if (event.source == window && event.data.type == "injectJavaScript") {
+        injectJs(event.data.javascript);
+    }
+});
+
+function injectJs(code) {
+    console.log("* * * Injecting custom JavaScript * * *\n" + code);
+    let injectJsScript = document.createElement("script");
+    injectJsScript.textContent = code;
+    (document.head || document.documentElement).appendChild(injectJsScript);
+}
