@@ -57,12 +57,9 @@ public class BrowserParentTest {
     public void setup(TestInfo testInfo) {
         String displayName = testInfo.getDisplayName();
         DriverManagerType driverManagerType = DriverManagerType
-                .valueOf(displayName.substring(displayName.indexOf("=") + 1)
-                        .toUpperCase());
-
-        File extSrc = new File("ext");
-
+                .valueOfDisplayName(displayName);
         WebDriverManager.getInstance(driverManagerType).setup();
+        File extSrc = new File("ext");
 
         switch (driverManagerType) {
         case OPERA:
