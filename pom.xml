@@ -15,7 +15,7 @@
     </parent>
 
     <properties>
-        <wdm.version>5.0.0</wdm.version>
+        <wdm.version>5.0.1</wdm.version>
         <truth.version>1.1.3</truth.version>
 
         <java.version>1.8</java.version>
