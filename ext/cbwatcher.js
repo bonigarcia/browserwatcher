@@ -42,6 +42,12 @@ let logGatheringCode = "var originalConsole = {}; (" + function() {
         });
     });
 
+    window.addEventListener("securitypolicyviolation", function(e) {
+        let errorMessage = e.error ? `${e.error.stack}` : `${e.blockedURI} ${e.violatedDirective} ${e.originalPolicy}`;
+        console.error(errorMessage);
+        e.preventDefault();
+    });
+
     function getDateTime() {
         let now = new Date();
         let day = now.getDate().toString().padStart(2, "0");
