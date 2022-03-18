@@ -116,8 +116,8 @@ public class BrowserParentTest {
     }
 
     @SuppressWarnings("unchecked")
-    public List<Map<String, String>> readLogs() {
-        List<Map<String, String>> logMessages = (List<Map<String, String>>) readJavaScriptVariable(
+    public List<Map<String, Object>> readLogs() {
+        List<Map<String, Object>> logMessages = (List<Map<String, Object>>) readJavaScriptVariable(
                 "console._cbwatcherLogs");
         return logMessages;
     }

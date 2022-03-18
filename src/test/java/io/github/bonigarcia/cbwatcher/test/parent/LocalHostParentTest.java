@@ -48,14 +48,15 @@ public class LocalHostParentTest extends BrowserParentTest {
     public void openLocalHost(String testPage, int logMessagesSize) {
         driver.get("http://localhost:" + serverPort + "/" + testPage);
 
-        List<Map<String, String>> logMessages = readLogs();
+        List<Map<String, Object>> logMessages = readLogs();
 
         if (logMessagesSize == 0) {
             assertThat(logMessages).isNull();
         } else {
-            for (Map<String, String> map : logMessages) {
+            for (Map<String, Object> map : logMessages) {
                 log.debug("[{}] {} {}", map.get("datetime"),
-                        String.format("%1$-7s", map.get("type").toUpperCase()),
+                        String.format("%1$-7s",
+                                map.get("type").toString().toUpperCase()),
                         map.get("message"));
             }
 

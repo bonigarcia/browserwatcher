@@ -61,15 +61,15 @@ class PublicWebsitesTest extends BrowserParentTest {
             throws IOException {
         driver.get(website);
 
-        List<Map<String, String>> logMessages = readLogs();
+        List<Map<String, Object>> logMessages = readLogs();
 
         try (PrintWriter pw = new PrintWriter(
                 new FileWriter(website.replaceAll("https://", "") + "_"
                         + browserType + ".txt"))) {
-            for (Map<String, String> map : logMessages) {
+            for (Map<String, Object> map : logMessages) {
                 pw.println("[" + map.get("datetime") + "] "
-                        + map.get("type").toUpperCase() + " "
-                        + map.get("message"));
+                        + map.get("type").toString().toUpperCase() + " "
+                        + map.get("message").toString());
             }
         }
     }
