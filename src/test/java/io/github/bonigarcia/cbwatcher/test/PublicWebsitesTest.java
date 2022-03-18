@@ -60,6 +60,7 @@ class PublicWebsitesTest extends BrowserParentTest {
     void logTest(DriverManagerType browserType, String website)
             throws IOException {
         driver.get(website);
+        waitSeconds(3);
 
         List<Map<String, Object>> logMessages = readLogs();
 
