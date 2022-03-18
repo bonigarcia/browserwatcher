@@ -31,7 +31,7 @@ import io.github.bonigarcia.wdm.config.DriverManagerType;
 public class UnhandledErrorTest extends LocalHostParentTest {
 
     @ParameterizedTest
-    @EnumSource(names = { "CHROME" })
+    @EnumSource(names = { "CHROME", "FIREFOX" })
     public void unhandledErrorTest(DriverManagerType browserType) {
         openLocalHost("unhandled_error.html", 1);
     }

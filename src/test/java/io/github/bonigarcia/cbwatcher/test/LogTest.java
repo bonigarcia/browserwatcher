@@ -31,7 +31,7 @@ import io.github.bonigarcia.wdm.config.DriverManagerType;
 public class LogTest extends LocalHostParentTest {
 
     @ParameterizedTest
-    @EnumSource(names = { "CHROME" })
+    @EnumSource(names = { "CHROME", "FIREFOX" })
     public void logTest(DriverManagerType browserType) {
         openLocalHost("index.html", 11);
     }

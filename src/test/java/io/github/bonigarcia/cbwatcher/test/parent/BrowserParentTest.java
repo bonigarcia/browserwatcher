@@ -16,12 +16,14 @@
  */
 package io.github.bonigarcia.cbwatcher.test.parent;
 
+import static io.github.bonigarcia.wdm.WebDriverManager.zipFolder;
 import static java.lang.Thread.sleep;
 import static java.lang.invoke.MethodHandles.lookup;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.slf4j.LoggerFactory.getLogger;
 
 import java.io.File;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 
@@ -32,6 +34,8 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.opera.OperaDriver;
 import org.openqa.selenium.opera.OperaOptions;
 import org.slf4j.Logger;
@@ -68,7 +72,15 @@ public class BrowserParentTest {
                     .addArguments("load-extension=" + extSrc.getAbsolutePath());
             this.driver = new OperaDriver(operaOptions);
             break;
-
+        case FIREFOX:
+            FirefoxOptions options = new FirefoxOptions();
+            options.addPreference("media.navigator.permission.disabled", true);
+            options.addPreference("media.navigator.streams.fake", true);
+            Path zippedExtension = zipFolder(extSrc.toPath());
+            this.driver = new FirefoxDriver(options);
+            ((FirefoxDriver) this.driver).installExtension(zippedExtension,
+                    true);
+            break;
         case CHROME:
         default:
             ChromeOptions chromeOptions = new ChromeOptions();

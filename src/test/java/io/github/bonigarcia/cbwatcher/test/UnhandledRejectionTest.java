@@ -31,7 +31,7 @@ import io.github.bonigarcia.wdm.config.DriverManagerType;
 public class UnhandledRejectionTest extends LocalHostParentTest {
 
     @ParameterizedTest
-    @EnumSource(names = { "CHROME" })
+    @EnumSource(names = { "CHROME", "FIREFOX" })
     public void unhandledRejectionTest(DriverManagerType browserType) {
         openLocalHost("unhandled_rejection.html", 1);
     }
