@@ -6,15 +6,15 @@
 
 *Cross Browser Watcher* is a [browser extension] aimed to monitor web browsers such as Chrome, Firefox, Opera, Edge. Its main features are:
 
-* Console log gatehering.
+* Console log gathering.
 * JavaScript monkey patching capabilities.
 
 ## About
 
-Cross Browser Watcher (Copyright &copy; 2021) is a project created and maintained by [Boni Garcia] licensed under [Apache 2.0 License].
+Cross Browser Watcher (Copyright &copy; 2021-2022) is a project created and maintained by [Boni Garcia] licensed under [Apache 2.0 License].
 
 [Apache 2.0 License]: https://www.apache.org/licenses/LICENSE-2.0
-[Boni Garcia]: https://bonigarcia.github.io/
-[Logo]: https://bonigarcia.github.io/img/cbwatcher.png
+[Boni Garcia]: https://bonigarcia.dev/
+[Logo]: https://bonigarcia.dev/img/cbwatcher.png
 [GitHub Repository]: https://github.com/bonigarcia/cbwatcher
 [browser extension]: https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions
