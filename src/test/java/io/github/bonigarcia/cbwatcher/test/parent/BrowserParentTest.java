@@ -60,6 +60,10 @@ public class BrowserParentTest {
     @BeforeEach
     public void setup(TestInfo testInfo) {
         String displayName = testInfo.getDisplayName();
+        int iComma = displayName.indexOf(",");
+        if (iComma != -1) {
+            displayName = displayName.substring(0, iComma);
+        }
         DriverManagerType driverManagerType = DriverManagerType
                 .valueOfDisplayName(displayName);
         WebDriverManager.getInstance(driverManagerType).setup();
