@@ -16,11 +16,16 @@
  */
 package io.github.bonigarcia.cbwatcher.test;
 
+import static io.github.bonigarcia.wdm.config.DriverManagerType.CHROME;
+import static io.github.bonigarcia.wdm.config.DriverManagerType.EDGE;
+import static io.github.bonigarcia.wdm.config.DriverManagerType.FIREFOX;
 import static java.lang.invoke.MethodHandles.lookup;
 import static org.slf4j.LoggerFactory.getLogger;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -52,21 +57,25 @@ class PublicWebsitesTest extends BrowserParentTest {
 
     @ParameterizedTest
     @MethodSource("provider")
-    void logTest(DriverManagerType browserType, String website) {
+    void logTest(DriverManagerType browserType, String website)
+            throws IOException {
         driver.get(website);
 
         List<Map<String, String>> logMessages = readLogs();
-        for (Map<String, String> map : logMessages) {
-            log.debug("<{}><{}> [{}] {} {}", browserType, website,
-                    map.get("datetime"),
-                    String.format("%1$-7s", map.get("type").toUpperCase()),
-                    map.get("message"));
+
+        try (PrintWriter pw = new PrintWriter(
+                new FileWriter(website.replaceAll("https://", "") + "_"
+                        + browserType + ".txt"))) {
+            for (Map<String, String> map : logMessages) {
+                pw.println("[" + map.get("datetime") + "] "
+                        + map.get("type").toUpperCase() + " "
+                        + map.get("message"));
+            }
         }
     }
 
     static Stream<Arguments> provider() {
-        List<DriverManagerType> browsers = Arrays
-                .asList(DriverManagerType.CHROME, DriverManagerType.FIREFOX);
+        List<DriverManagerType> browsers = Arrays.asList(CHROME, FIREFOX, EDGE);
         List<String> websites = getUrlsFromFile("websites-mini.txt");
         List<Arguments> cartesianProduct = new ArrayList<>();
 

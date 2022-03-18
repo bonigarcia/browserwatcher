@@ -34,6 +34,8 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.opera.OperaDriver;
@@ -77,13 +79,22 @@ public class BrowserParentTest {
             this.driver = new OperaDriver(operaOptions);
             break;
         case FIREFOX:
-            FirefoxOptions options = new FirefoxOptions();
-            options.addPreference("media.navigator.permission.disabled", true);
-            options.addPreference("media.navigator.streams.fake", true);
+            FirefoxOptions firefoxOptions = new FirefoxOptions();
+            firefoxOptions.addPreference("media.navigator.permission.disabled",
+                    true);
+            firefoxOptions.addPreference("media.navigator.streams.fake", true);
             Path zippedExtension = zipFolder(extSrc.toPath());
-            this.driver = new FirefoxDriver(options);
+            this.driver = new FirefoxDriver(firefoxOptions);
             ((FirefoxDriver) this.driver).installExtension(zippedExtension,
                     true);
+            break;
+        case EDGE:
+            EdgeOptions edgeOptions = new EdgeOptions();
+            edgeOptions
+                    .addArguments("load-extension=" + extSrc.getAbsolutePath());
+            edgeOptions.addArguments("--use-fake-ui-for-media-stream");
+            edgeOptions.addArguments("--use-fake-device-for-media-stream");
+            this.driver = new EdgeDriver(edgeOptions);
             break;
         case CHROME:
         default:
@@ -95,7 +106,6 @@ public class BrowserParentTest {
             this.driver = new ChromeDriver(chromeOptions);
             break;
         }
-
     }
 
     @AfterEach
