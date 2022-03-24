@@ -57,7 +57,7 @@ class PublicWebsitesTest extends BrowserParentTest {
 
     @ParameterizedTest
     @MethodSource("provider")
-    void logTest(int index, DriverManagerType browserType, String website)
+    void logTest(DriverManagerType browserType, String website, int index)
             throws IOException {
         driver.get(website);
         waitSeconds(3);
@@ -83,7 +83,7 @@ class PublicWebsitesTest extends BrowserParentTest {
 
         for (int i = 0; i < websites.size(); i++) {
             for (DriverManagerType browser : browsers) {
-                cartesianProduct.add(Arguments.of(i, browser, websites.get(i)));
+                cartesianProduct.add(Arguments.of(browser, websites.get(i), i));
             }
         }
         return cartesianProduct.stream();
