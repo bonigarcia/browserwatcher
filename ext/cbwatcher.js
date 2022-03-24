@@ -20,7 +20,7 @@ let logGatheringCode = "var originalConsole = {}; (" + function() {
 
     console._cbwatcherLogs = [];
     const consoleMethodNames = ["log", "warn", "error", "info", "dir", "time", "timeEnd", "table", "count"];
-    const eventListenerNames = ["error", "unhandledrejection"];
+    const eventListenerNames = ["error", "unhandledrejection", "messageerror"];
 
     consoleMethodNames.forEach(methodName => {
         let originalMethod = (originalConsole[methodName] = console[methodName]);
