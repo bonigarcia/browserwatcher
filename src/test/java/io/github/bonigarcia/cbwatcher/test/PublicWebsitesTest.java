@@ -57,7 +57,7 @@ class PublicWebsitesTest extends BrowserParentTest {
 
     @ParameterizedTest
     @MethodSource("provider")
-    void logTest(DriverManagerType browserType, String website)
+    void logTest(int index, DriverManagerType browserType, String website)
             throws IOException {
         driver.get(website);
         waitSeconds(3);
@@ -65,8 +65,9 @@ class PublicWebsitesTest extends BrowserParentTest {
         List<Map<String, Object>> logMessages = readLogs();
 
         try (PrintWriter pw = new PrintWriter(
-                new FileWriter(website.replaceAll("https://", "") + "_"
-                        + browserType + ".txt"))) {
+                new FileWriter(String.format("%02d", index + 1) + "_"
+                        + website.replaceAll("https://", "") + "_" + browserType
+                        + ".txt"))) {
             for (Map<String, Object> map : logMessages) {
                 pw.println("[" + map.get("datetime") + "] "
                         + map.get("type").toString().toUpperCase() + " "
@@ -80,9 +81,9 @@ class PublicWebsitesTest extends BrowserParentTest {
         List<String> websites = getUrlsFromFile("websites-mini.txt");
         List<Arguments> cartesianProduct = new ArrayList<>();
 
-        for (DriverManagerType browser : browsers) {
-            for (String website : websites) {
-                cartesianProduct.add(Arguments.of(browser, website));
+        for (int i = 0; i < websites.size(); i++) {
+            for (DriverManagerType browser : browsers) {
+                cartesianProduct.add(Arguments.of(i, browser, websites.get(i)));
             }
         }
         return cartesianProduct.stream();
