@@ -13,6 +13,7 @@
     "options_ui": {
         "page": "options.html"
     },
+    "content_security_policy": "script-src 'unsafe-inline'; object-src 'self'",
     "content_scripts": [
         {
             "matches": [
