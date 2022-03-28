@@ -67,14 +67,14 @@ class PublicWebsitesTest extends BrowserParentTest {
                 new FileWriter(String.format("%02d", index + 1) + "_"
                         + website.replaceAll("https://", "") + "_" + browserType
                         + ".txt"))) {
-            //if (logMessages != null) {
+            if (logMessages != null) {
                 for (Map<String, Object> map : logMessages) {
                     pw.println("[" + map.get("datetime") + "] ["
                             + map.get("wrapper").toString().toUpperCase() + "."
                             + map.get("type").toString().toUpperCase() + "] "
                             + map.get("message").toString());
                 }
-            //}
+            }
         }
     }
 

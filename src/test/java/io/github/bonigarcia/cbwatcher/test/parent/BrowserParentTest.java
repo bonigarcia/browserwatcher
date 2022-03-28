@@ -83,7 +83,7 @@ public class BrowserParentTest {
             firefoxOptions.addPreference("media.navigator.permission.disabled",
                     true);
             firefoxOptions.addPreference("media.navigator.streams.fake", true);
-//            firefoxOptions.addPreference("security.csp.enable", false);
+            firefoxOptions.addPreference("security.csp.enable", false);
             Path zippedExtension = zipFolder(extSrc.toPath());
             this.driver = new FirefoxDriver(firefoxOptions);
             ((FirefoxDriver) this.driver).installExtension(zippedExtension,
