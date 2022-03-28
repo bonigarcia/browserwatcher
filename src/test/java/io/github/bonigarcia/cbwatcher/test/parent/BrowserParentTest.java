@@ -38,8 +38,6 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
-import org.openqa.selenium.opera.OperaDriver;
-import org.openqa.selenium.opera.OperaOptions;
 import org.slf4j.Logger;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -72,12 +70,6 @@ public class BrowserParentTest {
         File extSrc = new File("ext");
 
         switch (driverManagerType) {
-        case OPERA:
-            OperaOptions operaOptions = new OperaOptions();
-            operaOptions
-                    .addArguments("load-extension=" + extSrc.getAbsolutePath());
-            this.driver = new OperaDriver(operaOptions);
-            break;
         case FIREFOX:
             FirefoxOptions firefoxOptions = new FirefoxOptions();
             firefoxOptions.addPreference("media.navigator.permission.disabled",
