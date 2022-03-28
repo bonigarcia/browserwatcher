@@ -20,7 +20,7 @@ let logGatheringCode = "var originalConsole = {}; (" + function() {
 
     console._cbwatcherLogs = [];
     const consoleMethodNames = ["log", "warn", "error", "info", "dir", "time", "timeEnd", "table", "count"];
-    const eventListenerNames = ["error", "unhandledrejection", "messageerror"];
+    const eventListenerNames = ["error", "unhandledrejection", "messageerror", "securitypolicyviolation"];
 
     consoleMethodNames.forEach(methodName => {
         let originalMethod = (originalConsole[methodName] = console[methodName]);
@@ -28,7 +28,7 @@ let logGatheringCode = "var originalConsole = {}; (" + function() {
         console[methodName] = function() {
             let params = Array.prototype.slice.call(arguments, 1);
             let message = params.length ? Array.from(arguments) : arguments[0];
-            console._cbwatcherLogs.push({ datetime: getDateTime(), type: methodName, message });
+            console._cbwatcherLogs.push({ datetime: getDateTime(), wrapper: "console", type: methodName, message: message });
 
             originalMethod.apply(console, arguments);
         }
@@ -36,16 +36,18 @@ let logGatheringCode = "var originalConsole = {}; (" + function() {
 
     eventListenerNames.forEach(listenerName => {
         window.addEventListener(listenerName, function(e) {
-            let errorMessage = e.error ? `${e.error.stack}` : `${e.type} ${e.reason}`;
-            console.error(errorMessage);
+            let errorMessage = "";
+            if (listenerName === "securitypolicyviolation") {
+                errorMessage = e.error ? `${e.error.stack}` : `${e.blockedURI} ${e.violatedDirective} ${e.originalPolicy}`;
+            }
+            else {
+                errorMessage = e.error ? `${e.error.stack}` : `${e.type} ${e.reason}`;
+            }
+            console._cbwatcherLogs.push({ datetime: getDateTime(), wrapper: "listener", type: listenerName, message: errorMessage });
+
+            originalConsole.error(errorMessage);
             e.preventDefault();
         });
-    });
-
-    window.addEventListener("securitypolicyviolation", function(e) {
-        let errorMessage = e.error ? `${e.error.stack}` : `${e.blockedURI} ${e.violatedDirective} ${e.originalPolicy}`;
-        console.error(errorMessage);
-        e.preventDefault();
     });
 
     function getDateTime() {

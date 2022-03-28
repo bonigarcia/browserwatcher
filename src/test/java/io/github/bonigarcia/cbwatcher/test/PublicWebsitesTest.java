@@ -60,7 +60,6 @@ class PublicWebsitesTest extends BrowserParentTest {
     void logTest(DriverManagerType browserType, String website, int index)
             throws IOException {
         driver.get(website);
-        waitSeconds(3);
 
         List<Map<String, Object>> logMessages = readLogs();
 
@@ -68,11 +67,14 @@ class PublicWebsitesTest extends BrowserParentTest {
                 new FileWriter(String.format("%02d", index + 1) + "_"
                         + website.replaceAll("https://", "") + "_" + browserType
                         + ".txt"))) {
-            for (Map<String, Object> map : logMessages) {
-                pw.println("[" + map.get("datetime") + "] "
-                        + map.get("type").toString().toUpperCase() + " "
-                        + map.get("message").toString());
-            }
+            //if (logMessages != null) {
+                for (Map<String, Object> map : logMessages) {
+                    pw.println("[" + map.get("datetime") + "] ["
+                            + map.get("wrapper").toString().toUpperCase() + "."
+                            + map.get("type").toString().toUpperCase() + "] "
+                            + map.get("message").toString());
+                }
+            //}
         }
     }
 
