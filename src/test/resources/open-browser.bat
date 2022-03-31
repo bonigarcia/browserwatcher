@@ -1,4 +1,4 @@
-@echo off
+@ECHO OFF
 
 SET browser=%1
 
@@ -7,4 +7,8 @@ IF "%browser%"=="" (
 	EXIT /b 1
 )
 
-for /F "tokens=*" %%A in (websites.txt) do ping 127.0.0.1 -n 1 -w 100 > nul && start %browser% %%A
+SET "urls="
+
+FOR /F "tokens=*" %%A IN (websites.txt) DO CALL SET "urls=%%urls%% %%A"
+
+START %browser% %urls%
