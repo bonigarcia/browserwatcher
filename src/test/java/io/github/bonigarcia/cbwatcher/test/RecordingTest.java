@@ -36,7 +36,7 @@ class RecordingTest extends BrowserParentTest {
     @ParameterizedTest
     @EnumSource(names = { "CHROME" })
     void webRtcTest(DriverManagerType browserType) throws Exception {
-        driver.get("https://www.eldiario.es/");
+        driver.get("https://bonigarcia.dev/selenium-webdriver-java/");
 
         startRecording();
         waitSeconds(TEST_TIME_SEC);
