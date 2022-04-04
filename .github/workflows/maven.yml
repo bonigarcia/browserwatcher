@@ -39,4 +39,4 @@ jobs:
       with:
         name: webm-files
         path: |
-          **/*.webm
+          /home/runner/Downloads/*.webm
