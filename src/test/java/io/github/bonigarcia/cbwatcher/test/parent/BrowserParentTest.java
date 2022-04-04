@@ -145,9 +145,10 @@ public class BrowserParentTest {
                         + "    javascript: \"" + jsCode + ";\"" + "}, \"*\");");
     }
 
-    public void startRecording() {
+    public void startRecording(String recordingName) {
         ((JavascriptExecutor) driver).executeScript(
-                "window.postMessage({ type: \"startRecording\" });");
+                "window.postMessage({ type: \"startRecording\", name: \""
+                        + recordingName + "\" });");
     }
 
     public void stopRecording() {

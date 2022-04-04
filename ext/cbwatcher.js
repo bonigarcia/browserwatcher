@@ -103,7 +103,7 @@ window.addEventListener("message", function(event) {
         injectJsLibs(event.data.javascript);
     }
     else if (event.source == window && event.data.type == "startRecording") {
-        chrome.runtime.sendMessage({ type: "start-recording" });
+        chrome.runtime.sendMessage({ type: "start-recording", name : event.data.name });
     }
     else if (event.source == window && event.data.type == "stopRecording") {
         chrome.runtime.sendMessage({ type: "stop-recording" });

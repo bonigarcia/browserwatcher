@@ -16,8 +16,17 @@
  */
 package io.github.bonigarcia.cbwatcher.test;
 
+import static java.lang.invoke.MethodHandles.lookup;
+import static org.junit.jupiter.api.Assertions.fail;
+import static org.slf4j.LoggerFactory.getLogger;
+
+import java.io.File;
+import java.util.concurrent.TimeUnit;
+
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
+import org.slf4j.Logger;
 
 import io.github.bonigarcia.cbwatcher.test.parent.BrowserParentTest;
 import io.github.bonigarcia.wdm.config.DriverManagerType;
@@ -30,20 +39,44 @@ import io.github.bonigarcia.wdm.config.DriverManagerType;
  */
 class RecordingTest extends BrowserParentTest {
 
+    static final Logger log = getLogger(lookup().lookupClass());
+
     static final int TEST_TIME_SEC = 10;
     static final int REC_TIME_SEC = 10;
+    static final int POLL_TIME_MSEC = 100;
+    static final String REC_FILENAME = "recTest";
+    static final String REC_EXT = ".webm";
+
+    File targetFolder;
+
+    @BeforeEach
+    void setup() {
+        targetFolder = new File(System.getProperty("user.home"), "Downloads");
+    }
 
     @ParameterizedTest
     @EnumSource(names = { "CHROME" })
-    void webRtcTest(DriverManagerType browserType) throws Exception {
+    void recTest(DriverManagerType browserType) throws Exception {
         driver.get("https://bonigarcia.dev/selenium-webdriver-java/");
 
-        startRecording();
+        startRecording(REC_FILENAME);
         waitSeconds(TEST_TIME_SEC);
         stopRecording();
-        waitSeconds(REC_TIME_SEC);
 
-        // TODO: assert recording
+        long timeoutMs = System.currentTimeMillis()
+                + TimeUnit.SECONDS.toMillis(REC_TIME_SEC);
+
+        File recFile;
+        do {
+            recFile = new File(targetFolder, REC_FILENAME + REC_EXT);
+            if (System.currentTimeMillis() > timeoutMs) {
+                fail("Timeout of " + REC_TIME_SEC + "s waiting for recording");
+            }
+            Thread.sleep(POLL_TIME_MSEC);
+
+        } while (!recFile.exists());
+
+        log.debug("Recording available at {}", recFile);
     }
 
 }

@@ -4,6 +4,7 @@ const defaultWidth = 1920;
 const detaultHeight = 1080;
 const recordingMimeType = "video/webm;codecs=vp8,opus";
 const recordingPrefix = "-browser-recording.webm";
+const recordingExtension = ".webm";
 const normalLogo = "../icons/cbwatcher-logo.png";
 const recorderLogo = "../icons/cbwatcher-logo-rec.png";
 
@@ -13,7 +14,7 @@ var isRecording = false;
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
         if (request.type == "start-recording") {
-            startRecording();
+            startRecording(request.name);
         }
         else if (request.type == "stop-recording") {
             stopRecording();
@@ -28,7 +29,7 @@ chrome.commands.onCommand.addListener(function(command) {
     }
 });
 
-function startRecording() {
+function startRecording(recordingName) {
     let width = defaultWidth;
     let height = detaultHeight;
 
@@ -66,7 +67,8 @@ function startRecording() {
                 transform: (chunk, ctrl) => chunk.arrayBuffer().then(b => ctrl.enqueue(new Uint8Array(b)))
             })
             const writer = writable.getWriter()
-            readable.pipeTo(window.streamSaver.createWriteStream(getDateString() + recordingPrefix));
+            let recName = recordingName ? recordingName : getDateString() + recordingPrefix;
+            readable.pipeTo(window.streamSaver.createWriteStream(recName + recordingExtension));
 
             // Record tab stream
             var recordedBlobs = [];
