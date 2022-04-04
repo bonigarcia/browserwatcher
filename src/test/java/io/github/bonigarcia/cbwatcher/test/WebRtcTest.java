@@ -18,6 +18,7 @@ package io.github.bonigarcia.cbwatcher.test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.openqa.selenium.By;
@@ -34,6 +35,11 @@ import io.github.bonigarcia.wdm.config.DriverManagerType;
 public class WebRtcTest extends BrowserParentTest {
 
     static final int TEST_TIME_SEC = 10;
+
+    @BeforeAll
+    public static void setup() {
+        isWebRtc = true;
+    }
 
     @ParameterizedTest
     @EnumSource(names = { "CHROME" })

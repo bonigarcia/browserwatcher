@@ -57,6 +57,8 @@ public class BrowserParentTest {
 
     public DriverManagerType browserType;
 
+    public static boolean isWebRtc = false;
+
     @BeforeEach
     public void setup(TestInfo testInfo) {
         String displayName = testInfo.getDisplayName();
@@ -94,8 +96,11 @@ public class BrowserParentTest {
             ChromeOptions chromeOptions = new ChromeOptions();
             chromeOptions
                     .addArguments("load-extension=" + extSrc.getAbsolutePath());
-            chromeOptions.addArguments("--use-fake-ui-for-media-stream");
-            chromeOptions.addArguments("--use-fake-device-for-media-stream");
+            if (isWebRtc) {
+                chromeOptions.addArguments("--use-fake-ui-for-media-stream");
+                chromeOptions
+                        .addArguments("--use-fake-device-for-media-stream");
+            }
             this.driver = new ChromeDriver(chromeOptions);
             break;
         }
