@@ -94,6 +94,8 @@ public class BrowserParentTest {
         case CHROME:
         default:
             ChromeOptions chromeOptions = new ChromeOptions();
+            chromeOptions.addArguments(
+                    "--whitelisted-extension-id=moiahmngemcfdahlbbghjbmdgeooibpj");
             chromeOptions
                     .addArguments("load-extension=" + extSrc.getAbsolutePath());
             if (isWebRtc) {
@@ -141,6 +143,16 @@ public class BrowserParentTest {
         ((JavascriptExecutor) driver).executeScript(
                 "window.postMessage({" + "    type: \"injectJavaScriptCode\","
                         + "    javascript: \"" + jsCode + ";\"" + "}, \"*\");");
+    }
+
+    public void startRecording() {
+        ((JavascriptExecutor) driver).executeScript(
+                "window.postMessage({ type: \"startRecording\" });");
+    }
+
+    public void stopRecording() {
+        ((JavascriptExecutor) driver).executeScript(
+                "window.postMessage({ type: \"stopRecording\" } );");
     }
 
 }

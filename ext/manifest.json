@@ -8,7 +8,7 @@
         "80": "icons/cbwatcher-logo.png"
     },
     "permissions": [
-        "storage", "tabCapture", "downloads", "downloads.shelf"
+        "storage", "tabCapture", "tabs", "activeTab", "downloads", "downloads.shelf"
     ],
     "options_ui": {
         "page": "options.html"

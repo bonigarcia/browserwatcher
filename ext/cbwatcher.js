@@ -99,13 +99,18 @@ window.addEventListener("message", function(event) {
     if (event.source == window && event.data.type == "injectJavaScriptCode") {
         injectJsCode(event.data.javascript);
     }
-});
-
-window.addEventListener("message", function(event) {
-    if (event.source == window && event.data.type == "injectJavaScriptLibs") {
+    else if (event.source == window && event.data.type == "injectJavaScriptLibs") {
         injectJsLibs(event.data.javascript);
     }
+    else if (event.source == window && event.data.type == "startRecording") {
+        chrome.runtime.sendMessage({ type: "start-recording" });
+    }
+    else if (event.source == window && event.data.type == "stopRecording") {
+        chrome.runtime.sendMessage({ type: "stop-recording" });
+    }
 });
+
+
 
 function injectJsCode(code) {
     console.log("* * * Injecting custom JavaScript code * * *\n" + code);
@@ -127,3 +132,4 @@ function injectJsLibs(libs) {
         (document.head || document.documentElement).appendChild(s);
     });
 }
+

@@ -10,6 +10,16 @@ const recorderLogo = "../icons/cbwatcher-logo-rec.png";
 var mediaRecorder;
 var isRecording = false;
 
+chrome.runtime.onMessage.addListener(
+    function(request, sender, sendResponse) {
+        if (request.type == "start-recording") {
+            startRecording();
+        }
+        else if (request.type == "stop-recording") {
+            stopRecording();
+        }
+    });
+
 chrome.commands.onCommand.addListener(function(command) {
     if (command == "start") {
         startRecording();

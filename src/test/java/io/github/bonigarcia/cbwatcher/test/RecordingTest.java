@@ -16,10 +16,6 @@
  */
 package io.github.bonigarcia.cbwatcher.test;
 
-import java.awt.AWTException;
-import java.awt.Robot;
-import java.awt.event.KeyEvent;
-
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 
@@ -42,21 +38,12 @@ class RecordingTest extends BrowserParentTest {
     void webRtcTest(DriverManagerType browserType) throws Exception {
         driver.get("https://www.eldiario.es/");
 
-        sendAltKey(KeyEvent.VK_R);
+        startRecording();
         waitSeconds(TEST_TIME_SEC);
-        sendAltKey(KeyEvent.VK_W);
+        stopRecording();
         waitSeconds(REC_TIME_SEC);
 
         // TODO: assert recording
-    }
-
-    void sendAltKey(int key) throws AWTException {
-        Robot robot = new Robot();
-        int vkControl = KeyEvent.VK_ALT;
-        robot.keyPress(vkControl);
-        robot.keyPress(key);
-        robot.keyRelease(vkControl);
-        robot.keyRelease(key);
     }
 
 }
