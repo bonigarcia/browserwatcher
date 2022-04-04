@@ -5,7 +5,7 @@ const detaultHeight = 1080;
 const recordingMimeType = "video/webm;codecs=vp8,opus";
 const recordingPrefix = "-recording.webm";
 const normalLogo = "../icons/cbwatcher-logo.png";
-const recorderLogo = "../icons/record_icon.png";
+const recorderLogo = "../icons/cbwatcher-logo-rec.png";
 
 var mediaRecorder;
 var isRecording = false;
