@@ -95,7 +95,7 @@ public class BrowserParentTest {
         default:
             ChromeOptions chromeOptions = new ChromeOptions();
             chromeOptions.addArguments(
-                    "--whitelisted-extension-id=moiahmngemcfdahlbbghjbmdgeooibpj");
+                    "--whitelisted-extension-id=kbnnckbeejhjlljpgelfponodpecfapp");
             chromeOptions
                     .addArguments("load-extension=" + extSrc.getAbsolutePath());
             if (isWebRtc) {

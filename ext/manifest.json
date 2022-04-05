@@ -7,6 +7,7 @@
     "icons": {
         "80": "icons/cbwatcher-logo.png"
     },
+    "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsQMIzsxMT4o2oFbUAB/fOxPgkCFzxj6zh0Z/9+NO5lOmxwwC+4dGivHxWiflj9Js7sNz1sF/f561Tit+RBXEBAWxoaSTUX/IoGDZ0B23S6rev71KyM2eVykKfiUWgtXtRqYaXGGJ2xdp5DZXcZ5PDUCFkkouDbr/HiqK4TeGc7nfv8ogX55VtG8Ex/vXqQfEpZQtcJVsENLalEXjALYJGdZIHpdK5YUlXL430fW44Fmh9aX0i5OdUclWekByFIyhbYhONwquSmghN7VM35XQ68llCuNJQk7P43sQe79SIrR1AULM88Ksgx5vBKYl5i+KyiQtsZYCeFRuWSsOSm5ahQIDAQAB",
     "permissions": [
         "storage", "tabCapture", "tabs", "activeTab", "downloads", "downloads.shelf"
     ],
