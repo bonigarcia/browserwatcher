@@ -3,7 +3,7 @@ const recordingDelayMs = 1000;
 const defaultWidth = 1920;
 const detaultHeight = 1080;
 const recordingMimeType = "video/webm;codecs=vp8,opus";
-const recordingPrefix = "-browser-recording.webm";
+const recordingPrefix = "-browser-recording";
 const recordingExtension = ".webm";
 const normalLogo = "../icons/cbwatcher-logo.png";
 const recorderLogo = "../icons/cbwatcher-logo-rec.png";
