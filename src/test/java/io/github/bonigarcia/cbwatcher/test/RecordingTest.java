@@ -20,11 +20,15 @@ import static java.lang.invoke.MethodHandles.lookup;
 import static org.slf4j.LoggerFactory.getLogger;
 
 import java.io.File;
+import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
+import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 
 import io.github.bonigarcia.cbwatcher.test.parent.BrowserParentTest;
@@ -40,7 +44,6 @@ class RecordingTest extends BrowserParentTest {
 
     static final Logger log = getLogger(lookup().lookupClass());
 
-    static final int TEST_TIME_SEC = 10;
     static final int REC_TIME_SEC = 10;
     static final int POLL_TIME_MSEC = 100;
     static final String REC_FILENAME = "recTest";
@@ -54,12 +57,15 @@ class RecordingTest extends BrowserParentTest {
     }
 
     @ParameterizedTest
-    @EnumSource(names = { "CHROME" })
+    @EnumSource(names = { "CHROME", "EDGE" })
     void recTest(DriverManagerType browserType) throws Exception {
-        driver.get("https://bonigarcia.dev/selenium-webdriver-java/");
+        String recFilename = REC_FILENAME + "_" + browserType.getBrowserName();
 
-        startRecording(REC_FILENAME);
-        waitSeconds(TEST_TIME_SEC);
+        driver.get(
+                "https://bonigarcia.dev/selenium-webdriver-java/slow-calculator.html");
+
+        startRecording(recFilename);
+        exercise();
         stopRecording();
 
         long timeoutMs = System.currentTimeMillis()
@@ -67,7 +73,7 @@ class RecordingTest extends BrowserParentTest {
 
         File recFile;
         do {
-            recFile = new File(targetFolder, REC_FILENAME + REC_EXT);
+            recFile = new File(targetFolder, recFilename + REC_EXT);
             if (System.currentTimeMillis() > timeoutMs) {
                 log.error("Timeout of {} seconds waiting for recording",
                         REC_TIME_SEC);
@@ -80,6 +86,18 @@ class RecordingTest extends BrowserParentTest {
         if (recFile.exists()) {
             log.debug("Recording available at {}", recFile);
         }
+    }
+
+    void exercise() {
+        // 1 + 3
+        driver.findElement(By.xpath("//span[text()='1']")).click();
+        driver.findElement(By.xpath("//span[text()='+']")).click();
+        driver.findElement(By.xpath("//span[text()='3']")).click();
+        driver.findElement(By.xpath("//span[text()='=']")).click();
+
+        // ... should be 4, wait for it
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.textToBe(By.className("screen"), "4"));
     }
 
 }

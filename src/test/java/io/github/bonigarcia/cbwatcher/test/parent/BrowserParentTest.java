@@ -53,6 +53,8 @@ public class BrowserParentTest {
 
     static final Logger log = getLogger(lookup().lookupClass());
 
+    static final String EXTENSION_ID = "kbnnckbeejhjlljpgelfponodpecfapp";
+
     public WebDriver driver;
 
     public DriverManagerType browserType;
@@ -86,16 +88,20 @@ public class BrowserParentTest {
         case EDGE:
             EdgeOptions edgeOptions = new EdgeOptions();
             edgeOptions
+                    .addArguments("--whitelisted-extension-id=" + EXTENSION_ID);
+            edgeOptions
                     .addArguments("load-extension=" + extSrc.getAbsolutePath());
-            edgeOptions.addArguments("--use-fake-ui-for-media-stream");
-            edgeOptions.addArguments("--use-fake-device-for-media-stream");
+            if (isWebRtc) {
+                edgeOptions.addArguments("--use-fake-ui-for-media-stream");
+                edgeOptions.addArguments("--use-fake-device-for-media-stream");
+            }
             this.driver = new EdgeDriver(edgeOptions);
             break;
         case CHROME:
         default:
             ChromeOptions chromeOptions = new ChromeOptions();
-            chromeOptions.addArguments(
-                    "--whitelisted-extension-id=kbnnckbeejhjlljpgelfponodpecfapp");
+            chromeOptions
+                    .addArguments("--whitelisted-extension-id=" + EXTENSION_ID);
             chromeOptions
                     .addArguments("load-extension=" + extSrc.getAbsolutePath());
             if (isWebRtc) {
