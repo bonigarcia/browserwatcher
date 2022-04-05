@@ -17,7 +17,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ ubuntu-latest, windows-latest, macos-latest ]
+        os: [ windows-latest ]
         java: [ 11 ]
     steps:
     - uses: actions/checkout@v2
@@ -43,4 +43,4 @@ jobs:
       with:
         name: webm-files
         path: |
-          **/*.webm
+          C:\Users\runneradmin\Downloads\*.webm
