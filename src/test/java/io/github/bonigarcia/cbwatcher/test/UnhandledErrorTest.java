@@ -28,6 +28,8 @@ public class UnhandledErrorTest extends LocalHostParentTest {
     @EnumSource(names = { "CHROME", "FIREFOX" })
     public void unhandledErrorTest(DriverManagerType browserType) {
         openLocalHost("unhandled_error.html", 1);
+
+        waitSeconds(5);
     }
 
 }

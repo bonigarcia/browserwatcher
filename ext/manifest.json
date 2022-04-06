@@ -31,6 +31,9 @@
                 "<all_urls>"
             ],
             "run_at": "document_start",
+            "css": [
+                "css/growl.css"
+            ],
             "js": [
                 "cbwatcher.js"
             ]

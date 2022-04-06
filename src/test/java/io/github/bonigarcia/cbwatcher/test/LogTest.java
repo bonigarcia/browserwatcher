@@ -28,6 +28,8 @@ public class LogTest extends LocalHostParentTest {
     @EnumSource(names = { "CHROME", "FIREFOX" })
     public void logTest(DriverManagerType browserType) {
         openLocalHost("index.html", 11);
+
+        waitSeconds(5);
     }
 
 }
