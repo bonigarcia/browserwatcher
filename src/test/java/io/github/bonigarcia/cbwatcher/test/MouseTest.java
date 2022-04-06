@@ -16,7 +16,6 @@
  */
 package io.github.bonigarcia.cbwatcher.test;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.openqa.selenium.By;
@@ -27,11 +26,6 @@ import io.github.bonigarcia.cbwatcher.test.parent.BrowserParentTest;
 import io.github.bonigarcia.wdm.config.DriverManagerType;
 
 public class MouseTest extends BrowserParentTest {
-
-    @BeforeAll
-    public static void setup() {
-        isWebRtc = true;
-    }
 
     @ParameterizedTest
     @EnumSource(names = { "CHROME" })
