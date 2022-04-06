@@ -26,12 +26,6 @@ import org.openqa.selenium.By;
 import io.github.bonigarcia.cbwatcher.test.parent.BrowserParentTest;
 import io.github.bonigarcia.wdm.config.DriverManagerType;
 
-/**
- * WebRTC test.
- *
- * @author Boni Garcia
- * @since 1.0.0
- */
 public class WebRtcTest extends BrowserParentTest {
 
     static final int TEST_TIME_SEC = 10;

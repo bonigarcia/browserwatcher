@@ -43,12 +43,6 @@ import org.slf4j.Logger;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.github.bonigarcia.wdm.config.DriverManagerType;
 
-/**
- * Parent for tests using a spring-boot web application.
- *
- * @author Boni Garcia
- * @since 1.0.0
- */
 public class BrowserParentTest {
 
     static final Logger log = getLogger(lookup().lookupClass());

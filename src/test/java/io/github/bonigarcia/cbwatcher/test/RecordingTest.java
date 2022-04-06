@@ -34,12 +34,6 @@ import org.slf4j.Logger;
 import io.github.bonigarcia.cbwatcher.test.parent.BrowserParentTest;
 import io.github.bonigarcia.wdm.config.DriverManagerType;
 
-/**
- * Recording test.
- *
- * @author Boni Garcia
- * @since 1.0.0
- */
 class RecordingTest extends BrowserParentTest {
 
     static final Logger log = getLogger(lookup().lookupClass());

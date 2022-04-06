@@ -22,12 +22,6 @@ import org.junit.jupiter.params.provider.EnumSource;
 import io.github.bonigarcia.cbwatcher.test.parent.LocalHostParentTest;
 import io.github.bonigarcia.wdm.config.DriverManagerType;
 
-/**
- * Test log messages.
- *
- * @author Boni Garcia
- * @since 1.0.0
- */
 public class LogTest extends LocalHostParentTest {
 
     @ParameterizedTest

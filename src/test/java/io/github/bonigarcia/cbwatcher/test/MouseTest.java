@@ -26,12 +26,6 @@ import org.openqa.selenium.interactions.Actions;
 import io.github.bonigarcia.cbwatcher.test.parent.BrowserParentTest;
 import io.github.bonigarcia.wdm.config.DriverManagerType;
 
-/**
- * Mouse test.
- *
- * @author Boni Garcia
- * @since 1.0.0
- */
 public class MouseTest extends BrowserParentTest {
 
     @BeforeAll

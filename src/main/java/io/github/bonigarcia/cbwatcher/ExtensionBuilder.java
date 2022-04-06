@@ -29,12 +29,6 @@ import java.util.zip.ZipOutputStream;
 
 import org.slf4j.Logger;
 
-/**
- * Cross Browser Watcher extension builder (typically XPI or CRC file).
- *
- * @author Boni Garcia
- * @since 1.0.0
- */
 public class ExtensionBuilder {
 
     static final Logger log = getLogger(lookup().lookupClass());

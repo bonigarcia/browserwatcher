@@ -22,12 +22,6 @@ import org.junit.jupiter.params.provider.EnumSource;
 import io.github.bonigarcia.cbwatcher.test.parent.LocalHostParentTest;
 import io.github.bonigarcia.wdm.config.DriverManagerType;
 
-/**
- * Test unhandled errors.
- *
- * @author Boni Garcia
- * @since 1.0.0
- */
 public class UnhandledErrorTest extends LocalHostParentTest {
 
     @ParameterizedTest
