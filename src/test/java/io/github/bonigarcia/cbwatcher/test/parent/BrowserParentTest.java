@@ -151,6 +151,28 @@ public class BrowserParentTest {
                         + "    javascript: \"" + jsCode + ";\"" + "}, \"*\");");
     }
 
+    public void injectJavaScriptLibs(List<String> jsLibs) {
+        String libs = String.join("\r\n", jsLibs);
+        injectJavaScriptLib(libs);
+    }
+
+    public void injectJavaScriptLib(String jsLib) {
+        ((JavascriptExecutor) driver).executeScript(
+                "window.postMessage({" + "    type: \"injectJavaScriptLibs\","
+                        + "    javascript: \"" + jsLib + "\"" + "} );");
+    }
+
+    public void injectCssSheets(List<String> cssSheets) {
+        String css = String.join("\r\n", cssSheets);
+        injectCssSheet(css);
+    }
+
+    public void injectCssSheet(String cssSheet) {
+        ((JavascriptExecutor) driver).executeScript(
+                "window.postMessage({" + "    type: \"injectCssSheets\","
+                        + "    css: \"" + cssSheet + "\"" + "} );");
+    }
+
     public void startRecording(String recordingName) {
         ((JavascriptExecutor) driver).executeScript(
                 "window.postMessage({ type: \"startRecording\", name: \""

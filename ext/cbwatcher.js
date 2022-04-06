@@ -83,44 +83,44 @@ chrome.storage.sync.get("_cbwatcherLogGathering", function(data) {
     }
 });
 
-chrome.storage.sync.get("_cbwatcherJavaScriptCode", function(data) {
-    if (data["_cbwatcherJavaScriptCode"]) {
-        injectJsCode(data["_cbwatcherJavaScriptCode"]);
-    }
-});
-
 chrome.storage.sync.get("_cbwatcherJavaScriptLibs", function(data) {
     if (data["_cbwatcherJavaScriptLibs"]) {
         injectJsLibs(data["_cbwatcherJavaScriptLibs"]);
     }
 });
 
-window.addEventListener("message", function(event) {
-    if (event.source == window && event.data.type == "injectJavaScriptCode") {
-        injectJsCode(event.data.javascript);
+chrome.storage.sync.get("_cbwatcherInjectCssShets", function(data) {
+    if (data["_cbwatcherInjectCssShets"]) {
+        injectCssSheets(data["_cbwatcherInjectCssSheets"]);
     }
-    else if (event.source == window && event.data.type == "injectJavaScriptLibs") {
+});
+
+chrome.storage.sync.get("_cbwatcherJavaScriptCode", function(data) {
+    if (data["_cbwatcherJavaScriptCode"]) {
+        injectJsCode(data["_cbwatcherJavaScriptCode"]);
+    }
+});
+
+window.addEventListener("message", function(event) {
+    if (event.source == window && event.data.type == "injectJavaScriptLibs") {
         injectJsLibs(event.data.javascript);
     }
+    else if (event.source == window && event.data.type == "injectCssSheets") {
+        injectCssSheets(event.data.css);
+    }
+    else if (event.source == window && event.data.type == "injectJavaScriptCode") {
+        injectJsCode(event.data.javascript);
+    }
     else if (event.source == window && event.data.type == "startRecording") {
-        chrome.runtime.sendMessage({ type: "start-recording", name : event.data.name });
+        chrome.runtime.sendMessage({ type: "start-recording", name: event.data.name });
     }
     else if (event.source == window && event.data.type == "stopRecording") {
         chrome.runtime.sendMessage({ type: "stop-recording" });
     }
 });
 
-
-
-function injectJsCode(code) {
-    console.log("* * * Injecting custom JavaScript code * * *\n" + code);
-    let injectJsScript = document.createElement("script");
-    injectJsScript.textContent = code;
-    (document.head || document.documentElement).appendChild(injectJsScript);
-}
-
 function injectJsLibs(libs) {
-    console.log("* * * Injecting custom JavaScript libraries * * * " + libs);
+    console.log("* * * Injecting JavaScript libraries * * *");
     let arrayOfLibs = libs.split(/[\r\n]+/g);
     arrayOfLibs.forEach(function(lib) {
         console.log("Injecting: " + lib);
@@ -131,5 +131,24 @@ function injectJsLibs(libs) {
         };
         (document.head || document.documentElement).appendChild(s);
     });
+}
+
+function injectCssSheets(cssSheets) {
+    console.log("* * * Injecting custom CSS sheets * * *");
+    let array = cssSheets.split(/[\r\n]+/g);
+    array.forEach(function(css) {
+        console.log("Injecting: " + css);
+        var l = document.createElement("link");
+        l.rel = "stylesheet";
+        l.href = css;
+        (document.head || document.documentElement).appendChild(l);
+    });
+}
+
+function injectJsCode(code) {
+    console.log("* * * Injecting custom JavaScript code * * *\n" + code);
+    let injectJsScript = document.createElement("script");
+    injectJsScript.textContent = code;
+    (document.head || document.documentElement).appendChild(injectJsScript);
 }
 
