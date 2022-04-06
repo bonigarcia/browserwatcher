@@ -146,8 +146,7 @@ public class BrowserParentTest {
     }
 
     public void injectJavaScriptLibs(List<String> jsLibs) {
-        String libs = String.join("\r\n", jsLibs);
-        injectJavaScriptLib(libs);
+        jsLibs.stream().forEach(this::injectJavaScriptLib);
     }
 
     public void injectJavaScriptLib(String jsLib) {
@@ -157,8 +156,7 @@ public class BrowserParentTest {
     }
 
     public void injectCssSheets(List<String> cssSheets) {
-        String css = String.join("\r\n", cssSheets);
-        injectCssSheet(css);
+        cssSheets.stream().forEach(this::injectCssSheet);
     }
 
     public void injectCssSheet(String cssSheet) {

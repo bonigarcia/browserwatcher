@@ -16,6 +16,9 @@
  */
 package io.github.bonigarcia.cbwatcher.test;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 
@@ -31,8 +34,10 @@ public class GrowlTest extends BrowserParentTest {
     public void webRtcTest(DriverManagerType browserType) {
         driver.get("https://bonigarcia.dev/selenium-webdriver-java/");
 
-        injectJavaScriptLib(
+        List<String> jsLibs = Arrays.asList(
+                "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js",
                 "https://ksylvest.github.io/jquery-growl/javascripts/jquery.growl.js");
+        injectJavaScriptLibs(jsLibs);
         injectCssSheet(
                 "https://ksylvest.github.io/jquery-growl/stylesheets/jquery.growl.css");
         injectJavaScriptCode("setTimeout(()=>{"
