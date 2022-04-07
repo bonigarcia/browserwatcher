@@ -4,10 +4,11 @@
 
 # Cross Browser Watcher [![][Logo]][GitHub Repository]
 
-*Cross Browser Watcher* is a [browser extension] aimed to monitor web browsers such as Chrome, Firefox, Opera, Edge. Its main features are:
+*Cross Browser Watcher* is a [browser extension] aimed to monitor web browsers such as Chrome, Firefox, or Edge. Its main features are:
 
 * Console log gathering.
-* JavaScript monkey patching capabilities.
+* Browser recording.
+* JavaScript and CSS injection.
 
 ## About
 
