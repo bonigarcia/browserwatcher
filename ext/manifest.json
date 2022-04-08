@@ -5,26 +5,16 @@
     "version": "1.0.0",
     "homepage_url": "https://github.com/bonigarcia/cbwatcher",
     "icons": {
-        "80": "icons/cbwatcher-logo.png"
+        "80": "img/browserwatcher-80.png"
     },
     "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsQMIzsxMT4o2oFbUAB/fOxPgkCFzxj6zh0Z/9+NO5lOmxwwC+4dGivHxWiflj9Js7sNz1sF/f561Tit+RBXEBAWxoaSTUX/IoGDZ0B23S6rev71KyM2eVykKfiUWgtXtRqYaXGGJ2xdp5DZXcZ5PDUCFkkouDbr/HiqK4TeGc7nfv8ogX55VtG8Ex/vXqQfEpZQtcJVsENLalEXjALYJGdZIHpdK5YUlXL430fW44Fmh9aX0i5OdUclWekByFIyhbYhONwquSmghN7VM35XQ68llCuNJQk7P43sQe79SIrR1AULM88Ksgx5vBKYl5i+KyiQtsZYCeFRuWSsOSm5ahQIDAQAB",
     "permissions": [
         "storage", "tabCapture", "tabs", "activeTab", "downloads", "downloads.shelf"
     ],
     "options_ui": {
-        "page": "options.html"
+        "page": "html/options.html"
     },
     "content_security_policy": "script-src 'self' 'unsafe-eval' 'unsafe-inline'; object-src 'self'",
-    "background": {
-        "scripts": ["lib/ponyfill.min.js", "lib/StreamSaver.min.js", "background.js"],
-        "persistent": false
-    },
-    "browser_action": {
-       "default_icon": "icons/cbwatcher-logo.png"
-    },
-    "web_accessible_resources": [
-       "icons/*"
-    ],
     "content_scripts": [
         {
             "matches": [
@@ -35,9 +25,20 @@
                 "css/growl.css"
             ],
             "js": [
-                "cbwatcher.js"
+                "content.js"
             ]
         }
+    ],
+    "background": {
+        "scripts": ["js/ponyfill.min.js", "js/StreamSaver.min.js", "js/background.js"],
+        "persistent": false
+    },
+    "browser_action": {
+       "default_icon": "img/browserwatcher-80.png",
+       "default_popup": "html/popup.html"
+    },
+    "web_accessible_resources": [
+       "img/*", "js/*", "css/*"
     ],
     "commands": {
       "start": {

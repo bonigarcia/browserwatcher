@@ -118,7 +118,7 @@ public class BrowserParentTest {
     @SuppressWarnings("unchecked")
     public List<Map<String, Object>> readLogs() {
         List<Map<String, Object>> logMessages = (List<Map<String, Object>>) readJavaScriptVariable(
-                "console._cbwatcherLogs");
+                "console._bwLogs");
         return logMessages;
     }
 
@@ -142,7 +142,7 @@ public class BrowserParentTest {
     public void injectJavaScriptCode(String jsCode) {
         ((JavascriptExecutor) driver).executeScript(
                 "window.postMessage({" + "    type: \"injectJavaScriptCode\","
-                        + "    javascript: \"" + jsCode + ";\"" + "}, \"*\");");
+                        + "    js: \"" + jsCode + ";\"" + "}, \"*\");");
     }
 
     public void injectJavaScriptLibs(List<String> jsLibs) {
@@ -152,7 +152,7 @@ public class BrowserParentTest {
     public void injectJavaScriptLib(String jsLib) {
         ((JavascriptExecutor) driver).executeScript(
                 "window.postMessage({" + "    type: \"injectJavaScriptLibs\","
-                        + "    javascript: \"" + jsLib + "\"" + "} );");
+                        + "    lib: \"" + jsLib + "\"" + "} );");
     }
 
     public void injectCssSheets(List<String> cssSheets) {

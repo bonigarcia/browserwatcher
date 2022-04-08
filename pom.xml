@@ -16,7 +16,7 @@
 
     <properties>
         <selenium.version>4.1.3</selenium.version>
-        <wdm.version>5.1.0</wdm.version>
+        <wdm.version>5.1.1</wdm.version>
 
         <java.version>1.8</java.version>
         <maven.compiler.target>${java.version}</maven.compiler.target>

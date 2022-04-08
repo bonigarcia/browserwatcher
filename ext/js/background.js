@@ -5,8 +5,8 @@ const detaultHeight = 1080;
 const recordingMimeType = "video/webm;codecs=vp8,opus";
 const recordingPrefix = "-browser-recording";
 const recordingExtension = ".webm";
-const normalLogo = "../icons/cbwatcher-logo.png";
-const recorderLogo = "../icons/cbwatcher-logo-rec.png";
+const normalLogo = "../img/browserwatcher-80.png";
+const recorderLogo = "../img/browserwatcher-rec-80.png";
 
 var mediaRecorder;
 var isRecording = false;
@@ -18,6 +18,9 @@ chrome.runtime.onMessage.addListener(
         }
         else if (request.type == "stop-recording") {
             stopRecording();
+        }
+        else if (request.type == "inject-js-code") {
+            injectCode(request.code);
         }
     });
 
@@ -106,7 +109,7 @@ function startRecording(recordingName) {
 
     waitRecording(() => {
         if (!isRecording) {
-            mediaRecorder.start(1000);
+            mediaRecorder.start(recordingDelayMs);
             isRecording = true;
         }
     });
@@ -135,4 +138,26 @@ function getDateString() {
 
 function pad(date) {
     return `${date}`.padStart(2, '0');
+}
+
+function injectLib(lib) {
+    chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+        console.log("* * * Injecting JavaScript library * * *\n" + lib);
+        chrome.tabs.executeScript(tabs[0].id, { file: lib });
+    });
+}
+
+
+function injectCss(css) {
+    chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+        console.log("* * * Injecting CSS * * *\n" + css);
+        chrome.tabs.insertCSS(tabs[0].id, { file: css });
+    });
+}
+
+function injectCode(js) {
+    chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+        console.log("* * * Injecting JavaScript code * * *\n" + js);
+        chrome.tabs.executeScript(tabs[0].id, { code: js });
+    });
 }
