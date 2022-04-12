@@ -2,7 +2,7 @@
 [![License badge](https://img.shields.io/badge/license-Apache2-green.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 [![Twitter Follow](https://img.shields.io/twitter/follow/boni_gg.svg?style=social)](https://twitter.com/boni_gg)
 
-# Browser Watcher [![][Logo]][GitHub Repository]
+# [![][Logo]][GitHub Repository]
 
 *Browser Watcher* is a [browser extension] aimed to monitor web browsers such as Chrome, Firefox, or Edge. Its main features are:
 
