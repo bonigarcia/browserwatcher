@@ -349,43 +349,41 @@ let restoreLogCode = "(" + function() {
     delete console._bwLogs;
 } + ")();";
 
-chrome.storage.sync.get("_cbwatcherLogGathering", function(data) {
-    if (data["_cbwatcherLogGathering"] && data["_cbwatcherLogGathering"] == "false") {
+chrome.storage.sync.get("_bwLogGathering", function(data) {
+    if (data["_bwLogGathering"] && data["_bwLogGathering"] == "false") {
         let restoreLogScript = document.createElement("script");
         restoreLogScript.textContent = restoreLogCode;
         (document.head || document.documentElement).appendChild(restoreLogScript);
     }
 });
 
-/*
-chrome.storage.sync.get("_cbwatcherJavaScriptLibs", function(data) {
-    if (data["_cbwatcherJavaScriptLibs"]) {
-        injectJsLibs(data["_cbwatcherJavaScriptLibs"]);
+chrome.storage.sync.get("_bwJavaScriptLibs", function(data) {
+    if (data["_bwJavaScriptLibs"]) {
+        injectJsLibs(data["_bwJavaScriptLibs"]);
     }
 });
 
-chrome.storage.sync.get("_cbwatcherInjectCssShets", function(data) {
-    if (data["_cbwatcherInjectCssShets"]) {
-        injectCssSheets(data["_cbwatcherInjectCssSheets"]);
+chrome.storage.sync.get("_bwInjectCssShets", function(data) {
+    if (data["_bwInjectCssShets"]) {
+        injectCssSheets(data["_bwInjectCssSheets"]);
     }
 });
 
-chrome.storage.sync.get("_cbwatcherJavaScriptCode", function(data) {
-    if (data["_cbwatcherJavaScriptCode"]) {
-        injectJsCode(data["_cbwatcherJavaScriptCode"]);
+chrome.storage.sync.get("_bwJavaScriptCode", function(data) {
+    if (data["_bwJavaScriptCode"]) {
+        injectJsCode(data["_bwJavaScriptCode"]);
     }
 });
-*/
 
 window.addEventListener("message", function(event) {
     if (event.source == window && event.data.type == "injectJavaScriptLibs") {
-        chrome.runtime.sendMessage({ type: "inject-js-lib", libs: event.data.lib });
+        injectJsLibs(event.data.lib);
     }
     else if (event.source == window && event.data.type == "injectCssSheets") {
-        chrome.runtime.sendMessage({ type: "inject-css", css: event.data.css });
+         injectCssSheets(event.data.css);
     }
     else if (event.source == window && event.data.type == "injectJavaScriptCode") {
-        chrome.runtime.sendMessage({ type: "inject-js-code", javascript: event.data.js });
+        injectJsCode(event.data.js);
     }
     else if (event.source == window && event.data.type == "startRecording") {
         chrome.runtime.sendMessage({ type: "start-recording", name: event.data.name });
@@ -397,3 +395,35 @@ window.addEventListener("message", function(event) {
 
 
 
+function injectJsLibs(libs) {
+    console.log("* * * Injecting JavaScript libraries * * *");
+    let arrayOfLibs = libs.split(/[\r\n]+/g);
+    arrayOfLibs.forEach(function(lib) {
+        console.log("Injecting: " + lib);
+        var s = document.createElement("script");
+        s.src = lib;
+        s.onload = function() {
+            this.remove();
+        };
+        (document.head || document.documentElement).appendChild(s);
+    });
+}
+
+function injectCssSheets(cssSheets) {
+    console.log("* * * Injecting custom CSS sheets * * *");
+    let array = cssSheets.split(/[\r\n]+/g);
+    array.forEach(function(css) {
+        console.log("Injecting: " + css);
+        var l = document.createElement("link");
+        l.rel = "stylesheet";
+        l.href = css;
+        (document.head || document.documentElement).appendChild(l);
+    });
+}
+
+function injectJsCode(code) {
+    console.log("* * * Injecting custom JavaScript code * * *\n" + code);
+    let injectJsScript = document.createElement("script");
+    injectJsScript.textContent = code;
+    (document.head || document.documentElement).appendChild(injectJsScript);
+}

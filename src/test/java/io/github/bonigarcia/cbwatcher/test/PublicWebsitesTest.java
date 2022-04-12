@@ -70,8 +70,9 @@ class PublicWebsitesTest extends BrowserParentTest {
     }
 
     static Stream<Arguments> provider() {
-        List<DriverManagerType> browsers = Arrays
-                .asList(DriverManagerType.CHROME);
+        List<DriverManagerType> browsers = Arrays.asList(
+                DriverManagerType.CHROME, DriverManagerType.FIREFOX,
+                DriverManagerType.EDGE);
         List<String> websites = getUrlsFromFile("websites-mini.txt");
         List<Arguments> cartesianProduct = new ArrayList<>();
 
