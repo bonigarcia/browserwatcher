@@ -14,7 +14,7 @@
  * limitations under the License.
  *
  */
-package io.github.bonigarcia.cbwatcher.test;
+package io.github.bonigarcia.browserwatcher.test;
 
 import java.util.Arrays;
 import java.util.List;
@@ -22,7 +22,7 @@ import java.util.List;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 
-import io.github.bonigarcia.cbwatcher.test.parent.BrowserParentTest;
+import io.github.bonigarcia.browserwatcher.test.parent.BrowserParentTest;
 import io.github.bonigarcia.wdm.config.DriverManagerType;
 
 public class GrowlTest extends BrowserParentTest {

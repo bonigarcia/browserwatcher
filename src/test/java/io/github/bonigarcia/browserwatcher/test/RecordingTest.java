@@ -14,7 +14,7 @@
  * limitations under the License.
  *
  */
-package io.github.bonigarcia.cbwatcher.test;
+package io.github.bonigarcia.browserwatcher.test;
 
 import static java.lang.invoke.MethodHandles.lookup;
 import static org.slf4j.LoggerFactory.getLogger;
@@ -31,7 +31,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 
-import io.github.bonigarcia.cbwatcher.test.parent.BrowserParentTest;
+import io.github.bonigarcia.browserwatcher.test.parent.BrowserParentTest;
 import io.github.bonigarcia.wdm.config.DriverManagerType;
 
 class RecordingTest extends BrowserParentTest {

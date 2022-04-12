@@ -14,7 +14,7 @@
  * limitations under the License.
  *
  */
-package io.github.bonigarcia.cbwatcher.test.parent;
+package io.github.bonigarcia.browserwatcher.test.parent;
 
 import static io.github.bonigarcia.wdm.WebDriverManager.zipFolder;
 import static java.lang.Thread.sleep;
