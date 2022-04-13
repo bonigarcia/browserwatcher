@@ -16,6 +16,9 @@
  */
 package io.github.bonigarcia.browserwatcher.test;
 
+import static io.github.bonigarcia.wdm.config.DriverManagerType.CHROME;
+import static io.github.bonigarcia.wdm.config.DriverManagerType.EDGE;
+import static io.github.bonigarcia.wdm.config.DriverManagerType.FIREFOX;
 import static java.lang.invoke.MethodHandles.lookup;
 import static org.slf4j.LoggerFactory.getLogger;
 
@@ -70,8 +73,7 @@ class PublicWebsitesTest extends BrowserParentTest {
     }
 
     static Stream<Arguments> provider() {
-        List<DriverManagerType> browsers = Arrays
-                .asList(DriverManagerType.CHROME);
+        List<DriverManagerType> browsers = Arrays.asList(CHROME, FIREFOX, EDGE);
         List<String> websites = getUrlsFromFile("websites-mini.txt");
         List<Arguments> cartesianProduct = new ArrayList<>();
 
