@@ -25,12 +25,12 @@
                 "css/growl.css"
             ],
             "js": [
-                "content.js"
+                "js/content.js"
             ]
         }
     ],
     "background": {
-        "scripts": ["js/ponyfill.min.js", "js/StreamSaver.min.js", "js/background.js"],
+        "scripts": ["js/background.js", "js/ponyfill.min.js", "js/StreamSaver.min.js"],
         "persistent": false
     },
     "browser_action": {
