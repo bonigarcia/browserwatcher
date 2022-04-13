@@ -55,8 +55,6 @@ function startRecording(recordingName) {
                 },
             },
         }, function(stream) {
-            chrome.browserAction.setIcon({ path: recorderLogo });
-
             let mediaConstraints = {
                 mimeType: recordingMimeType
             }
@@ -85,6 +83,7 @@ function startRecording(recordingName) {
             // On recording stopped
             mediaRecorder.onstop = () => {
                 chrome.browserAction.setIcon({ path: normalLogo });
+                chrome.storage.sync.set({ _browserWatcherRecording: "false" });
 
                 // Stop streams
                 stream.getTracks().forEach(function(track) {
@@ -104,6 +103,9 @@ function startRecording(recordingName) {
             stream.getVideoTracks()[0].onended = function() {
                 mediaRecorder.stop();
             }
+
+            chrome.browserAction.setIcon({ path: recorderLogo });
+            chrome.storage.sync.set({ _browserWatcherRecording: "true" });
         });
     });
 

@@ -21,7 +21,6 @@ $(document).ready(function() {
         }
     })
 
-
     chrome.storage.sync.get("_browserWatcherGrowl", function(data) {
         let toggle = data["_browserWatcherGrowl"] && data["_browserWatcherGrowl"] == "true";
         $('#growl').prop("checked", toggle);
@@ -42,7 +41,6 @@ $(document).ready(function() {
             });
         }
     })
-
 
     chrome.storage.sync.get("_browserWatcherRecording", function(data) {
         let toggle = data["_browserWatcherRecording"] && data["_browserWatcherRecording"] == "true";
