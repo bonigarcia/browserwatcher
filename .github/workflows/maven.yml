@@ -37,9 +37,13 @@ jobs:
         sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/edge stable main" > /etc/apt/sources.list.d/microsoft-edge-dev.list'
         sudo rm microsoft.gpg
         sudo apt update && sudo apt install microsoft-edge-stable
-    - name: Test with Maven
+    - name: Run tests on Linux and Mac
+      if: matrix.os != 'windows-latest'
       run: mvn -B test
-    - name: Store recordings
+    - name: Run recording test on Windows
+      if: matrix.os == 'windows-latest'
+      run: mvn -B test -Dtest=RecordingTest
+    - name: Store recordings on Windows
       if: always() && matrix.os == 'windows-latest'
       uses: actions/upload-artifact@v3
       with:
