@@ -17,6 +17,7 @@
 package io.github.bonigarcia.browserwatcher;
 
 import static java.lang.invoke.MethodHandles.lookup;
+import static org.apache.commons.io.FilenameUtils.separatorsToUnix;
 import static org.slf4j.LoggerFactory.getLogger;
 
 import java.io.File;
@@ -44,7 +45,7 @@ public class ExtensionBuilder {
 
     public File build(String extension)
             throws FileNotFoundException, IOException {
-        log.debug("Building Cross Browser Watcher (source folder: {})",
+        log.debug("Building BrowserWatcher (source folder: {})",
                 SOURCE_FOLDER);
         String extensionName = CBEXTENSION_NAME + "." + extension;
         File targetFile = new File(TARGET_FOLDER, extensionName);
@@ -73,7 +74,8 @@ public class ExtensionBuilder {
                 String name = srcFile.getPath();
                 name = name.replace(rootPath.getPath(), "").substring(1);
                 log.debug("Zipping {}", name);
-                zip.putNextEntry(new ZipEntry(name));
+                ZipEntry zipEntry = new ZipEntry(separatorsToUnix(name));
+                zip.putNextEntry(zipEntry);
                 while ((len = in.read(buf)) > 0) {
                     zip.write(buf, 0, len);
                 }
