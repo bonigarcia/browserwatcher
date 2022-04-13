@@ -141,8 +141,8 @@ public class BrowserParentTest {
 
     public void injectJavaScriptCode(String jsCode) {
         ((JavascriptExecutor) driver).executeScript(
-                "window.postMessage({" + "    type: \"injectJavaScriptCode\","
-                        + "    js: \"" + jsCode + ";\"" + "}, \"*\");");
+                "window.postMessage({ type: \"injectJavaScriptCode\", js: \""
+                        + jsCode + ";\" });");
     }
 
     public void injectJavaScriptLibs(List<String> jsLibs) {
@@ -151,8 +151,8 @@ public class BrowserParentTest {
 
     public void injectJavaScriptLib(String jsLib) {
         ((JavascriptExecutor) driver).executeScript(
-                "window.postMessage({" + "    type: \"injectJavaScriptLibs\","
-                        + "    lib: \"" + jsLib + "\"" + "} );");
+                "window.postMessage({ type: \"injectJavaScriptLibs\", lib: \""
+                        + jsLib + "\" });");
     }
 
     public void injectCssSheets(List<String> cssSheets) {
@@ -161,8 +161,8 @@ public class BrowserParentTest {
 
     public void injectCssSheet(String cssSheet) {
         ((JavascriptExecutor) driver).executeScript(
-                "window.postMessage({" + "    type: \"injectCssSheets\","
-                        + "    css: \"" + cssSheet + "\"" + "} );");
+                "window.postMessage({ type: \"injectCssSheets\", css: \""
+                        + cssSheet + "\" });");
     }
 
     public void startRecording(String recordingName) {
