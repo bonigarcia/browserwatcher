@@ -48,8 +48,8 @@ class PublicWebsitesTest extends BrowserParentTest {
 
     @ParameterizedTest
     @MethodSource("provider")
-    void logTest(DriverManagerType browserType, String website, int index)
-            throws IOException {
+    void publicWebsitesTest(DriverManagerType browserType, String website,
+            int index) throws IOException {
         driver.get(website);
 
         List<Map<String, Object>> logMessages = readLogs();
