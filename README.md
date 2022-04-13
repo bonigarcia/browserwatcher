@@ -13,7 +13,7 @@
 
 ## About
 
-Cross Browser Watcher (Copyright &copy; 2021-2022) is a project created and maintained by [Boni Garcia] licensed under [Apache 2.0 License].
+BrowserWatcher (Copyright &copy; 2021-2022) is a project created and maintained by [Boni Garcia] licensed under [Apache 2.0 License].
 
 [Apache 2.0 License]: https://www.apache.org/licenses/LICENSE-2.0
 [Boni Garcia]: https://bonigarcia.dev/

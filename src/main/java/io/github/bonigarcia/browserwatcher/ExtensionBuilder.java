@@ -36,7 +36,8 @@ public class ExtensionBuilder {
 
     static final String SOURCE_FOLDER = "ext";
     static final String TARGET_FOLDER = "target";
-    static final String CBEXTENSION_NAME = "cbwatcher";
+    static final String EXTENSION_NAME = "browserwatcher";
+    static final String EXTENSION_VERSION = "1.0.0";
     static final String DEFAULT_EXTENSION = "xpi";
 
     public File build() throws FileNotFoundException, IOException {
@@ -45,9 +46,9 @@ public class ExtensionBuilder {
 
     public File build(String extension)
             throws FileNotFoundException, IOException {
-        log.debug("Building BrowserWatcher (source folder: {})",
-                SOURCE_FOLDER);
-        String extensionName = CBEXTENSION_NAME + "." + extension;
+        log.debug("Building BrowserWatcher (source folder: {})", SOURCE_FOLDER);
+        String extensionName = EXTENSION_NAME + "-" + EXTENSION_VERSION + "."
+                + extension;
         File targetFile = new File(TARGET_FOLDER, extensionName);
         zipFolder(new File(SOURCE_FOLDER), targetFile);
         log.debug("Extension available on {}/{}", TARGET_FOLDER, extensionName);

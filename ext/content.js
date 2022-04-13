@@ -253,7 +253,7 @@ let logGatheringCode = growlFunction + "var originalConsole = {}; (" + function(
         localStorage.setItem("_browserWatcherLog", "true");
     }
 
-    console.log("* * * Cross Browser Watcher * * *");
+    console.log("* * * BrowserWatcher * * *");
     console._bwLogs = [];
 
     const consoleMethodNames = ["log", "warn", "error", "info", "dir", "time", "timeEnd", "table", "count"];

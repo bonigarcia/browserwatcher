@@ -24,11 +24,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class CBWatcherSpringBootApplication {
+public class BrowserWatcherSpringBootApplication {
 
     static final Logger log = getLogger(lookup().lookupClass());
 
     public static void main(String[] args) throws Exception {
-        new SpringApplication(CBWatcherSpringBootApplication.class).run(args);
+        new SpringApplication(BrowserWatcherSpringBootApplication.class).run(args);
     }
 }

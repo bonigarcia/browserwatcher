@@ -1,9 +1,9 @@
 {
-    "description": "Cross Browser Watcher",
+    "description": "Browser extension for monitoring console logging, tab recording, and JavaScript and CSS injection",
     "manifest_version": 2,
-    "name": "cbwatcher",
+    "name": "BrowserWatcher",
     "version": "1.0.0",
-    "homepage_url": "https://github.com/bonigarcia/cbwatcher",
+    "homepage_url": "https://github.com/bonigarcia/browserwatcher",
     "icons": {
         "80": "img/browserwatcher-80.png"
     },
