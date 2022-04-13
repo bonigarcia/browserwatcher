@@ -1,15 +1,12 @@
 function saveOptions(e) {
     e.preventDefault();
-    chrome.storage.sync.set({
-        _bwLogGathering: document.querySelector('input[name="log"]:checked').value
-    });
 
     chrome.storage.sync.set({
         _bwJavaScriptLibs: document.querySelector('textarea[name="libs"]').value
     });
 
     chrome.storage.sync.set({
-        _bwInjectCssShets: document.querySelector('textarea[name="css"]').value
+        _bwInjectCssSheets: document.querySelector('textarea[name="css"]').value
     });
 
     chrome.storage.sync.set({
@@ -22,12 +19,6 @@ function saveOptions(e) {
 }
 
 document.querySelector("form").addEventListener("submit", saveOptions);
-
-chrome.storage.sync.get("_bwLogGathering", function(data) {
-    if (data["_bwLogGathering"] && data["_bwLogGathering"] == "false") {
-        document.querySelector("#logfalse").checked = "checked";
-    }
-});
 
 chrome.storage.sync.get("_bwJavaScriptLibs", function(data) {
     if (data["_bwJavaScriptLibs"]) {

@@ -363,8 +363,8 @@ chrome.storage.sync.get("_bwJavaScriptLibs", function(data) {
     }
 });
 
-chrome.storage.sync.get("_bwInjectCssShets", function(data) {
-    if (data["_bwInjectCssShets"]) {
+chrome.storage.sync.get("_bwInjectCssSheets", function(data) {
+    if (data["_bwInjectCssSheets"]) {
         injectCssSheets(data["_bwInjectCssSheets"]);
     }
 });
