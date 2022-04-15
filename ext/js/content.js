@@ -251,6 +251,8 @@ let growlFunction = "" + function Growl() {
 let logGatheringCode = growlFunction + "var originalConsole = {}; (" + function() {
     if (!localStorage.getItem("_browserWatcherLog")) {
         localStorage.setItem("_browserWatcherLog", "true");
+        // Uncomment the following line to use growl by default
+        // localStorage.setItem("_browserWatcherGrowl", "true");
     }
 
     console.log("* * * BrowserWatcher * * *");
