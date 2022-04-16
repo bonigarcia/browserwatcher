@@ -18,7 +18,14 @@
         <selenium.version>4.1.3</selenium.version>
         <wdm.version>5.1.1</wdm.version>
         <commons-io.version>2.11.0</commons-io.version>
+
         <maven-surefire-plugin.version>3.0.0-M6</maven-surefire-plugin.version>
+        <maven-asciidoctor-plugin.version>2.2.2</maven-asciidoctor-plugin.version>
+        <asciidoctorj-pdf.version>1.6.2</asciidoctorj-pdf.version>
+        <asciidoctorj-epub3.version>1.5.1</asciidoctorj-epub3.version>
+        <maven-site.version>3.11.0</maven-site.version>
+        <maven-project-info-reports.version>3.2.2</maven-project-info-reports.version>
+        <maven-javadoc-plugin.version>3.3.2</maven-javadoc-plugin.version>
 
         <java.version>1.8</java.version>
         <maven.compiler.target>${java.version}</maven.compiler.target>
@@ -96,6 +103,140 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.asciidoctor</groupId>
+                <artifactId>asciidoctor-maven-plugin</artifactId>
+                <version>${maven-asciidoctor-plugin.version}</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.asciidoctor</groupId>
+                        <artifactId>asciidoctorj-pdf</artifactId>
+                        <version>${asciidoctorj-pdf.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.asciidoctor</groupId>
+                        <artifactId>asciidoctorj-epub3</artifactId>
+                        <version>${asciidoctorj-epub3.version}</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <sourceDirectory>src/doc/asciidoc</sourceDirectory>
+                    <attributes>
+                        <endpoint-url>https://bonigarcia.dev</endpoint-url>
+                        <sourcedir>${project.build.sourceDirectory}</sourcedir>
+                        <project-version>${project.version}</project-version>
+                    </attributes>
+                    <outputDirectory>${basedir}/docs</outputDirectory>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>asciidoc-to-html</id>
+                        <phase>pre-site</phase>
+                        <goals>
+                            <goal>process-asciidoc</goal>
+                        </goals>
+                        <configuration>
+                            <backend>html5</backend>
+                            <attributes>
+                                <source-highlighter>coderay</source-highlighter>
+                                <stylesheet>css/styles.css</stylesheet>
+                                <imagesdir>img</imagesdir>
+                                <toc>left</toc>
+                                <icons>font</icons>
+                                <sectanchors>true</sectanchors>
+                                <idprefix />
+                                <idseparator>-</idseparator>
+                                <docinfo1>true</docinfo1>
+                                <toclevels>3</toclevels>
+                                <sectnums />
+                                <lang>en</lang>
+                                <docdatetime>${maven.build.timestamp}</docdatetime>
+                                <last-update-label>Updated on</last-update-label>
+                            </attributes>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>asciidoc-to-pdf</id>
+                        <phase>site</phase>
+                        <goals>
+                            <goal>process-asciidoc</goal>
+                        </goals>
+                        <configuration>
+                            <doctype>book</doctype>
+                            <backend>pdf</backend>
+                            <sourceDirectory>src/doc/asciidoc</sourceDirectory>
+                            <sourceDocumentName>index.adoc</sourceDocumentName>
+                            <outputFile>${project.artifactId}.pdf</outputFile>
+                            <attributes>
+                                <source-highlighter>coderay</source-highlighter>
+                                <imagesdir>img</imagesdir>
+                                <pagenums />
+                                <toc />
+                                <idprefix />
+                                <idseparator>-</idseparator>
+                                <icons>font</icons>
+                                <sectnums />
+                                <lang>en</lang>
+                                <revnumber>${project.version}</revnumber>
+                                <revdate>${maven.build.timestamp}</revdate>
+                            </attributes>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>asciidoc-to-epub</id>
+                        <phase>site</phase>
+                        <goals>
+                            <goal>process-asciidoc</goal>
+                        </goals>
+                        <configuration>
+                            <doctype>book</doctype>
+                            <backend>epub3</backend>
+                            <sourceDirectory>src/doc/asciidoc</sourceDirectory>
+                            <sourceDocumentName>index.adoc</sourceDocumentName>
+                            <outputFile>${project.artifactId}.epub</outputFile>
+                            <attributes>
+                                <source-highlighter>coderay</source-highlighter>
+                                <imagesdir>img</imagesdir>
+                                <pagenums />
+                                <toc />
+                                <idprefix />
+                                <idseparator>-</idseparator>
+                                <icons>font</icons>
+                                <sectnums />
+                                <lang>en</lang>
+                                <revnumber>${project.version}</revnumber>
+                                <revdate>${maven.build.timestamp}</revdate>
+                            </attributes>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>${maven-site.version}</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <version>${maven-project-info-reports.version}</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>${maven-javadoc-plugin.version}</version><!--$NO-MVN-MAN-VER$-->
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <source>8</source>
+                </configuration>
             </plugin>
         </plugins>
     </build>
