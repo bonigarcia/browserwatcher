@@ -1,0 +1,71 @@
+= BrowserWatcher
+Boni García
+Version {project-version}
+
+:revnumber: {project-version}
+
+== Motivation
+When an automated end-to-end test (e.g., with https://www.selenium.dev/documentation/webdriver/[Selenium WebDriver]) fails is usually challenging to discover the underlying error cause. A common strategy is to gather the browser console logs to discard problems on the client-side. The problem is the browser log gathering feature is not standard in the W3C WebDriver specification. The driver for Chrome (i.e., https://chromedriver.chromium.org/[chromedriver]) provides a custom implementation for log gathering. But this feature is not available in other drivers such as https://github.com/mozilla/geckodriver/[geckodriver] (i.e., the driver for Firefox).
+
+.What is BrowserWatcher?
+****
+BrowserWatcher is a https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions[browser extension] designed to monitor web browsers such as Chrome, Firefox, or Edge. Its features are cross-browser console log gathering/displaying, tab recording, and JavaScript/CSS injection.
+****
+
+ifndef::backend-pdf[]
+ifndef::backend-epub3[]
+++++
+include::carbon.html[]
+++++
+endif::[]
+endif::[]
+
+== Setup
+BrowserWatcher can be used in two different ways. First, manually as an installed extension in your browser. Second, automatically, through https://bonigarcia.dev/webdrivermanager/[WebDriverManager].
+
+Regarding the first way (i.e., manually), BrowserWatcher can be installed as an extension in any browser implementing the https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions[browser extension API] (such as Chrome, Firefox, Edge, etc.). You can use the following files to install BrowserWatcher in your browser:
+
+* browserwatcher-{project-version}.crx: Chrome Extension (CRX), for Chromium-based browsers, such as Chrome or Edge.
+* browserwatcher-{project-version}.xpi: XPInstall (XPI), for Firefox.
+
+Regarding the second way (i.e., automatically), see the section about <<WebDriverManager>> for further details.
+
+== Features
+Once BrowserWatcher is installed in a browser, you can see its logo in the browser navigation bar, as follows:
+
+=== Console Log Gathering
+BrowserWatcher allows gathering the browser console following a cross-browser approach. Internally, it uses a _monkey patching_ technique to override the JavaScript object `console`. In addition, it implements several JavaScript listeners for the following events: `error`, `unhandledrejection`, `messageerror`, and `securitypolicyviolation`.
+
+=== Console Log Displaying
+To do.
+
+=== Tab recording
+To do.
+
+=== JavaScript and CSS injection
+To do.
+
+== WebDriverManager
+To do.
+
+== Examples
+To do.
+
+== Further Documentation
+There are other resources related to automated testing you can find helpful. For instance, the following books:
+
+* García, Boni. https://www.oreilly.com/library/view/hands-on-selenium-webdriver/9781098109998/[Hands-On Selenium WebDriver with Java]. _O'Reilly Media, Inc._, 2022.
+* García, Boni. https://www.amazon.com/Mastering-Software-Testing-JUnit-Comprehensive-ebook/dp/B076ZQCK5Q/[Mastering Software Testing with JUnit 5]. _Packt Publishing Ltd_, 2017.
+
+Or the following journal papers:
+
+* García, Boni, et al. "https://www.sciencedirect.com/science/article/abs/pii/S0164121222000516[Selenium-Jupiter: A JUnit 5 extension for Selenium WebDriver]." _Journal of Systems and Software_ (2022): 111298.
+* García, Boni, et al. "https://link.springer.com/article/10.1007%2Fs10664-021-09975-3[Automated driver management for Selenium WebDriver]." _Empirical Software Engineering_ 26.5 (2021): 1-51.
+* García, Boni, et al. "https://www.mdpi.com/2079-9292/9/7/1067[A survey of the Selenium ecosystem]." _Electronics_ 9.7 (2020): 1067.
+* García, Boni, et al. "https://www.mdpi.com/2079-9292/9/3/462[Assessment of QoE for video and audio in WebRTC applications using full-reference models]." _Electronics_ 9.3 (2020): 462.
+* García, Boni, et al. "https://www.mdpi.com/2079-9292/8/8/854[Practical evaluation of VMAF perceptual video quality for WebRTC applications]." _Electronics_ 8.8 (2019): 854.
+* García, Boni, et al. "https://ieeexplore.ieee.org/document/7992926/[WebRTC testing: challenges and practical solutions]." _IEEE Communications Standards Magazine_ 1.2 (2017): 36-42.
+* García, Boni, and Juan Carlos Dueñas. "https://www.rintonpress.com/journals/jweonline.html#v14n56[Web browsing automation for applications quality control]." _Journal of web engineering_ (2015): 474-502.
+
+== About
+BrowserWatcher (Copyright © 2021-2022) is an open-source project created and maintained by https://bonigarcia.dev/[Boni García] (https://twitter.com/boni_gg[@boni_gg]), licensed under the terms of https://www.apache.org/licenses/LICENSE-2.0[Apache 2.0 License]. This documentation (also available in link:browserwatcher.pdf[PDF] and link:browserwatcher.epub[EPUB]) is released under the terms of https://creativecommons.org/licenses/by-nc-sa/2.0/[CC BY-NC-SA 2.0].
