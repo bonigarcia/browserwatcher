@@ -21,35 +21,141 @@ endif::[]
 endif::[]
 
 == Setup
-BrowserWatcher can be used in two different ways. First, manually as an installed extension in your browser. Second, automatically, through https://bonigarcia.dev/webdrivermanager/[WebDriverManager].
+BrowserWatcher can be used in two different ways. First, it can be installed as an extension in any browser implementing the https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions[browser extension API] (such as Chrome, Firefox, Edge, etc.). You can use the following files to install BrowserWatcher in your browser:
 
-Regarding the first way (i.e., manually), BrowserWatcher can be installed as an extension in any browser implementing the https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions[browser extension API] (such as Chrome, Firefox, Edge, etc.). You can use the following files to install BrowserWatcher in your browser:
+* https://github.com/bonigarcia/browserwatcher/releases/download/browserwatcher-{project-version}/browserwatcher-{project-version}.crx[browserwatcher-{project-version}.crx]: Chrome Extension (CRX), for Chromium-based browsers, such as Chrome or Edge. To install it, you can drag and drop this file into the extensions page  (_chrome://extensions/_).
+* https://github.com/bonigarcia/browserwatcher/releases/download/browserwatcher-{project-version}/browserwatcher-{project-version}.xpi[browserwatcher-{project-version}.xpi]: XPInstall (XPI), for Firefox. To install it, visit the _about:addons_ page and click on _Install Add-on From File..._.
 
-* browserwatcher-{project-version}.crx: Chrome Extension (CRX), for Chromium-based browsers, such as Chrome or Edge.
-* browserwatcher-{project-version}.xpi: XPInstall (XPI), for Firefox.
-
-Regarding the second way (i.e., automatically), see the section about <<WebDriverManager>> for further details.
+Second, you can use BrowserWatcher automatically through https://bonigarcia.dev/webdrivermanager/[WebDriverManager]. See the section about <<WebDriverManager>> for a basic introduction to this use.
 
 == Features
 Once BrowserWatcher is installed in a browser, you can see its logo in the browser navigation bar, as follows:
 
+[[browserwatcher-install]]
+[.thumb]
+.BrowserWatcher installed in Chrome
+image::browserwatcher-install-v1.png[scaledwidth=100%]
+
 === Console Log Gathering
-BrowserWatcher allows gathering the browser console following a cross-browser approach. Internally, it uses a _monkey patching_ technique to override the JavaScript object `console`. In addition, it implements several JavaScript listeners for the following events: `error`, `unhandledrejection`, `messageerror`, and `securitypolicyviolation`.
+BrowserWatcher allows gathering the browser console following a cross-browser approach. Internally, it uses a _monkey patching_ technique to override the JavaScript object `console`. In particular, the following methods are overridden: `log`, `warn`, `error`, `info`, `dir`, `time`, `timeEnd`, `table`, and `count`. In addition, it implements several JavaScript listeners for the following events: `error`, `unhandledrejection`, `messageerror`, and `securitypolicyviolation`. This way, the gathered logs are accessible in the property `_bwLogs` in the `console` object. The following picture shows an example of the gathered logs of a the https://bonigarcia.dev/selenium-webdriver-java/console-logs.html[sample page]:
+
+[[gather-console-logs-example]]
+[.thumb]
+.Console log gathering example
+image::gather-console-logs-example-v2.png[scaledwidth=100%]
+
+BrowserWatcher has a configuration page, displayed when clicked in its icon. This page has three toggle buttons to set up different features. The first one allows enabling (and disabling) the log gathering feature.
+
+[[popup-logs]]
+[.thumb]
+.BrowserWatcher popup configuration page (console log gathering)
+image::popup-logs-v1.png[scaledwidth=100%]
 
 === Console Log Displaying
-To do.
+In addition to log gathering, BrowserWatcher allows displaying the console logs (and listened events) as dialog notifications on the page. This feature can be enabled using the following button:
+
+[[popup-display]]
+[.thumb]
+.BrowserWatcher popup configuration page (console log displaying)
+image::popup-display-v1.png[scaledwidth=100%]
+
+The following picture shows an example of these notifications:
+
+[[display-console-logs-example]]
+[.thumb]
+.Display logs example
+image::display-console-logs-example-v2.png[scaledwidth=100%]
 
 === Tab recording
-To do.
+BrowserWatcher allows recording a browser tab. This feature requires a page loaded in the current tab (in other words, it cannot record empty or configuration pages). Then, it can be started using the following button:
+
+[[popup-rec]]
+[.thumb]
+.BrowserWatcher popup configuration page (recording)
+image::popup-rec-v1.png[scaledwidth=100%]
+
+The recording is stopped using the same button. The recording file will be a WEBM file, available in your _Downloads_ folder.
+
+WARNING: This feature is based on the API https://developer.chrome.com/docs/extensions/reference/tabCapture/[tabCapture]. Therefore, this feature is not available in Firefox since this API is not implemented by Firefox yet.
+
+There are some alternative ways to start and stop the recordings. First, by using the keyboard shortcut `Alt+R` (for starting the recording) and `Alt+W` (for stopping the recording). Second, by executing the following JavaScript commands:
+
+* `window.postMessage({ type: "startRecording" });` : For starting the recording. The recording file name will be auto generated, composed by the system timestamp plus the prefix `-browser-recording.webm`. 
+* `window.postMessage({ type: "startRecording", name: "myrecording" });`: For starting the recording and specifyng a custom file recording (`myrecording.webm` in this example).
+* `window.postMessage({ type: "startRecording" });` : For stopping the recording.
 
 === JavaScript and CSS injection
-To do.
+BrowserWatcher has an _options_ page, available by clicking on the following menu option:
+
+[[options]]
+[.thumb]
+.BrowserWatcher menu option
+image::options-v1.png[scaledwidth=100%]
+
+This options page allows injecting JavaScript code, libraries, and CSS stylesheets. The following screenshot shows an example that injects an online JavaScript library to highlight the mouse. The resulting mouse pointer is shown subsequently.
+
+[[options-saved]]
+[.thumb]
+.BrowserWatcher options page (example for highlighting mouse)
+image::options-saved-v1.png[scaledwidth=100%]
+
+[[js-css-injection-example]]
+[.thumb]
+.JavaScript and CSS injection page example (highlighting mouse)
+image::js-css-injection-example-v1.png[scaledwidth=100%]
+
+Alternatively, this feature can be enabled by executing the following JavaScript commands:
+
+* `window.postMessage({ type: "injectJavaScriptCode", js: "jsCode" });`
+* `window.postMessage({ type: "injectJavaScriptLibs", lib: "jsLib" });`
+* `window.postMessage({ type: "injectCssSheets", css: "cssSheet" });`
 
 == WebDriverManager
-To do.
+As of version 5.2.0, WebDriverManager provides seamless integration with BrowserWatcher. In other words, WebDriverManager allows injecting BrowserWatcher in browsers controlled with Selenium WebDriver and created through WebDriverManager with the methods `.watch()` and `.create()`. These browsers allow log gathering, displaying, and tab recording through BrowserWatcher.
 
-== Examples
-To do.
+For example, the following test shows some basic use of log gathering using WebDriverManager and BrowserWatcher:
+
+[source,java]
+----
+class GatherLogsChromeTest {
+
+    static final Logger log = getLogger(lookup().lookupClass());
+
+    WebDriverManager wdm = WebDriverManager.chromedriver().watch();
+    WebDriver driver;
+
+    @BeforeEach
+    void setup() {
+        driver = wdm.create();
+    }
+
+    @AfterEach
+    void teardown() {
+        driver.quit();
+    }
+
+    @Test
+    void test() {
+        driver.get(
+                "https://bonigarcia.dev/selenium-webdriver-java/console-logs.html");
+
+        List<Map<String, Object>> logMessages = wdm.getLogs();
+
+        for (Map<String, Object> map : logMessages) {
+            log.debug("[{}] [{}.{}] {}", map.get("datetime"),
+                    map.get("wrapper").toString().toUpperCase(),
+                    String.format("%1$-7s",
+                            map.get("type").toString().toUpperCase()),
+                    map.get("message"));
+        }
+
+        assertThat(logMessages).hasSize(5);
+    }
+
+}
+----
+
+Please visit its https://bonigarcia.dev/webdrivermanager/[documentation page] for further details.
 
 == Further Documentation
 There are other resources related to automated testing you can find helpful. For instance, the following books:
