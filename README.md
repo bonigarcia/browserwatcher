@@ -11,6 +11,9 @@
 * Browser tab recording.
 * JavaScript and CSS injection.
 
+## Documentation
+The documentation of [BrowserWatcher] is hosted as with GitHub Pages. This site contains all the features, examples, configuration, etc. of BrowserWatcher.
+
 ## About
 
 BrowserWatcher (Copyright &copy; 2021-2022) is a project created and maintained by [Boni Garcia] licensed under [Apache 2.0 License].
@@ -20,3 +23,4 @@ BrowserWatcher (Copyright &copy; 2021-2022) is a project created and maintained 
 [Logo]: https://bonigarcia.dev/img/bw.png
 [GitHub Repository]: https://github.com/bonigarcia/browserwatcher
 [browser extension]: https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions
+[BrowserWatcher]: https://bonigarcia.dev/browserwatcher/
