@@ -326,6 +326,24 @@ let logGatheringCode = growlFunction + "var originalConsole = {}; (" + function(
         });
     });
 
+    var origOpen = XMLHttpRequest.prototype.open;
+    XMLHttpRequest.prototype.open = function(method, url) {
+        this.addEventListener('load', function() {
+            if (this.status >= 400) {
+                let errorMessage = `${method} ${url} ${this.status}`;
+                let listenerName = "xhr-error";
+                if (localStorage.getItem("_browserWatcherLog") && localStorage.getItem("_browserWatcherLog") == "true") {
+                    console._bwLogs.push({ datetime: getDateTime(), wrapper: "listener", type: listenerName, message: errorMessage });
+                }
+
+                if (console.growl) {
+                    console.growl.error({ text: errorMessage, title: "listenerName." + listenerName });
+                }
+            }
+        });
+        origOpen.apply(this, arguments);
+    };
+
     function getDateTime() {
         let now = new Date();
         let day = now.getDate().toString().padStart(2, "0");
@@ -382,7 +400,7 @@ window.addEventListener("message", function(event) {
         injectJsLibs(event.data.lib);
     }
     else if (event.source == window && event.data.type == "injectCssSheets") {
-         injectCssSheets(event.data.css);
+        injectCssSheets(event.data.css);
     }
     else if (event.source == window && event.data.type == "injectJavaScriptCode") {
         injectJsCode(event.data.js);
