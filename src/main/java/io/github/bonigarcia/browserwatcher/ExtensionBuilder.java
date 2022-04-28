@@ -37,7 +37,7 @@ public class ExtensionBuilder {
     static final String SOURCE_FOLDER = "ext";
     static final String TARGET_FOLDER = "target";
     static final String EXTENSION_NAME = "browserwatcher";
-    static final String EXTENSION_VERSION = "1.0.0";
+    static final String EXTENSION_VERSION = "1.0.1";
     static final String DEFAULT_EXTENSION = "crx";
 
     public File build() throws FileNotFoundException, IOException {
