@@ -311,7 +311,16 @@ let logGatheringCode = growlFunction + "var originalConsole = {}; (" + function(
                 errorMessage = e.error ? `${e.error.stack}` : `${e.blockedURI} ${e.violatedDirective} ${e.originalPolicy}`;
             }
             else {
-                errorMessage = e.error ? `${e.error.stack}` : `${e.type} ${e.reason}`;
+                errorMessage = e.error ? `${e.error.stack}` : `${e.type}`;
+                if (e.lineno) {
+                    errorMessage += `:${e.lineno}`;
+                }
+                if (e.reason) {
+                    errorMessage += ` ${e.reason}`;
+                }
+                if (e.message) {
+                    errorMessage += ` ${e.message}`;
+                }
             }
             if (localStorage.getItem("_browserWatcherLog") && localStorage.getItem("_browserWatcherLog") == "true") {
                 console._bwLogs.push({ datetime: getDateTime(), wrapper: "listener", type: listenerName, message: errorMessage });
