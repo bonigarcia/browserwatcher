@@ -274,7 +274,7 @@ let logGatheringCode = growlFunction + "var originalConsole = {}; (" + function(
 
         console[methodName] = function() {
             let params = Array.prototype.slice.call(arguments, 1);
-            let message = params.length ? Array.from(arguments) : arguments[0];
+            let message = params.length ? Array.from(arguments) : String(arguments[0]);
             if (localStorage.getItem("_browserWatcherLog") && localStorage.getItem("_browserWatcherLog") == "true") {
                 console._bwLogs.push({ datetime: getDateTime(), wrapper: "console", type: methodName, message: message });
             }
