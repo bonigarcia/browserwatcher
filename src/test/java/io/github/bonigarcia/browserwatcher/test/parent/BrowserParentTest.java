@@ -38,7 +38,6 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
-import org.openqa.selenium.firefox.FirefoxProfile;
 import org.slf4j.Logger;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -178,6 +177,16 @@ public class BrowserParentTest {
     public void stopRecording() {
         ((JavascriptExecutor) driver).executeScript(
                 "window.postMessage({ type: \"stopRecording\" } );");
+    }
+
+    public void disableCsp() {
+        ((JavascriptExecutor) driver).executeScript(
+                "window.postMessage({ type: \"disableCsp\" } );");
+    }
+
+    public void enableCsp() {
+        ((JavascriptExecutor) driver)
+                .executeScript("window.postMessage({ type: \"enableCsp\" } );");
     }
 
 }

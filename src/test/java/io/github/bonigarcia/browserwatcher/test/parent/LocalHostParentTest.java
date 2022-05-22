@@ -44,8 +44,10 @@ public class LocalHostParentTest extends BrowserParentTest {
 
         List<Map<String, Object>> logMessages = readLogs();
 
-        if (logMessagesSize == 0) {
+        if (logMessagesSize == -1) {
             assertThat(logMessages).isNull();
+        } else if (logMessagesSize == 0) {
+            assertThat(logMessages).isEmpty();
         } else {
             for (Map<String, Object> map : logMessages) {
                 log.debug("[{}] [{}.{}] {}", map.get("datetime"),

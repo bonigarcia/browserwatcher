@@ -10,6 +10,7 @@ const recorderLogo = "../img/browserwatcher-rec-80.png";
 
 var mediaRecorder;
 var isRecording = false;
+var disableCsp = false;
 
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
@@ -21,6 +22,12 @@ chrome.runtime.onMessage.addListener(
         }
         else if (request.type == "inject-js-code") {
             injectCode(request.code);
+        }
+        else if (request.type == "disable-csp") {
+            disableCsp = true;
+        }
+        else if (request.type == "enable-csp") {
+            disableCsp = false;
         }
     });
 
@@ -168,7 +175,7 @@ function injectCode(js) {
 
 var onHeadersReceived = function(details) {
     for (var i = 0; i < details.responseHeaders.length; i++) {
-        if (details.responseHeaders[i].name.toLowerCase() === 'content-security-policy') {
+        if (disableCsp && details.responseHeaders[i].name.toLowerCase() === 'content-security-policy') {
             details.responseHeaders[i].value = '';
         }
     }

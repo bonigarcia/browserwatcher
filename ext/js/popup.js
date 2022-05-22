@@ -63,4 +63,18 @@ $(document).ready(function() {
             });
         }
     })
+
+    chrome.storage.sync.get("_browserWatcherDisableCsp", function(data) {
+        let toggle = data["_browserWatcherDisableCsp"] && data["_browserWatcherDisableCsp"] == "true";
+        $('#csp').prop("checked", toggle);
+    });
+    $("#csp").change(function() {
+        if (this.checked) {
+            chrome.runtime.sendMessage({ type: "disable-csp" });
+            chrome.storage.sync.set({ _browserWatcherDisableCsp: "true" });
+        } else {
+            chrome.runtime.sendMessage({ type: "enable-csp" });
+            chrome.storage.sync.set({ _browserWatcherDisableCsp: "false" });
+        }
+    })
 });

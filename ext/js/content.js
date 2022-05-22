@@ -420,6 +420,12 @@ window.addEventListener("message", function(event) {
     else if (event.source == window && event.data.type == "stopRecording") {
         chrome.runtime.sendMessage({ type: "stop-recording" });
     }
+    else if (event.source == window && event.data.type == "disableCsp") {
+        chrome.runtime.sendMessage({ type: "disable-csp" });
+    }
+    else if (event.source == window && event.data.type == "enableCsp") {
+        chrome.runtime.sendMessage({ type: "enable-csp" });
+    }
 });
 
 
