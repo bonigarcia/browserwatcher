@@ -775,7 +775,7 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <h1>BrowserWatcher</h1>
 <div class="details">
 <span id="author" class="author">Boni García</span><br>
-<span id="revdate">Version 1.0.0</span>
+<span id="revdate">Version 1.0.1</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -787,7 +787,8 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <li><a href="#console-log-gathering">3.1. Console Log Gathering</a></li>
 <li><a href="#console-log-displaying">3.2. Console Log Displaying</a></li>
 <li><a href="#tab-recording">3.3. Tab recording</a></li>
-<li><a href="#javascript-and-css-injection">3.4. JavaScript and CSS injection</a></li>
+<li><a href="#disabling-csp">3.4. Disabling CSP</a></li>
+<li><a href="#javascript-and-css-injection">3.5. JavaScript and CSS injection</a></li>
 </ul>
 </li>
 <li><a href="#webdrivermanager">4. WebDriverManager</a></li>
@@ -801,13 +802,13 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <h2 id="motivation"><a class="anchor" href="#motivation"></a>1. Motivation</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>When an automated end-to-end test (e.g., with <a href="https://www.selenium.dev/documentation/webdriver/">Selenium WebDriver</a>) fails is usually challenging to discover the underlying error cause. A common strategy is to gather the browser console logs to discard problems on the client-side. The problem is the browser log gathering feature is not standard in the W3C WebDriver specification. The driver for Chrome (i.e., <a href="https://chromedriver.chromium.org/">chromedriver</a>) provides a custom implementation for log gathering. But this feature is not available in other drivers such as <a href="https://github.com/mozilla/geckodriver/">geckodriver</a> (i.e., the driver for Firefox).</p>
+<p>When an automated end-to-end test (e.g., with <a href="https://www.selenium.dev/documentation/webdriver/">Selenium WebDriver</a>) fails, it can be challenging to discover the underlying error cause. A common strategy is to gather the browser console logs to discard problems on the client-side. The problem is the browser log gathering feature is not standard in the <a href="https://www.w3.org/TR/webdriver/">W3C WebDriver</a> specification. The driver for Chrome (i.e., <a href="https://chromedriver.chromium.org/">chromedriver</a>) provides a custom implementation for log gathering. But this feature is not available in other drivers such as <a href="https://github.com/mozilla/geckodriver/">geckodriver</a> (i.e., the driver for Firefox). A standard solution is proposed in the new <a href="https://w3c.github.io/webdriver-bidi/">W3C WebDriver BiDi</a>, but this approach is not yet implemented in all drivers (e.g., geckodriver).</p>
 </div>
 <div class="sidebarblock">
 <div class="content">
 <div class="title">What is BrowserWatcher?</div>
 <div class="paragraph">
-<p>BrowserWatcher is a <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions">browser extension</a> designed to monitor web browsers such as Chrome, Firefox, or Edge. Its features are cross-browser console log gathering/displaying, tab recording, and JavaScript/CSS injection.</p>
+<p>BrowserWatcher is a <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions">browser extension</a> designed to monitor web browsers such as Chrome, Firefox, or Edge. Its features are cross-browser console log gathering/displaying, tab recording, Content Security Policy (CSP) disabling, and JavaScript/CSS injection.</p>
 </div>
 </div>
 </div>
@@ -900,10 +901,10 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <div class="ulist">
 <ul>
 <li>
-<p><a href="https://github.com/bonigarcia/browserwatcher/releases/download/1.0.0/browserwatcher-1.0.0.crx">browserwatcher-1.0.0.crx</a>: Chrome Extension (CRX), for Chromium-based browsers, such as Chrome or Edge. To install it, you can drag and drop this file into the extensions page  (<em>chrome://extensions/</em>).</p>
+<p><a href="https://github.com/bonigarcia/browserwatcher/releases/download/1.0.1/browserwatcher-1.0.1.crx">browserwatcher-1.0.1.crx</a>: Chrome Extension (CRX), for Chromium-based browsers, such as Chrome or Edge. To install it, you can drag and drop this file into the extensions page  (<em>chrome://extensions/</em>).</p>
 </li>
 <li>
-<p><a href="https://github.com/bonigarcia/browserwatcher/releases/download/1.0.0/browserwatcher-1.0.0.xpi">browserwatcher-1.0.0.xpi</a>: XPInstall (XPI), for Firefox. To install it, visit the <em>about:addons</em> page and click on <em>Install Add-on From File&#8230;&#8203;</em>.</p>
+<p><a href="https://github.com/bonigarcia/browserwatcher/releases/download/1.0.1/browserwatcher-1.0.1.xpi">browserwatcher-1.0.1.xpi</a>: XPInstall (XPI), for Firefox. To install it, visit the <em>about:addons</em> page and click on <em>Install Add-on From File&#8230;&#8203;</em>.</p>
 </li>
 </ul>
 </div>
@@ -927,7 +928,7 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <div class="sect2">
 <h3 id="console-log-gathering"><a class="anchor" href="#console-log-gathering"></a>3.1. Console Log Gathering</h3>
 <div class="paragraph">
-<p>BrowserWatcher allows gathering the browser console following a cross-browser approach. Internally, it uses a <em>monkey patching</em> technique to override the JavaScript object <code>console</code>. In particular, the following methods are overridden: <code>log</code>, <code>warn</code>, <code>error</code>, <code>info</code>, <code>dir</code>, <code>time</code>, <code>timeEnd</code>, <code>table</code>, and <code>count</code>. In addition, it implements several JavaScript listeners for the following events: <code>error</code>, <code>unhandledrejection</code>, <code>messageerror</code>, and <code>securitypolicyviolation</code>. This way, the gathered logs are accessible in the property <code>_bwLogs</code> in the <code>console</code> object. The following picture shows an example of the gathered logs of a the <a href="https://bonigarcia.dev/selenium-webdriver-java/console-logs.html">sample page</a>:</p>
+<p>BrowserWatcher allows gathering the browser console following a cross-browser approach. Internally, it uses a <em>monkey patching</em> technique to override the JavaScript object <code>console</code>. In particular, the following methods are overridden: <code>log</code>, <code>warn</code>, <code>error</code>, <code>info</code>, <code>dir</code>, <code>time</code>, <code>timeEnd</code>, <code>table</code>, and <code>count</code>. In addition, it implements several JavaScript listeners for the following events: <code>error</code> (JavaScript error trace), <code>unhandledrejection</code> (when a JavaScript <em>Promise</em> with no rejection handler is rejected), <code>messageerror</code> (when the <em>Window</em> object receives a message that cannot be deserialized), and <code>securitypolicyviolation</code> (when the content security policy is violated). This way, the gathered logs are accessible in the property <code>_bwLogs</code> in the <code>console</code> object. The following picture shows an example of the gathered logs of a the <a href="https://bonigarcia.dev/selenium-webdriver-java/console-logs.html">sample page</a>:</p>
 </div>
 <div id="gather-console-logs-example" class="imageblock thumb">
 <div class="content">
@@ -940,7 +941,7 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 </div>
 <div id="popup-logs" class="imageblock thumb">
 <div class="content">
-<img src="img/popup-logs-v1.png" alt="popup logs v1">
+<img src="img/popup-logs-v2.png" alt="popup logs v2">
 </div>
 <div class="title">Figure 3. BrowserWatcher popup configuration page (console log gathering)</div>
 </div>
@@ -952,7 +953,7 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 </div>
 <div id="popup-display" class="imageblock thumb">
 <div class="content">
-<img src="img/popup-display-v1.png" alt="popup display v1">
+<img src="img/popup-display-v2.png" alt="popup display v2">
 </div>
 <div class="title">Figure 4. BrowserWatcher popup configuration page (console log displaying)</div>
 </div>
@@ -973,7 +974,7 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 </div>
 <div id="popup-rec" class="imageblock thumb">
 <div class="content">
-<img src="img/popup-rec-v1.png" alt="popup rec v1">
+<img src="img/popup-rec-v2.png" alt="popup rec v2">
 </div>
 <div class="title">Figure 6. BrowserWatcher popup configuration page (recording)</div>
 </div>
@@ -1010,7 +1011,32 @@ This feature is based on the API <a href="https://developer.chrome.com/docs/exte
 </div>
 </div>
 <div class="sect2">
-<h3 id="javascript-and-css-injection"><a class="anchor" href="#javascript-and-css-injection"></a>3.4. JavaScript and CSS injection</h3>
+<h3 id="disabling-csp"><a class="anchor" href="#disabling-csp"></a>3.4. Disabling CSP</h3>
+<div class="paragraph">
+<p><a href="https://content-security-policy.com/">Content Security Policy (CSP)</a> is the name of an HTTP response header that browsers use to improve the security of web pages. CSP helps to protect from attacks such as cross-site scripting (XSS). Nevertheless, developers might want to disable the CSP headers received from the server for testing purposes. For this reason, BrowserWatcher allows bypassing these CSP headers. This feature (i.e., disabling CSP headers) is enabled by clicking the following button:</p>
+</div>
+<div id="popup-csp" class="imageblock thumb">
+<div class="content">
+<img src="img/popup-csp-v2.png" alt="popup csp v2">
+</div>
+<div class="title">Figure 7. BrowserWatcher popup configuration page (disable CSP headers)</div>
+</div>
+<div class="paragraph">
+<p>In addition, this feature can be enabled/disabled by executing the following JavaScript commands:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>window.postMessage({ type: "disableCsp" });</code> : For disabling CSP.</p>
+</li>
+<li>
+<p><code>window.postMessage({ type: "enableCsp" });</code> : For enabling CSP (as it was by default).</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="javascript-and-css-injection"><a class="anchor" href="#javascript-and-css-injection"></a>3.5. JavaScript and CSS injection</h3>
 <div class="paragraph">
 <p>BrowserWatcher has an <em>options</em> page, available by clicking on the following menu option:</p>
 </div>
@@ -1018,7 +1044,7 @@ This feature is based on the API <a href="https://developer.chrome.com/docs/exte
 <div class="content">
 <img src="img/options-v1.png" alt="options v1">
 </div>
-<div class="title">Figure 7. BrowserWatcher menu option</div>
+<div class="title">Figure 8. BrowserWatcher menu option</div>
 </div>
 <div class="paragraph">
 <p>This options page allows injecting JavaScript code, libraries, and CSS stylesheets. The following screenshot shows an example that injects an online JavaScript library to highlight the mouse. The resulting mouse pointer is shown subsequently.</p>
@@ -1027,13 +1053,13 @@ This feature is based on the API <a href="https://developer.chrome.com/docs/exte
 <div class="content">
 <img src="img/options-saved-v1.png" alt="options saved v1">
 </div>
-<div class="title">Figure 8. BrowserWatcher options page (example for highlighting mouse)</div>
+<div class="title">Figure 9. BrowserWatcher options page (example for highlighting mouse)</div>
 </div>
 <div id="js-css-injection-example" class="imageblock thumb">
 <div class="content">
 <img src="img/js-css-injection-example-v1.png" alt="js css injection example v1">
 </div>
-<div class="title">Figure 9. JavaScript and CSS injection page example (highlighting mouse)</div>
+<div class="title">Figure 10. JavaScript and CSS injection page example (highlighting mouse)</div>
 </div>
 <div class="paragraph">
 <p>Alternatively, this feature can be enabled by executing the following JavaScript commands:</p>
@@ -1165,8 +1191,8 @@ This feature is based on the API <a href="https://developer.chrome.com/docs/exte
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 1.0.0<br>
-Updated on 20-04-2022
+Version 1.0.1<br>
+Updated on 23-05-2022
 </div>
 </div>
 </body>
