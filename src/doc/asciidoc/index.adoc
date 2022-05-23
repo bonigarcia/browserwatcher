@@ -5,11 +5,12 @@ Version {project-version}
 :revnumber: {project-version}
 
 == Motivation
-When an automated end-to-end test (e.g., with https://www.selenium.dev/documentation/webdriver/[Selenium WebDriver]) fails is usually challenging to discover the underlying error cause. A common strategy is to gather the browser console logs to discard problems on the client-side. The problem is the browser log gathering feature is not standard in the W3C WebDriver specification. The driver for Chrome (i.e., https://chromedriver.chromium.org/[chromedriver]) provides a custom implementation for log gathering. But this feature is not available in other drivers such as https://github.com/mozilla/geckodriver/[geckodriver] (i.e., the driver for Firefox).
+When an automated end-to-end test (e.g., with https://www.selenium.dev/documentation/webdriver/[Selenium WebDriver]) fails, it can be challenging to discover the underlying error cause. A common strategy is to gather the browser console logs to discard problems on the client-side. The problem is the browser log gathering feature is not standard in the https://www.w3.org/TR/webdriver/[W3C WebDriver] specification. The driver for Chrome (i.e., https://chromedriver.chromium.org/[chromedriver]) provides a custom implementation for log gathering. But this feature is not available in other drivers such as https://github.com/mozilla/geckodriver/[geckodriver] (i.e., the driver for Firefox). A standard solution is proposed in the new https://w3c.github.io/webdriver-bidi/[W3C WebDriver BiDi], but this approach is not yet implemented in all drivers (e.g., geckodriver).
+
 
 .What is BrowserWatcher?
 ****
-BrowserWatcher is a https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions[browser extension] designed to monitor web browsers such as Chrome, Firefox, or Edge. Its features are cross-browser console log gathering/displaying, tab recording, and JavaScript/CSS injection.
+BrowserWatcher is a https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions[browser extension] designed to monitor web browsers such as Chrome, Firefox, or Edge. Its features are cross-browser console log gathering/displaying, tab recording, Content Security Policy (CSP) disabling, and JavaScript/CSS injection.
 ****
 
 ifndef::backend-pdf[]
@@ -37,7 +38,7 @@ Once BrowserWatcher is installed in a browser, you can see its logo in the brows
 image::browserwatcher-install-v1.png[scaledwidth=100%]
 
 === Console Log Gathering
-BrowserWatcher allows gathering the browser console following a cross-browser approach. Internally, it uses a _monkey patching_ technique to override the JavaScript object `console`. In particular, the following methods are overridden: `log`, `warn`, `error`, `info`, `dir`, `time`, `timeEnd`, `table`, and `count`. In addition, it implements several JavaScript listeners for the following events: `error`, `unhandledrejection`, `messageerror`, and `securitypolicyviolation`. This way, the gathered logs are accessible in the property `_bwLogs` in the `console` object. The following picture shows an example of the gathered logs of a the https://bonigarcia.dev/selenium-webdriver-java/console-logs.html[sample page]:
+BrowserWatcher allows gathering the browser console following a cross-browser approach. Internally, it uses a _monkey patching_ technique to override the JavaScript object `console`. In particular, the following methods are overridden: `log`, `warn`, `error`, `info`, `dir`, `time`, `timeEnd`, `table`, and `count`. In addition, it implements several JavaScript listeners for the following events: `error` (JavaScript error trace), `unhandledrejection` (when a JavaScript _Promise_ with no rejection handler is rejected), `messageerror` (when the _Window_ object receives a message that cannot be deserialized), and `securitypolicyviolation` (when the content security policy is violated). This way, the gathered logs are accessible in the property `_bwLogs` in the `console` object. The following picture shows an example of the gathered logs of a the https://bonigarcia.dev/selenium-webdriver-java/console-logs.html[sample page]:
 
 [[gather-console-logs-example]]
 [.thumb]
@@ -49,7 +50,7 @@ BrowserWatcher has a configuration page, displayed when clicked in its icon. Thi
 [[popup-logs]]
 [.thumb]
 .BrowserWatcher popup configuration page (console log gathering)
-image::popup-logs-v1.png[scaledwidth=100%]
+image::popup-logs-v2.png[scaledwidth=100%]
 
 === Console Log Displaying
 In addition to log gathering, BrowserWatcher allows displaying the console logs (and listened events) as dialog notifications on the page. This feature can be enabled using the following button:
@@ -57,7 +58,7 @@ In addition to log gathering, BrowserWatcher allows displaying the console logs 
 [[popup-display]]
 [.thumb]
 .BrowserWatcher popup configuration page (console log displaying)
-image::popup-display-v1.png[scaledwidth=100%]
+image::popup-display-v2.png[scaledwidth=100%]
 
 The following picture shows an example of these notifications:
 
@@ -72,7 +73,7 @@ BrowserWatcher allows recording a browser tab. This feature requires a page load
 [[popup-rec]]
 [.thumb]
 .BrowserWatcher popup configuration page (recording)
-image::popup-rec-v1.png[scaledwidth=100%]
+image::popup-rec-v2.png[scaledwidth=100%]
 
 The recording is stopped using the same button. The recording file will be a WEBM file, available in your _Downloads_ folder.
 
@@ -83,6 +84,19 @@ There are some alternative ways to start and stop the recordings. First, by usin
 * `window.postMessage({ type: "startRecording" });` : For starting the recording. The recording file name will be auto generated, composed by the system timestamp plus the prefix `-browser-recording.webm`. 
 * `window.postMessage({ type: "startRecording", name: "myrecording" });`: For starting the recording and specifyng a custom file recording (`myrecording.webm` in this example).
 * `window.postMessage({ type: "startRecording" });` : For stopping the recording.
+
+=== Disabling CSP
+https://content-security-policy.com/[Content Security Policy (CSP)] is the name of an HTTP response header that browsers use to improve the security of web pages. CSP helps to protect from attacks such as cross-site scripting (XSS). Nevertheless, developers might want to disable the CSP headers received from the server for testing purposes. For this reason, BrowserWatcher allows bypassing these CSP headers. This feature (i.e., disabling CSP headers) is enabled by clicking the following button:
+
+[[popup-csp]]
+[.thumb]
+.BrowserWatcher popup configuration page (disable CSP headers)
+image::popup-csp-v2.png[scaledwidth=100%]
+
+In addition, this feature can be enabled/disabled by executing the following JavaScript commands:
+
+* `window.postMessage({ type: "disableCsp" });` : For disabling CSP.
+* `window.postMessage({ type: "enableCsp" });` : For enabling CSP (as it was by default).
 
 === JavaScript and CSS injection
 BrowserWatcher has an _options_ page, available by clicking on the following menu option:
