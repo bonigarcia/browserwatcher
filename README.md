@@ -7,12 +7,13 @@
 *BrowserWatcher* is a [browser extension] aimed to monitor web browsers such as Chrome, Firefox, or Edge. Its main features are:
 
 * Console log gathering.
-* Console log displaying (as Growl notifications).
+* Console log displaying (as *growl* notifications).
 * Browser tab recording.
+* Content Security Policy (CSP) disabling.
 * JavaScript and CSS injection.
 
 ## Documentation
-The documentation of [BrowserWatcher] is hosted as with GitHub Pages. This site contains all the features, examples, configuration, etc. of BrowserWatcher.
+The documentation of [BrowserWatcher] is hosted as with GitHub Pages. This site explains its features, examples, configuration, etc.
 
 ## About
 
