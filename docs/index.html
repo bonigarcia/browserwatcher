@@ -928,7 +928,7 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <div class="sect2">
 <h3 id="console-log-gathering"><a class="anchor" href="#console-log-gathering"></a>3.1. Console Log Gathering</h3>
 <div class="paragraph">
-<p>BrowserWatcher allows gathering the browser console following a cross-browser approach. Internally, it uses a <em>monkey patching</em> technique to override the JavaScript object <code>console</code>. In particular, the following methods are overridden: <code>log</code>, <code>warn</code>, <code>error</code>, <code>info</code>, <code>dir</code>, <code>time</code>, <code>timeEnd</code>, <code>table</code>, and <code>count</code>. In addition, it implements several JavaScript listeners for the following events: <code>error</code> (JavaScript error trace), <code>unhandledrejection</code> (when a JavaScript <em>Promise</em> with no rejection handler is rejected), <code>messageerror</code> (when the <em>Window</em> object receives a message that cannot be deserialized), and <code>securitypolicyviolation</code> (when the content security policy is violated). This way, the gathered logs are accessible in the property <code>_bwLogs</code> in the <code>console</code> object. The following picture shows an example of the gathered logs of a the <a href="https://bonigarcia.dev/selenium-webdriver-java/console-logs.html">sample page</a>:</p>
+<p>BrowserWatcher allows gathering the browser console following a cross-browser approach. Internally, it uses a <em>monkey patching</em> technique to override the JavaScript object <code>console</code>. In particular, the following methods are overridden: <code>log</code>, <code>warn</code>, <code>error</code>, <code>info</code>, <code>dir</code>, <code>time</code>, <code>timeEnd</code>, <code>table</code>, and <code>count</code>. In addition, it implements several JavaScript listeners for the following events: <code>error</code> (JavaScript error trace), <code>unhandledrejection</code> (when a JavaScript <em>Promise</em> with no rejection handler is rejected), <code>messageerror</code> (when the <em>Window</em> object receives a message that cannot be deserialized), <code>securitypolicyviolation</code> (when the content security policy is violated), and <code>xhr-error</code> (error response from <code>XMLHttpRequest</code>). This way, the gathered logs are accessible in the property <code>_bwLogs</code> in the <code>console</code> object. The following picture shows an example of the gathered logs of a the <a href="https://bonigarcia.dev/selenium-webdriver-java/console-logs.html">sample page</a>:</p>
 </div>
 <div id="gather-console-logs-example" class="imageblock thumb">
 <div class="content">
@@ -1192,7 +1192,7 @@ This feature is based on the API <a href="https://developer.chrome.com/docs/exte
 <div id="footer">
 <div id="footer-text">
 Version 1.1.0<br>
-Updated on 23-05-2022
+Updated on 24-05-2022
 </div>
 </div>
 </body>
