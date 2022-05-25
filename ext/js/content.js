@@ -327,7 +327,7 @@ let logGatheringCode = growlFunction + "var originalConsole = {}; (" + function(
             }
 
             if (console.growl) {
-                console.growl.error({ text: errorMessage, title: "listenerName." + listenerName });
+                console.growl.error({ text: errorMessage, title: "listener." + listenerName });
             }
 
             originalConsole.error(errorMessage);
@@ -346,7 +346,7 @@ let logGatheringCode = growlFunction + "var originalConsole = {}; (" + function(
                 }
 
                 if (console.growl) {
-                    console.growl.error({ text: errorMessage, title: "listenerName." + listenerName });
+                    console.growl.error({ text: errorMessage, title: "listener." + listenerName });
                 }
             }
         });
