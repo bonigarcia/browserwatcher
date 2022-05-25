@@ -12,6 +12,9 @@ var mediaRecorder;
 var isRecording = false;
 var disableCsp = false;
 
+// Uncomment the following line to disable CSP by default
+// disableCsp = true;
+
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
         if (request.type == "start-recording") {
