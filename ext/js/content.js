@@ -358,7 +358,7 @@ let logGatheringCode = growlFunction + "var originalConsole = {}; (" + function(
         let day = now.getDate().toString().padStart(2, "0");
         let month = (now.getMonth() + 1).toString().padStart(2, "0");
         let year = now.getFullYear();
-        let time = now.toLocaleTimeString();
+        let time = now.toLocaleTimeString("en-US", { hour12: false });
         let millis = now.getMilliseconds().toString().padStart(3, "0");
         return `${day}-${month}-${year} ${time}.${millis}`;
     }
