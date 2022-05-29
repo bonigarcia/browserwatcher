@@ -276,7 +276,7 @@ let logGatheringCode = growlFunction + "var originalConsole = {}; (" + function(
             let params = Array.prototype.slice.call(arguments, 1);
             let message = params.length ? Array.from(arguments) : String(arguments[0]);
             if (localStorage.getItem("_browserWatcherLog") && localStorage.getItem("_browserWatcherLog") == "true") {
-                console._bwLogs.push({ datetime: getDateTime(), wrapper: "console", type: methodName, message: message });
+                console._bwLogs.push({ datetime: getDateTime(), source: "console", type: methodName, message: message });
             }
 
             if (console.growl) {
@@ -323,7 +323,7 @@ let logGatheringCode = growlFunction + "var originalConsole = {}; (" + function(
                 }
             }
             if (localStorage.getItem("_browserWatcherLog") && localStorage.getItem("_browserWatcherLog") == "true") {
-                console._bwLogs.push({ datetime: getDateTime(), wrapper: "listener", type: listenerName, message: errorMessage });
+                console._bwLogs.push({ datetime: getDateTime(), source: "listener", type: listenerName, message: errorMessage });
             }
 
             if (console.growl) {
@@ -342,7 +342,7 @@ let logGatheringCode = growlFunction + "var originalConsole = {}; (" + function(
                 let errorMessage = `${method} ${url} ${this.status}`;
                 let listenerName = "xhr-error";
                 if (localStorage.getItem("_browserWatcherLog") && localStorage.getItem("_browserWatcherLog") == "true") {
-                    console._bwLogs.push({ datetime: getDateTime(), wrapper: "listener", type: listenerName, message: errorMessage });
+                    console._bwLogs.push({ datetime: getDateTime(), source: "listener", type: listenerName, message: errorMessage });
                 }
 
                 if (console.growl) {

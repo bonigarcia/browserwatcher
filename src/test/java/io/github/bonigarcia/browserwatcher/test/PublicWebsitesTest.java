@@ -64,7 +64,7 @@ class PublicWebsitesTest extends BrowserParentTest {
             if (logMessages != null) {
                 for (Map<String, Object> map : logMessages) {
                     pw.println("[" + map.get("datetime") + "] ["
-                            + map.get("wrapper").toString().toUpperCase() + "."
+                            + map.get("source").toString().toUpperCase() + "."
                             + map.get("type").toString().toUpperCase() + "] "
                             + map.get("message").toString());
                 }
