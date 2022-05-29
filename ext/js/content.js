@@ -259,7 +259,7 @@ let logGatheringCode = growlFunction + "var originalConsole = {}; (" + function(
     console._bwLogs = [];
 
     const consoleMethodNames = ["log", "warn", "error", "info", "dir", "time", "timeEnd", "table", "count"];
-    const eventListenerNames = ["error", "unhandledrejection", "messageerror", "securitypolicyviolation"];
+    const eventListenerNames = ["error", "unhandledrejection", "securitypolicyviolation"];
 
 
     if (localStorage.getItem("_browserWatcherGrowl") && localStorage.getItem("_browserWatcherGrowl") == "true") {
