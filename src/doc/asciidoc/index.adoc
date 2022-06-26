@@ -43,7 +43,7 @@ BrowserWatcher allows gathering the browser console following a cross-browser ap
 [[gather-console-logs-example]]
 [.thumb]
 .Console log gathering example
-image::gather-console-logs-example-v2.png[scaledwidth=100%]
+image::gather-console-logs-example-v3.png[scaledwidth=100%]
 
 BrowserWatcher has a configuration page, displayed when clicked in its icon. This page has three toggle buttons to set up different features. The first one allows enabling (and disabling) the log gathering feature.
 
@@ -65,7 +65,7 @@ The following picture shows an example of these notifications:
 [[display-console-logs-example]]
 [.thumb]
 .Display logs example
-image::display-console-logs-example-v2.png[scaledwidth=100%]
+image::display-console-logs-example-v3.png[scaledwidth=100%]
 
 === Tab recording
 BrowserWatcher allows recording a browser tab. This feature requires a page loaded in the current tab (in other words, it cannot record empty or configuration pages). Then, it can be started using the following button:
