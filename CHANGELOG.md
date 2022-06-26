@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.0] - 2022-06-26
+### Changed
+- Use label "source" instead of "wrapper" for gathered logs
+
+### Removed
+- Remove support for messageerror listener
+
+
 ## [1.1.0] - 2022-05-25
 ### Added
 - Include feature for disabling Content-Security-Policy (CSP)

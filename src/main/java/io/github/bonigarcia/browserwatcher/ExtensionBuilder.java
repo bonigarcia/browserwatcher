@@ -40,8 +40,9 @@ public class ExtensionBuilder {
     // static final String EXTENSION_NAME = "browserwatcher-display";
     // static final String EXTENSION_NAME = "browserwatcher-csp";
     // static final String EXTENSION_NAME = "browserwatcher-display-csp";
-    static final String EXTENSION_VERSION = "1.1.0";
+    static final String EXTENSION_VERSION = "1.2.0";
     static final String DEFAULT_EXTENSION = "crx";
+    // static final String DEFAULT_EXTENSION = "xpi";
 
     public File build() throws FileNotFoundException, IOException {
         return build(DEFAULT_EXTENSION);

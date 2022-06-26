@@ -775,7 +775,7 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <h1>BrowserWatcher</h1>
 <div class="details">
 <span id="author" class="author">Boni García</span><br>
-<span id="revdate">Version 1.1.0</span>
+<span id="revdate">Version 1.2.0</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -901,10 +901,10 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <div class="ulist">
 <ul>
 <li>
-<p><a href="https://github.com/bonigarcia/browserwatcher/releases/download/1.1.0/browserwatcher-1.1.0.crx">browserwatcher-1.1.0.crx</a>: Chrome Extension (CRX), for Chromium-based browsers, such as Chrome or Edge. To install it, you can drag and drop this file into the extensions page  (<em>chrome://extensions/</em>).</p>
+<p><a href="https://github.com/bonigarcia/browserwatcher/releases/download/1.2.0/browserwatcher-1.2.0.crx">browserwatcher-1.2.0.crx</a>: Chrome Extension (CRX), for Chromium-based browsers, such as Chrome or Edge. To install it, you can drag and drop this file into the extensions page  (<em>chrome://extensions/</em>).</p>
 </li>
 <li>
-<p><a href="https://github.com/bonigarcia/browserwatcher/releases/download/1.1.0/browserwatcher-1.1.0.xpi">browserwatcher-1.1.0.xpi</a>: XPInstall (XPI), for Firefox. To install it, visit the <em>about:addons</em> page and click on <em>Install Add-on From File&#8230;&#8203;</em>.</p>
+<p><a href="https://github.com/bonigarcia/browserwatcher/releases/download/1.2.0/browserwatcher-1.2.0.xpi">browserwatcher-1.2.0.xpi</a>: XPInstall (XPI), for Firefox. To install it, visit the <em>about:addons</em> page and click on <em>Install Add-on From File&#8230;&#8203;</em>.</p>
 </li>
 </ul>
 </div>
@@ -928,7 +928,7 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <div class="sect2">
 <h3 id="console-log-gathering"><a class="anchor" href="#console-log-gathering"></a>3.1. Console Log Gathering</h3>
 <div class="paragraph">
-<p>BrowserWatcher allows gathering the browser console following a cross-browser approach. Internally, it uses a <em>monkey patching</em> technique to override the JavaScript object <code>console</code>. In particular, the following methods are overridden: <code>log</code>, <code>warn</code>, <code>error</code>, <code>info</code>, <code>dir</code>, <code>time</code>, <code>timeEnd</code>, <code>table</code>, and <code>count</code>. In addition, it implements several JavaScript listeners for the following events: <code>error</code> (JavaScript error trace), <code>unhandledrejection</code> (when a JavaScript <em>Promise</em> with no rejection handler is rejected), <code>messageerror</code> (when the <em>Window</em> object receives a message that cannot be deserialized), <code>securitypolicyviolation</code> (when the content security policy is violated), and <code>xhr-error</code> (error response from <code>XMLHttpRequest</code>). This way, the gathered logs are accessible in the property <code>_bwLogs</code> in the <code>console</code> object. The following picture shows an example of the gathered logs of a the <a href="https://bonigarcia.dev/selenium-webdriver-java/console-logs.html">sample page</a>:</p>
+<p>BrowserWatcher allows gathering the browser console following a cross-browser approach. Internally, it uses a <em>monkey patching</em> technique to override the JavaScript object <code>console</code>. In particular, the following methods are overridden: <code>log</code>, <code>warn</code>, <code>error</code>, <code>info</code>, <code>dir</code>, <code>time</code>, <code>timeEnd</code>, <code>table</code>, and <code>count</code>. In addition, it implements several JavaScript listeners for the following events: <code>error</code> (JavaScript error trace), <code>unhandledrejection</code> (when a JavaScript <em>Promise</em> with no rejection handler is rejected), <code>securitypolicyviolation</code> (when the content security policy is violated), and <code>xhr-error</code> (error response from <code>XMLHttpRequest</code>). This way, the gathered logs are accessible in the property <code>_bwLogs</code> in the <code>console</code> object. The following picture shows an example of the gathered logs of a the <a href="https://bonigarcia.dev/selenium-webdriver-java/console-logs.html">sample page</a>:</p>
 </div>
 <div id="gather-console-logs-example" class="imageblock thumb">
 <div class="content">
@@ -1117,7 +1117,7 @@ This feature is based on the API <a href="https://developer.chrome.com/docs/exte
 
         <span class="keyword">for</span> (<span class="predefined-type">Map</span>&lt;<span class="predefined-type">String</span>, <span class="predefined-type">Object</span>&gt; map : logMessages) {
             log.debug(<span class="string"><span class="delimiter">&quot;</span><span class="content">[{}] [{}.{}] {}</span><span class="delimiter">&quot;</span></span>, map.get(<span class="string"><span class="delimiter">&quot;</span><span class="content">datetime</span><span class="delimiter">&quot;</span></span>),
-                    map.get(<span class="string"><span class="delimiter">&quot;</span><span class="content">wrapper</span><span class="delimiter">&quot;</span></span>).toString().toUpperCase(),
+                    map.get(<span class="string"><span class="delimiter">&quot;</span><span class="content">source</span><span class="delimiter">&quot;</span></span>).toString().toUpperCase(),
                     <span class="predefined-type">String</span>.format(<span class="string"><span class="delimiter">&quot;</span><span class="content">%1$-7s</span><span class="delimiter">&quot;</span></span>,
                             map.get(<span class="string"><span class="delimiter">&quot;</span><span class="content">type</span><span class="delimiter">&quot;</span></span>).toString().toUpperCase()),
                     map.get(<span class="string"><span class="delimiter">&quot;</span><span class="content">message</span><span class="delimiter">&quot;</span></span>));
@@ -1191,8 +1191,8 @@ This feature is based on the API <a href="https://developer.chrome.com/docs/exte
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 1.1.0<br>
-Updated on 24-05-2022
+Version 1.2.0<br>
+Updated on 26-06-2022
 </div>
 </div>
 </body>

@@ -2,7 +2,7 @@
     "description": "Browser extension for monitoring console logging, tab recording, CSP disabling, and JavaScript and CSS injection",
     "manifest_version": 2,
     "name": "BrowserWatcher",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "homepage_url": "https://github.com/bonigarcia/browserwatcher",
     "icons": {
         "80": "img/browserwatcher-80.png"
