@@ -5,7 +5,7 @@ Version {project-version}
 :revnumber: {project-version}
 
 == Motivation
-When an automated end-to-end test (e.g., with https://www.selenium.dev/documentation/webdriver/[Selenium WebDriver]) fails, it can be challenging to discover the underlying error cause. A common strategy is to gather the browser console logs to discard problems on the client-side. The problem is the browser log gathering feature is not standard in the https://www.w3.org/TR/webdriver/[W3C WebDriver] specification. The driver for Chrome (i.e., https://chromedriver.chromium.org/[chromedriver]) provides a custom implementation for log gathering. But this feature is not available in other drivers such as https://github.com/mozilla/geckodriver/[geckodriver] (i.e., the driver for Firefox). A standard solution is proposed in the new https://w3c.github.io/webdriver-bidi/[W3C WebDriver BiDi], but this approach is not yet implemented in all drivers (e.g., geckodriver).
+When an automated end-to-end test (e.g., with https://www.selenium.dev/documentation/webdriver/[Selenium WebDriver]) fails, it can be challenging to discover the underlying error cause. A common strategy is to gather the browser console logs to discard problems on the client-side. The problem is the browser log gathering feature is not standard in the https://www.w3.org/TR/webdriver/[W3C WebDriver] specification. The driver for Chrome (i.e., https://chromedriver.chromium.org/[chromedriver]) provides a custom implementation for log gathering using https://selenide.org/2019/12/16/advent-calendar-browser-logs/[LoggingPreferences]. Nevertheless, this feature is not available in other drivers such as https://github.com/mozilla/geckodriver/[geckodriver] (i.e., the driver for Firefox). A standard solution is proposed in the new https://w3c.github.io/webdriver-bidi/[W3C WebDriver BiDi], but this approach is not yet widely adopted in all browsers.
 
 
 .What is BrowserWatcher?
@@ -14,11 +14,9 @@ BrowserWatcher is a https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/Web
 ****
 
 ifndef::backend-pdf[]
-ifndef::backend-epub3[]
 ++++
 include::carbon.html[]
 ++++
-endif::[]
 endif::[]
 
 == Setup
@@ -188,4 +186,4 @@ Or the following journal papers:
 * García, Boni, and Juan Carlos Dueñas. "https://www.rintonpress.com/journals/jweonline.html#v14n56[Web browsing automation for applications quality control]." _Journal of web engineering_ (2015): 474-502.
 
 == About
-BrowserWatcher (Copyright © 2021-2022) is an open-source project created and maintained by https://bonigarcia.dev/[Boni García] (https://twitter.com/boni_gg[@boni_gg]), licensed under the terms of https://www.apache.org/licenses/LICENSE-2.0[Apache 2.0 License]. This documentation (also available in link:browserwatcher.pdf[PDF] and link:browserwatcher.epub[EPUB]) is released under the terms of https://creativecommons.org/licenses/by-nc-sa/2.0/[CC BY-NC-SA 2.0].
+BrowserWatcher (Copyright © 2021-2022) is an open-source project created and maintained by https://bonigarcia.dev/[Boni García] (https://twitter.com/boni_gg[@boni_gg]), licensed under the terms of https://www.apache.org/licenses/LICENSE-2.0[Apache 2.0 License]. This documentation (also available in link:browserwatcher.pdf[PDF]) is released under the terms of https://creativecommons.org/licenses/by-nc-sa/2.0/[CC BY-NC-SA 2.0].
