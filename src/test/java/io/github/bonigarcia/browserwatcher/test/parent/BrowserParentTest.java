@@ -84,8 +84,9 @@ public class BrowserParentTest {
             break;
         case EDGE:
             EdgeOptions edgeOptions = new EdgeOptions();
+            edgeOptions.addArguments("--remote-allow-origins=*");
             edgeOptions
-                    .addArguments("--whitelisted-extension-id=" + EXTENSION_ID);
+                    .addArguments("--allowlisted-extension-id=" + EXTENSION_ID);
             edgeOptions
                     .addArguments("load-extension=" + extSrc.getAbsolutePath());
             if (isWebRtc) {
@@ -97,8 +98,9 @@ public class BrowserParentTest {
         case CHROME:
         default:
             ChromeOptions chromeOptions = new ChromeOptions();
+            chromeOptions.addArguments("--remote-allow-origins=*");
             chromeOptions
-                    .addArguments("--whitelisted-extension-id=" + EXTENSION_ID);
+            .addArguments("--allowlisted-extension-id=" + EXTENSION_ID);
             chromeOptions
                     .addArguments("load-extension=" + extSrc.getAbsolutePath());
             if (isWebRtc) {
