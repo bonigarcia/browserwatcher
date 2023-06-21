@@ -22,6 +22,7 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.header.writers.XXssProtectionHeaderWriter;
 
 import io.github.bonigarcia.browserwatcher.test.parent.LocalHostParentTest;
 import io.github.bonigarcia.wdm.config.DriverManagerType;
@@ -33,8 +34,11 @@ public class ContentSecurityPolictyTest extends LocalHostParentTest {
         @Bean
         public SecurityFilterChain filterChain(HttpSecurity http)
                 throws Exception {
-            http.headers().xssProtection().and()
-                    .contentSecurityPolicy("default-src 'self'");
+            http.headers(headers -> headers
+                    .xssProtection(xss -> xss.headerValue(
+                            XXssProtectionHeaderWriter.HeaderValue.ENABLED_MODE_BLOCK))
+                    .contentSecurityPolicy(
+                            cps -> cps.policyDirectives("default-src 'self'")));
             return http.build();
         }
     }
