@@ -81,7 +81,7 @@ There are some alternative ways to start and stop the recordings. First, by usin
 
 * `window.postMessage({ type: "startRecording" });` : For starting the recording. The recording file name will be auto generated, composed by the system timestamp plus the prefix `-browser-recording.webm`. 
 * `window.postMessage({ type: "startRecording", name: "myrecording" });`: For starting the recording and specifyng a custom file recording (`myrecording.webm` in this example).
-* `window.postMessage({ type: "startRecording" });` : For stopping the recording.
+* `window.postMessage({ type: "stopRecording" });` : For stopping the recording.
 
 === Disabling CSP
 https://content-security-policy.com/[Content Security Policy (CSP)] is the name of an HTTP response header that browsers use to improve the security of web pages. CSP helps to protect from attacks such as cross-site scripting (XSS). Nevertheless, developers might want to disable the CSP headers received from the server for testing purposes. For this reason, BrowserWatcher allows bypassing these CSP headers. This feature (i.e., disabling CSP headers) is enabled by clicking the following button:
