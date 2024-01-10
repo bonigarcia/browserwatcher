@@ -20,7 +20,7 @@
         <commons-io.version>2.15.1</commons-io.version>
         <httpclient5.version>5.3</httpclient5.version>
 
-        <maven-surefire-plugin.version>3.2.3</maven-surefire-plugin.version>
+        <maven-surefire-plugin.version>3.2.5</maven-surefire-plugin.version>
         <maven-asciidoctor-plugin.version>2.2.4</maven-asciidoctor-plugin.version>
         <asciidoctorj-pdf.version>2.3.10</asciidoctorj-pdf.version>
         <maven-site.version>3.12.1</maven-site.version>
