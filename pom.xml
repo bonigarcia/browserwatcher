@@ -18,7 +18,7 @@
         <selenium.version>4.28.1</selenium.version>
         <wdm.version>5.9.2</wdm.version>
         <commons-io.version>2.18.0</commons-io.version>
-        <httpclient5.version>5.4.1</httpclient5.version>
+        <httpclient5.version>5.4.2</httpclient5.version>
 
         <maven-surefire-plugin.version>3.5.2</maven-surefire-plugin.version>
         <maven-asciidoctor-plugin.version>3.1.1</maven-asciidoctor-plugin.version>
