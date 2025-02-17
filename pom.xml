@@ -16,7 +16,7 @@
 
     <properties>
         <selenium.version>4.28.1</selenium.version>
-        <wdm.version>5.9.2</wdm.version>
+        <wdm.version>5.9.3</wdm.version>
         <commons-io.version>2.18.0</commons-io.version>
         <httpclient5.version>5.4.2</httpclient5.version>
 
