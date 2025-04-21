@@ -24,8 +24,17 @@ jobs:
         distribution: 'temurin'
         java-version: ${{ matrix.java }}
     - name: Start Xvfb
-      run: Xvfb :99 &
-    - name: Run tests on Linux and Mac
+      if: matrix.os == 'ubuntu-latest'
+      run: |
+        Xvfb $DISPLAY &
+    - name: Install browsers in macOS
+      if: matrix.os == 'macos-latest'
+      run: |
+        brew install --cask firefox
+        /Applications/Firefox.app/Contents/MacOS/firefox --version
+        brew install --cask microsoft-edge
+        "/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge" -version
+    - name: Run tests on Linux and macOS
       if: matrix.os != 'windows-latest'
       run: mvn -B test
     - name: Run recording test on Windows
