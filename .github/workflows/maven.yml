@@ -34,16 +34,26 @@ jobs:
         /Applications/Firefox.app/Contents/MacOS/firefox --version
         brew install --cask microsoft-edge
         "/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge" -version
-    - name: Run tests on Linux and macOS
-      if: matrix.os != 'windows-latest'
+    - name: Run tests
       run: mvn -B test
-    - name: Run recording test on Windows
-      if: matrix.os == 'windows-latest'
-      run: mvn -B test -Dtest=RecordingTest
+    - name: Store recordings on Linux
+      if: always() && matrix.os == 'ubuntu-latest'
+      uses: actions/upload-artifact@v4.6.2
+      with:
+        name: linux-recordings
+        path: |
+          /home/runner/Downloads/*.webm
     - name: Store recordings on Windows
       if: always() && matrix.os == 'windows-latest'
       uses: actions/upload-artifact@v4.6.2
       with:
-        name: webm-files
+        name: win-recordings
         path: |
           C:\Users\runneradmin\Downloads\*.webm
+    - name: Store recordings on macOS
+      if: always() && matrix.os == 'macos-latest'
+      uses: actions/upload-artifact@v4.6.2
+      with:
+        name: macos-recordings
+        path: |
+          /Users/runner/Downloads/*.webm
