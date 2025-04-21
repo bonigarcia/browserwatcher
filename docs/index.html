@@ -784,16 +784,20 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <li><a href="#setup">2. Setup</a></li>
 <li><a href="#features">3. Features</a>
 <ul class="sectlevel2">
-<li><a href="#browserwatcher-1-mv2">3.1. BrowserWatcher 1 (MV2)</a>
+<li><a href="#browserwatcher-2-mv3">3.1. BrowserWatcher 2 (MV3)</a>
 <ul class="sectlevel3">
-<li><a href="#console-log-gathering">3.1.1. Console Log Gathering</a></li>
-<li><a href="#console-log-displaying">3.1.2. Console Log Displaying</a></li>
-<li><a href="#video-recording">3.1.3. Video recording</a></li>
-<li><a href="#disabling-csp">3.1.4. Disabling CSP</a></li>
-<li><a href="#javascript-and-css-injection">3.1.5. JavaScript and CSS injection</a></li>
+<li><a href="#video-recording">3.1.1. Video recording</a></li>
 </ul>
 </li>
-<li><a href="#browserwatcher-2-mv3">3.2. BrowserWatcher 2 (MV3)</a></li>
+<li><a href="#browserwatcher-1-mv2">3.2. BrowserWatcher 1 (MV2)</a>
+<ul class="sectlevel3">
+<li><a href="#console-log-gathering">3.2.1. Console Log Gathering</a></li>
+<li><a href="#console-log-displaying">3.2.2. Console Log Displaying</a></li>
+<li><a href="#video-recording-2">3.2.3. Video recording</a></li>
+<li><a href="#disabling-csp">3.2.4. Disabling CSP</a></li>
+<li><a href="#javascript-and-css-injection">3.2.5. JavaScript and CSS injection</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a href="#webdrivermanager">4. WebDriverManager</a></li>
@@ -907,24 +911,24 @@ BrowserWatcher 1.x has been implemented using manifest version 2 (MV2), and its 
 <div class="ulist">
 <ul>
 <li>
-<p>BrowserWatcher 1 (MV2):</p>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="https://github.com/bonigarcia/browserwatcher/releases/download/1.2.0/browserwatcher-1.2.0.crx">browserwatcher-2.0.0.crx</a>: Chrome Extension (CRX), for Chromium-based browsers, such as Chrome or Edge. To install it, you can drag and drop this file into the extensions page  (<em>chrome://extensions/</em>).</p>
-</li>
-<li>
-<p><a href="https://github.com/bonigarcia/browserwatcher/releases/download/1.2.0/browserwatcher-1.2.0.xpi">browserwatcher-2.0.0.xpi</a>: XPInstall (XPI), for Firefox. To install it, visit the <em>about:addons</em> page and click on <em>Install Add-on From File&#8230;&#8203;</em>.</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
 <p>BrowserWatcher 2 (MV3):</p>
 <div class="ulist">
 <ul>
 <li>
 <p><a href="https://github.com/bonigarcia/browserwatcher/releases/download/2.0.0/browserwatcher-2.0.0.crx">browserwatcher-2.0.0.crx</a>: Chrome Extension (CRX), for Chromium-based browsers, such as Chrome or Edge. To install it, you can drag and drop this file into the extensions page  (<em>chrome://extensions/</em>).</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>BrowserWatcher 1 (MV2):</p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://github.com/bonigarcia/browserwatcher/releases/download/1.2.0/browserwatcher-1.2.0.crx">browserwatcher-1.2.0.crx</a>: Chrome Extension (CRX), for Chromium-based browsers.</p>
+</li>
+<li>
+<p><a href="https://github.com/bonigarcia/browserwatcher/releases/download/1.2.0/browserwatcher-1.2.0.xpi">browserwatcher-1.2.0.xpi</a>: XPInstall (XPI), for Firefox. To install it, visit the <em>about:addons</em> page and click on <em>Install Add-on From File&#8230;&#8203;</em>.</p>
 </li>
 </ul>
 </div>
@@ -949,9 +953,55 @@ BrowserWatcher 1.x has been implemented using manifest version 2 (MV2), and its 
 <div class="title">Figure 1. BrowserWatcher installed in Chrome</div>
 </div>
 <div class="sect2">
-<h3 id="browserwatcher-1-mv2"><a class="anchor" href="#browserwatcher-1-mv2"></a>3.1. BrowserWatcher 1 (MV2)</h3>
+<h3 id="browserwatcher-2-mv3"><a class="anchor" href="#browserwatcher-2-mv3"></a>3.1. BrowserWatcher 2 (MV3)</h3>
 <div class="sect3">
-<h4 id="console-log-gathering"><a class="anchor" href="#console-log-gathering"></a>3.1.1. Console Log Gathering</h4>
+<h4 id="video-recording"><a class="anchor" href="#video-recording"></a>3.1.1. Video recording</h4>
+<div class="paragraph">
+<p>BrowserWatcher 2 also allows us to record the current browser tab. The recording can be started and stopped using the following popup:</p>
+</div>
+<div id="popup-rec" class="imageblock thumb">
+<div class="content">
+<img src="img/popup-rec-mv3-v1.png" alt="popup rec mv3 v1">
+</div>
+<div class="title">Figure 2. BrowserWatcher popup configuration page (recording)</div>
+</div>
+<div class="paragraph">
+<p>The recording is stopped using the same button. The recording file will be a WEBM file, available in your <em>Downloads</em> folder.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+This feature is based on the API <a href="https://developer.chrome.com/docs/extensions/reference/tabCapture/">tabCapture</a>. Therefore, this feature is only available in Chromium-based browser.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>There are some alternative ways to start and stop the recordings. First, by using the keyboard shortcut <code>Alt+R</code> (for starting the recording) and <code>Alt+W</code> (for stopping the recording). Second, by executing the following JavaScript commands:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>window.postMessage({ type: "startRecording" }, "*");</code> : For starting the recording. The recording file name will be auto generated, composed by the system timestamp plus the prefix <code>-browser-recording.webm</code>.</p>
+</li>
+<li>
+<p><code>window.postMessage({ type: "startRecording", name: "myrecording" }, "*");</code>: For starting the recording and specifyng a custom file recording (<code>myrecording.webm</code> in this example).</p>
+</li>
+<li>
+<p><code>window.postMessage({ type: "stopRecording" }, "*");</code> : For stopping the recording.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="browserwatcher-1-mv2"><a class="anchor" href="#browserwatcher-1-mv2"></a>3.2. BrowserWatcher 1 (MV2)</h3>
+<div class="sect3">
+<h4 id="console-log-gathering"><a class="anchor" href="#console-log-gathering"></a>3.2.1. Console Log Gathering</h4>
 <div class="paragraph">
 <p>BrowserWatcher allows gathering the browser console following a cross-browser approach. Internally, it uses a <em>monkey patching</em> technique to override the JavaScript object <code>console</code>. In particular, the following methods are overridden: <code>log</code>, <code>warn</code>, <code>error</code>, <code>info</code>, <code>dir</code>, <code>time</code>, <code>timeEnd</code>, <code>table</code>, and <code>count</code>. In addition, it implements several JavaScript listeners for the following events: <code>error</code> (JavaScript error trace), <code>unhandledrejection</code> (when a JavaScript <em>Promise</em> with no rejection handler is rejected), <code>securitypolicyviolation</code> (when the content security policy is violated), and <code>xhr-error</code> (error response from <code>XMLHttpRequest</code>). This way, the gathered logs are accessible in the property <code>_bwLogs</code> in the <code>console</code> object. The following picture shows an example of the gathered logs of a the <a href="https://bonigarcia.dev/selenium-webdriver-java/console-logs.html">sample page</a>:</p>
 </div>
@@ -959,7 +1009,7 @@ BrowserWatcher 1.x has been implemented using manifest version 2 (MV2), and its 
 <div class="content">
 <img src="img/gather-console-logs-example-v3.png" alt="gather console logs example v3">
 </div>
-<div class="title">Figure 2. Console log gathering example</div>
+<div class="title">Figure 3. Console log gathering example</div>
 </div>
 <div class="paragraph">
 <p>BrowserWatcher has a configuration page, displayed when clicked in its icon. This page has three toggle buttons to set up different features. The first one allows enabling (and disabling) the log gathering feature.</p>
@@ -968,11 +1018,11 @@ BrowserWatcher 1.x has been implemented using manifest version 2 (MV2), and its 
 <div class="content">
 <img src="img/popup-logs-v2.png" alt="popup logs v2">
 </div>
-<div class="title">Figure 3. BrowserWatcher popup configuration page (console log gathering)</div>
+<div class="title">Figure 4. BrowserWatcher popup configuration page (console log gathering)</div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="console-log-displaying"><a class="anchor" href="#console-log-displaying"></a>3.1.2. Console Log Displaying</h4>
+<h4 id="console-log-displaying"><a class="anchor" href="#console-log-displaying"></a>3.2.2. Console Log Displaying</h4>
 <div class="paragraph">
 <p>In addition to log gathering, BrowserWatcher allows displaying the console logs (and listened events) as dialog notifications on the page. This feature can be enabled using the following button:</p>
 </div>
@@ -980,7 +1030,7 @@ BrowserWatcher 1.x has been implemented using manifest version 2 (MV2), and its 
 <div class="content">
 <img src="img/popup-display-v2.png" alt="popup display v2">
 </div>
-<div class="title">Figure 4. BrowserWatcher popup configuration page (console log displaying)</div>
+<div class="title">Figure 5. BrowserWatcher popup configuration page (console log displaying)</div>
 </div>
 <div class="paragraph">
 <p>The following picture shows an example of these notifications:</p>
@@ -989,11 +1039,11 @@ BrowserWatcher 1.x has been implemented using manifest version 2 (MV2), and its 
 <div class="content">
 <img src="img/display-console-logs-example-v3.png" alt="display console logs example v3">
 </div>
-<div class="title">Figure 5. Display logs example</div>
+<div class="title">Figure 6. Display logs example</div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="video-recording"><a class="anchor" href="#video-recording"></a>3.1.3. Video recording</h4>
+<h4 id="video-recording-2"><a class="anchor" href="#video-recording-2"></a>3.2.3. Video recording</h4>
 <div class="paragraph">
 <p>BrowserWatcher allows recording a browser tab. This feature requires a page loaded in the current tab (in other words, it cannot record empty or configuration pages). Then, it can be started using the following button:</p>
 </div>
@@ -1001,7 +1051,7 @@ BrowserWatcher 1.x has been implemented using manifest version 2 (MV2), and its 
 <div class="content">
 <img src="img/popup-rec-v2.png" alt="popup rec v2">
 </div>
-<div class="title">Figure 6. BrowserWatcher popup configuration page (recording)</div>
+<div class="title">Figure 7. BrowserWatcher popup configuration page (recording)</div>
 </div>
 <div class="paragraph">
 <p>The recording is stopped using the same button. The recording file will be a WEBM file, available in your <em>Downloads</em> folder.</p>
@@ -1036,7 +1086,7 @@ This feature is based on the API <a href="https://developer.chrome.com/docs/exte
 </div>
 </div>
 <div class="sect3">
-<h4 id="disabling-csp"><a class="anchor" href="#disabling-csp"></a>3.1.4. Disabling CSP</h4>
+<h4 id="disabling-csp"><a class="anchor" href="#disabling-csp"></a>3.2.4. Disabling CSP</h4>
 <div class="paragraph">
 <p><a href="https://content-security-policy.com/">Content Security Policy (CSP)</a> is the name of an HTTP response header that browsers use to improve the security of web pages. CSP helps to protect from attacks such as cross-site scripting (XSS). Nevertheless, developers might want to disable the CSP headers received from the server for testing purposes. For this reason, BrowserWatcher allows bypassing these CSP headers. This feature (i.e., disabling CSP headers) is enabled by clicking the following button:</p>
 </div>
@@ -1044,7 +1094,7 @@ This feature is based on the API <a href="https://developer.chrome.com/docs/exte
 <div class="content">
 <img src="img/popup-csp-v2.png" alt="popup csp v2">
 </div>
-<div class="title">Figure 7. BrowserWatcher popup configuration page (disable CSP headers)</div>
+<div class="title">Figure 8. BrowserWatcher popup configuration page (disable CSP headers)</div>
 </div>
 <div class="paragraph">
 <p>In addition, this feature can be enabled/disabled by executing the following JavaScript commands:</p>
@@ -1061,7 +1111,7 @@ This feature is based on the API <a href="https://developer.chrome.com/docs/exte
 </div>
 </div>
 <div class="sect3">
-<h4 id="javascript-and-css-injection"><a class="anchor" href="#javascript-and-css-injection"></a>3.1.5. JavaScript and CSS injection</h4>
+<h4 id="javascript-and-css-injection"><a class="anchor" href="#javascript-and-css-injection"></a>3.2.5. JavaScript and CSS injection</h4>
 <div class="paragraph">
 <p>BrowserWatcher has an <em>options</em> page, available by clicking on the following menu option:</p>
 </div>
@@ -1069,7 +1119,7 @@ This feature is based on the API <a href="https://developer.chrome.com/docs/exte
 <div class="content">
 <img src="img/options-v1.png" alt="options v1">
 </div>
-<div class="title">Figure 8. BrowserWatcher menu option</div>
+<div class="title">Figure 9. BrowserWatcher menu option</div>
 </div>
 <div class="paragraph">
 <p>This options page allows injecting JavaScript code, libraries, and CSS stylesheets. The following screenshot shows an example that injects an online JavaScript library to highlight the mouse. The resulting mouse pointer is shown subsequently.</p>
@@ -1078,13 +1128,13 @@ This feature is based on the API <a href="https://developer.chrome.com/docs/exte
 <div class="content">
 <img src="img/options-saved-v1.png" alt="options saved v1">
 </div>
-<div class="title">Figure 9. BrowserWatcher options page (example for highlighting mouse)</div>
+<div class="title">Figure 10. BrowserWatcher options page (example for highlighting mouse)</div>
 </div>
 <div id="js-css-injection-example" class="imageblock thumb">
 <div class="content">
 <img src="img/js-css-injection-example-v1.png" alt="js css injection example v1">
 </div>
-<div class="title">Figure 10. JavaScript and CSS injection page example (highlighting mouse)</div>
+<div class="title">Figure 11. JavaScript and CSS injection page example (highlighting mouse)</div>
 </div>
 <div class="paragraph">
 <p>Alternatively, this feature can be enabled by executing the following JavaScript commands:</p>
@@ -1102,49 +1152,6 @@ This feature is based on the API <a href="https://developer.chrome.com/docs/exte
 </li>
 </ul>
 </div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="browserwatcher-2-mv3"><a class="anchor" href="#browserwatcher-2-mv3"></a>3.2. BrowserWatcher 2 (MV3)</h3>
-<div class="paragraph">
-<p>BrowserWatcher 2 also allows us to record the current browser tab. The recording can be started and stopped using the following popup:</p>
-</div>
-<div id="popup-rec" class="imageblock thumb">
-<div class="content">
-<img src="img/popup-rec-mv3-v1.png" alt="popup rec mv3 v1">
-</div>
-<div class="title">Figure 11. BrowserWatcher popup configuration page (recording)</div>
-</div>
-<div class="paragraph">
-<p>The recording is stopped using the same button. The recording file will be a WEBM file, available in your <em>Downloads</em> folder.</p>
-</div>
-<div class="admonitionblock warning">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-warning" title="Warning"></i>
-</td>
-<td class="content">
-This feature is based on the API <a href="https://developer.chrome.com/docs/extensions/reference/tabCapture/">tabCapture</a>. Therefore, this feature is only available in Chromium-based browser.
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>There are some alternative ways to start and stop the recordings. First, by using the keyboard shortcut <code>Alt+R</code> (for starting the recording) and <code>Alt+W</code> (for stopping the recording). Second, by executing the following JavaScript commands:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>window.postMessage({ type: "startRecording" }, "*");</code> : For starting the recording. The recording file name will be auto generated, composed by the system timestamp plus the prefix <code>-browser-recording.webm</code>.</p>
-</li>
-<li>
-<p><code>window.postMessage({ type: "startRecording", name: "myrecording" }, "*");</code>: For starting the recording and specifyng a custom file recording (<code>myrecording.webm</code> in this example).</p>
-</li>
-<li>
-<p><code>window.postMessage({ type: "stopRecording" }, "*");</code> : For stopping the recording.</p>
-</li>
-</ul>
 </div>
 </div>
 </div>

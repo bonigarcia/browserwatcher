@@ -23,12 +23,13 @@ endif::[]
 == Setup
 BrowserWatcher can be used in two different ways. First, it can be installed as an extension in any browser implementing the https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions[browser extension API] (such as Chrome, Firefox, Edge, etc.). You can use the following files to install BrowserWatcher in your browser:
 
-* BrowserWatcher 1 (MV2):
-** https://github.com/bonigarcia/browserwatcher/releases/download/1.2.0/browserwatcher-1.2.0.crx[browserwatcher-{project-version}.crx]: Chrome Extension (CRX), for Chromium-based browsers, such as Chrome or Edge. To install it, you can drag and drop this file into the extensions page  (_chrome://extensions/_).
-** https://github.com/bonigarcia/browserwatcher/releases/download/1.2.0/browserwatcher-1.2.0.xpi[browserwatcher-{project-version}.xpi]: XPInstall (XPI), for Firefox. To install it, visit the _about:addons_ page and click on _Install Add-on From File..._.
-
 * BrowserWatcher 2 (MV3):
 ** https://github.com/bonigarcia/browserwatcher/releases/download/{project-version}/browserwatcher-{project-version}.crx[browserwatcher-{project-version}.crx]: Chrome Extension (CRX), for Chromium-based browsers, such as Chrome or Edge. To install it, you can drag and drop this file into the extensions page  (_chrome://extensions/_).
+
+* BrowserWatcher 1 (MV2):
+** https://github.com/bonigarcia/browserwatcher/releases/download/1.2.0/browserwatcher-1.2.0.crx[browserwatcher-1.2.0.crx]: Chrome Extension (CRX), for Chromium-based browsers.
+** https://github.com/bonigarcia/browserwatcher/releases/download/1.2.0/browserwatcher-1.2.0.xpi[browserwatcher-1.2.0.xpi]: XPInstall (XPI), for Firefox. To install it, visit the _about:addons_ page and click on _Install Add-on From File..._.
+
 
 Second, you can use BrowserWatcher automatically through https://bonigarcia.dev/webdrivermanager/[WebDriverManager]. See the section about <<WebDriverManager>> for a basic introduction to this use.
 
@@ -39,6 +40,25 @@ Once BrowserWatcher is installed in a browser, you can see its logo in the brows
 [.thumb]
 .BrowserWatcher installed in Chrome
 image::browserwatcher-install-v1.png[scaledwidth=100%]
+
+=== BrowserWatcher 2 (MV3)
+==== Video recording
+BrowserWatcher 2 also allows us to record the current browser tab. The recording can be started and stopped using the following popup:
+
+[[popup-rec]]
+[.thumb]
+.BrowserWatcher popup configuration page (recording)
+image::popup-rec-mv3-v1.png[scaledwidth=100%]
+
+The recording is stopped using the same button. The recording file will be a WEBM file, available in your _Downloads_ folder.
+
+WARNING: This feature is based on the API https://developer.chrome.com/docs/extensions/reference/tabCapture/[tabCapture]. Therefore, this feature is only available in Chromium-based browser.
+
+There are some alternative ways to start and stop the recordings. First, by using the keyboard shortcut `Alt+R` (for starting the recording) and `Alt+W` (for stopping the recording). Second, by executing the following JavaScript commands:
+
+* `window.postMessage({ type: "startRecording" }, "*");` : For starting the recording. The recording file name will be auto generated, composed by the system timestamp plus the prefix `-browser-recording.webm`. 
+* `window.postMessage({ type: "startRecording", name: "myrecording" }, "*");`: For starting the recording and specifyng a custom file recording (`myrecording.webm` in this example).
+* `window.postMessage({ type: "stopRecording" }, "*");` : For stopping the recording.
 
 === BrowserWatcher 1 (MV2)
 ==== Console Log Gathering
@@ -127,24 +147,6 @@ Alternatively, this feature can be enabled by executing the following JavaScript
 * `window.postMessage({ type: "injectJavaScriptCode", js: "jsCode" });`
 * `window.postMessage({ type: "injectJavaScriptLibs", lib: "jsLib" });`
 * `window.postMessage({ type: "injectCssSheets", css: "cssSheet" });`
-
-=== BrowserWatcher 2 (MV3)
-BrowserWatcher 2 also allows us to record the current browser tab. The recording can be started and stopped using the following popup:
-
-[[popup-rec]]
-[.thumb]
-.BrowserWatcher popup configuration page (recording)
-image::popup-rec-mv3-v1.png[scaledwidth=100%]
-
-The recording is stopped using the same button. The recording file will be a WEBM file, available in your _Downloads_ folder.
-
-WARNING: This feature is based on the API https://developer.chrome.com/docs/extensions/reference/tabCapture/[tabCapture]. Therefore, this feature is only available in Chromium-based browser.
-
-There are some alternative ways to start and stop the recordings. First, by using the keyboard shortcut `Alt+R` (for starting the recording) and `Alt+W` (for stopping the recording). Second, by executing the following JavaScript commands:
-
-* `window.postMessage({ type: "startRecording" }, "*");` : For starting the recording. The recording file name will be auto generated, composed by the system timestamp plus the prefix `-browser-recording.webm`. 
-* `window.postMessage({ type: "startRecording", name: "myrecording" }, "*");`: For starting the recording and specifyng a custom file recording (`myrecording.webm` in this example).
-* `window.postMessage({ type: "stopRecording" }, "*");` : For stopping the recording.
 
 
 == WebDriverManager
