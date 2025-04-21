@@ -1,38 +1,46 @@
-const fps = 60;
-const recordingDelayMs = 1000;
-const defaultWidth = 1920;
-const detaultHeight = 1080;
-const recordingMimeType = "video/webm;codecs=vp8,opus";
-const recordingPrefix = "-browser-recording";
-const recordingExtension = ".webm";
-const normalLogo = "../img/browserwatcher-80.png";
-const recorderLogo = "../img/browserwatcher-rec-80.png";
+/*
+ * (C) Copyright 2025 Boni Garcia (https://bonigarcia.github.io/)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
 
-var mediaRecorder;
-var isRecording = false;
-var disableCsp = false;
+let isRecording = false;
 
-// Uncomment the following line to disable CSP by default
-// disableCsp = true;
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    const handleAsync = async () => {
+        if (message.action === 'start-recording') {
+            try {
+                await startRecording(message.name);
+                isRecording = true;
+                sendResponse({status: 'recording-started'});
+            } catch (error) {
+                sendResponse({status: 'error', message: error.message});
+            }
+        }
+        else if (message.action === 'stop-recording') {
+            await stopRecording();
+            isRecording = false;
+            sendResponse({status: 'recording-stopped'});
+        }
+        else if (message.action === 'get-recording-state') {
+            sendResponse({isRecording});
+        }
+    };
 
-chrome.runtime.onMessage.addListener(
-    function(request, sender, sendResponse) {
-        if (request.type == "start-recording") {
-            startRecording(request.name);
-        }
-        else if (request.type == "stop-recording") {
-            stopRecording();
-        }
-        else if (request.type == "inject-js-code") {
-            injectCode(request.code);
-        }
-        else if (request.type == "disable-csp") {
-            disableCsp = true;
-        }
-        else if (request.type == "enable-csp") {
-            disableCsp = false;
-        }
-    });
+    handleAsync();
+    return true; // Required for async response
+});
 
 chrome.commands.onCommand.addListener(function(command) {
     if (command == "start") {
@@ -42,156 +50,31 @@ chrome.commands.onCommand.addListener(function(command) {
     }
 });
 
-function startRecording(recordingName) {
-    let width = defaultWidth;
-    let height = detaultHeight;
+async function startRecording(recordingName) {
+    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
 
-    chrome.windows.getCurrent(function(window) {
-        width = window.width;
-        height = window.height;
-    })
-    chrome.tabs.getSelected(null, function(tab) {
-        chrome.tabCapture.capture({
-            video: true,
-            audio: true,
-            videoConstraints: {
-                mandatory: {
-                    chromeMediaSource: 'tab',
-                    minWidth: width,
-                    minHeight: height,
-                    maxWidth: width,
-                    maxHeight: height,
-                    maxFrameRate: fps
-                },
-            },
-        }, function(stream) {
-            let mediaConstraints = {
-                mimeType: recordingMimeType
-            }
-            mediaRecorder = new MediaRecorder(stream, mediaConstraints);
-
-            // Hide the downloads shelf
-            chrome.downloads.setShelfEnabled(false);
-
-            // Write stream to filesystem asynchronously
-            const { readable, writable } = new TransformStream({
-                transform: (chunk, ctrl) => chunk.arrayBuffer().then(b => ctrl.enqueue(new Uint8Array(b)))
-            })
-            const writer = writable.getWriter()
-            let recName = recordingName ? recordingName : getDateString() + recordingPrefix;
-            readable.pipeTo(window.streamSaver.createWriteStream(recName + recordingExtension));
-
-            // Record tab stream
-            var recordedBlobs = [];
-            mediaRecorder.ondataavailable = event => {
-                if (event.data && event.data.size > 0) {
-                    writer.write(event.data);
-                    recordedBlobs.push(event.data);
-                }
-            };
-
-            // On recording stopped
-            mediaRecorder.onstop = () => {
-                chrome.browserAction.setIcon({ path: normalLogo });
-                chrome.storage.sync.set({ _browserWatcherRecording: "false" });
-
-                // Stop streams
-                stream.getTracks().forEach(function(track) {
-                    track.stop();
-                });
-
-                // Show download shelf again
-                chrome.downloads.setShelfEnabled(true);
-
-                waitRecording(() => {
-                    writer.close();
-                    isRecording = false;
-                });
-            }
-
-            // Stop recording tab is closed
-            stream.getVideoTracks()[0].onended = function() {
-                mediaRecorder.stop();
-            }
-
-            chrome.browserAction.setIcon({ path: recorderLogo });
-            chrome.storage.sync.set({ _browserWatcherRecording: "true" });
+    // Create offscreen document if needed
+    if (!(await chrome.offscreen.hasDocument())) {
+        await chrome.offscreen.createDocument({
+            url: '../html/offscreen.html',
+            reasons: ['USER_MEDIA'],
+            justification: 'Recording from tabCapture API'
         });
-    });
-
-    waitRecording(() => {
-        if (!isRecording) {
-            mediaRecorder.start(recordingDelayMs);
-            isRecording = true;
-        }
-    });
-}
-
-function stopRecording() {
-    if (isRecording) {
-        mediaRecorder.stop();
-    }
-}
-
-function waitRecording(f) {
-    setTimeout(f, recordingDelayMs);
-}
-
-function getDateString() {
-    let date = new Date();
-    let year = date.getFullYear();
-    let month = pad(date.getMonth() + 1);
-    let day = pad(date.getDate());
-    let hours = pad(date.getHours());
-    let minutes = pad(date.getMinutes());
-    let seconds = pad(date.getSeconds());
-    return `${year}_${month}_${day}-${hours}_${minutes}_${seconds}`;
-}
-
-function pad(date) {
-    return `${date}`.padStart(2, '0');
-}
-
-function injectLib(lib) {
-    chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
-        console.log("* * * Injecting JavaScript library * * *\n" + lib);
-        chrome.tabs.executeScript(tabs[0].id, { file: lib });
-    });
-}
-
-
-function injectCss(css) {
-    chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
-        console.log("* * * Injecting CSS * * *\n" + css);
-        chrome.tabs.insertCSS(tabs[0].id, { file: css });
-    });
-}
-
-function injectCode(js) {
-    chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
-        console.log("* * * Injecting JavaScript code * * *\n" + js);
-        chrome.tabs.executeScript(tabs[0].id, { code: js });
-    });
-}
-
-// Logic for diabling Content-Security-Policy (CSP)
-
-var onHeadersReceived = function(details) {
-    for (var i = 0; i < details.responseHeaders.length; i++) {
-        if (disableCsp && details.responseHeaders[i].name.toLowerCase() === 'content-security-policy') {
-            details.responseHeaders[i].value = '';
-        }
     }
 
-    return {
-        responseHeaders: details.responseHeaders
-    };
-};
+    // Get the media stream ID from the service worker context
+    const streamId = await chrome.tabCapture.getMediaStreamId({
+        targetTabId: tab.id
+    });
 
-var onHeaderFilter = { urls: ['*://*/*'], types: ['main_frame', 'sub_frame'] };
+    // Send to offscreen document
+    await chrome.runtime.sendMessage({
+        type: 'start-recording',
+        streamId: streamId,
+        name: recordingName
+    });
+}
 
-chrome.webRequest.onHeadersReceived.addListener(
-    onHeadersReceived, onHeaderFilter, ['blocking', 'responseHeaders']
-);
-
-chrome.browsingData.remove({}, { serviceWorkers: true }, function() { });
+async function stopRecording() {
+    await chrome.runtime.sendMessage({type: 'stop-recording'});
+}

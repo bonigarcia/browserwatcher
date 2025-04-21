@@ -1,80 +1,52 @@
-$(document).ready(function() {
-    chrome.storage.sync.get("_browserWatcherLogs", function(data) {
-        let toggle = data["_browserWatcherLogs"] && data["_browserWatcherLogs"] == "true";
-        $('#logs').prop("checked", toggle);
-    });
-    $("#logs").change(function() {
-        if (this.checked) {
-            chrome.runtime.sendMessage({ type: "inject-js-code", code: "localStorage.setItem('_browserWatcherLog', 'true');" });
-            chrome.storage.sync.get("_browserWatcherLogs", function(data) {
-                if (!data["_browserWatcherLogs"] || data["_browserWatcherLogs"] == "false") {
-                    chrome.storage.sync.set({ _browserWatcherLogs: "true" });
-                }
-            });
-        } else {
-            chrome.runtime.sendMessage({ type: "inject-js-code", code: "localStorage.setItem('_browserWatcherLog', 'false');" });
-            chrome.storage.sync.get("_browserWatcherLogs", function(data) {
-                if (!data["_browserWatcherLogs"] || data["_browserWatcherLogs"] == "true") {
-                    chrome.storage.sync.set({ _browserWatcherLogs: "false" });
-                }
-            });
-        }
-    })
+document.addEventListener('DOMContentLoaded', async () => {
+    const startBtn = document.getElementById('startBtn');
+    const stopBtn = document.getElementById('stopBtn');
+    const statusDiv = document.getElementById('status');
 
-    chrome.storage.sync.get("_browserWatcherGrowl", function(data) {
-        let toggle = data["_browserWatcherGrowl"] && data["_browserWatcherGrowl"] == "true";
-        $('#growl').prop("checked", toggle);
+    // Check current recording state
+    const { isRecording } = await chrome.runtime.sendMessage({
+        action: 'get-recording-state'
     });
-    $("#growl").change(function() {
-        chrome.runtime.sendMessage({ type: "inject-js-code", code: "localStorage.setItem('_browserWatcherGrowl', '" + this.checked + "');" });
-        if (this.checked) {
-            chrome.storage.sync.get("_browserWatcherGrowl", function(data) {
-                if (!data["_browserWatcherGrowl"] || data["_browserWatcherGrowl"] == "false") {
-                    chrome.storage.sync.set({ _browserWatcherGrowl: "true" });
-                }
-            });
-        } else {
-            chrome.storage.sync.get("_browserWatcherGrowl", function(data) {
-                if (!data["_browserWatcherGrowl"] || data["_browserWatcherGrowl"] == "true") {
-                    chrome.storage.sync.set({ _browserWatcherGrowl: "false" });
-                }
-            });
-        }
-    })
 
-    chrome.storage.sync.get("_browserWatcherRecording", function(data) {
-        let toggle = data["_browserWatcherRecording"] && data["_browserWatcherRecording"] == "true";
-        $('#record').prop("checked", toggle);
-    });
-    $("#record").change(function() {
-        if (this.checked) {
-            chrome.storage.sync.get("_browserWatcherRecording", function(data) {
-                if (!data["_browserWatcherRecording"] || data["_browserWatcherRecording"] == "false") {
-                    chrome.runtime.sendMessage({ type: "start-recording" });
-                    chrome.storage.sync.set({ _browserWatcherRecording: "true" });
-                }
-            });
-        } else {
-            chrome.storage.sync.get("_browserWatcherRecording", function(data) {
-                if (!data["_browserWatcherRecording"] || data["_browserWatcherRecording"] == "true") {
-                    chrome.runtime.sendMessage({ type: "stop-recording" });
-                    chrome.storage.sync.set({ _browserWatcherRecording: "false" });
-                }
-            });
-        }
-    })
+    if (isRecording) {
+        startBtn.disabled = true;
+        stopBtn.disabled = false;
+        statusDiv.textContent = 'Recording in progress...';
+    }
 
-    chrome.storage.sync.get("_browserWatcherDisableCsp", function(data) {
-        let toggle = data["_browserWatcherDisableCsp"] && data["_browserWatcherDisableCsp"] == "true";
-        $('#csp').prop("checked", toggle);
-    });
-    $("#csp").change(function() {
-        if (this.checked) {
-            chrome.runtime.sendMessage({ type: "disable-csp" });
-            chrome.storage.sync.set({ _browserWatcherDisableCsp: "true" });
-        } else {
-            chrome.runtime.sendMessage({ type: "enable-csp" });
-            chrome.storage.sync.set({ _browserWatcherDisableCsp: "false" });
+    startBtn.addEventListener('click', async () => {
+        try {
+            statusDiv.textContent = 'Starting recording...';
+
+            const response = await chrome.runtime.sendMessage({
+                action: 'start-recording'
+            });
+
+            if (response.status === 'recording-started') {
+                startBtn.disabled = true;
+                stopBtn.disabled = false;
+                statusDiv.textContent = 'Recording...';
+            } else if (response.status === 'error') {
+                throw new Error(response.message);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            statusDiv.textContent = 'Error: ' + error.message;
+            startBtn.disabled = false;
         }
-    })
+    });
+
+    stopBtn.addEventListener('click', async () => {
+        try {
+            statusDiv.textContent = 'Stopping recording...';
+            await chrome.runtime.sendMessage({ action: 'stop-recording' });
+            startBtn.disabled = false;
+            stopBtn.disabled = true;
+            statusDiv.textContent = 'Recording saved';
+            setTimeout(() => statusDiv.textContent = 'Ready', 2000);
+        } catch (error) {
+            console.error('Error stopping recording:', error);
+            statusDiv.textContent = 'Error stopping recording';
+        }
+    });
 });
