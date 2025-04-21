@@ -16,6 +16,7 @@
  */
 package io.github.bonigarcia.browserwatcher.test;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.springframework.boot.test.context.TestConfiguration;
@@ -27,6 +28,7 @@ import org.springframework.security.web.header.writers.XXssProtectionHeaderWrite
 import io.github.bonigarcia.browserwatcher.test.parent.LocalHostParentTest;
 import io.github.bonigarcia.wdm.config.DriverManagerType;
 
+@Disabled("Unavailable in MV3 extensions")
 public class ContentSecurityPolictyTest extends LocalHostParentTest {
 
     @TestConfiguration

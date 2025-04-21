@@ -19,12 +19,14 @@ package io.github.bonigarcia.browserwatcher.test;
 import java.util.Arrays;
 import java.util.List;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 
 import io.github.bonigarcia.browserwatcher.test.parent.BrowserParentTest;
 import io.github.bonigarcia.wdm.config.DriverManagerType;
 
+@Disabled("Unavailable in MV3 extensions")
 public class GrowlTest extends BrowserParentTest {
 
     static final int TEST_TIME_SEC = 5;

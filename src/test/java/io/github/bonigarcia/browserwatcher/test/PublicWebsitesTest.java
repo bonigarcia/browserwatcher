@@ -37,6 +37,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -45,6 +46,7 @@ import org.slf4j.Logger;
 import io.github.bonigarcia.browserwatcher.test.parent.BrowserParentTest;
 import io.github.bonigarcia.wdm.config.DriverManagerType;
 
+@Disabled("Unavailable in MV3 extensions")
 class PublicWebsitesTest extends BrowserParentTest {
 
     static final Logger log = getLogger(lookup().lookupClass());
