@@ -10,7 +10,8 @@ When an automated end-to-end test (e.g., with https://www.selenium.dev/documenta
 
 .What is BrowserWatcher?
 ****
-BrowserWatcher is a https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions[browser extension] designed to monitor web browsers such as Chrome, Firefox, or Edge. Its features are cross-browser console log gathering/displaying, tab recording, Content Security Policy (CSP) disabling, and JavaScript/CSS injection.
+BrowserWatcher is a https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions[browser extension] designed to monitor web browsers such as Chrome, Firefox, or Edge. 
+BrowserWatcher 1.x has been implemented using manifest version 2 (MV2), and its features are cross-browser console log gathering/displaying, video recording, Content Security Policy (CSP) disabling, and JavaScript/CSS injection. BrowserWatcher 2.x has been migrated to manifest version 3 (MV3), and the feature maintained is video recording.
 ****
 
 ifndef::backend-pdf[]
@@ -22,8 +23,12 @@ endif::[]
 == Setup
 BrowserWatcher can be used in two different ways. First, it can be installed as an extension in any browser implementing the https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions[browser extension API] (such as Chrome, Firefox, Edge, etc.). You can use the following files to install BrowserWatcher in your browser:
 
-* https://github.com/bonigarcia/browserwatcher/releases/download/{project-version}/browserwatcher-{project-version}.crx[browserwatcher-{project-version}.crx]: Chrome Extension (CRX), for Chromium-based browsers, such as Chrome or Edge. To install it, you can drag and drop this file into the extensions page  (_chrome://extensions/_).
-* https://github.com/bonigarcia/browserwatcher/releases/download/{project-version}/browserwatcher-{project-version}.xpi[browserwatcher-{project-version}.xpi]: XPInstall (XPI), for Firefox. To install it, visit the _about:addons_ page and click on _Install Add-on From File..._.
+* BrowserWatcher 1 (MV2):
+** https://github.com/bonigarcia/browserwatcher/releases/download/1.2.0/browserwatcher-1.2.0.crx[browserwatcher-{project-version}.crx]: Chrome Extension (CRX), for Chromium-based browsers, such as Chrome or Edge. To install it, you can drag and drop this file into the extensions page  (_chrome://extensions/_).
+** https://github.com/bonigarcia/browserwatcher/releases/download/1.2.0/browserwatcher-1.2.0.xpi[browserwatcher-{project-version}.xpi]: XPInstall (XPI), for Firefox. To install it, visit the _about:addons_ page and click on _Install Add-on From File..._.
+
+* BrowserWatcher 2 (MV3):
+** https://github.com/bonigarcia/browserwatcher/releases/download/{project-version}/browserwatcher-{project-version}.crx[browserwatcher-{project-version}.crx]: Chrome Extension (CRX), for Chromium-based browsers, such as Chrome or Edge. To install it, you can drag and drop this file into the extensions page  (_chrome://extensions/_).
 
 Second, you can use BrowserWatcher automatically through https://bonigarcia.dev/webdrivermanager/[WebDriverManager]. See the section about <<WebDriverManager>> for a basic introduction to this use.
 
@@ -35,7 +40,8 @@ Once BrowserWatcher is installed in a browser, you can see its logo in the brows
 .BrowserWatcher installed in Chrome
 image::browserwatcher-install-v1.png[scaledwidth=100%]
 
-=== Console Log Gathering
+=== BrowserWatcher 1 (MV2)
+==== Console Log Gathering
 BrowserWatcher allows gathering the browser console following a cross-browser approach. Internally, it uses a _monkey patching_ technique to override the JavaScript object `console`. In particular, the following methods are overridden: `log`, `warn`, `error`, `info`, `dir`, `time`, `timeEnd`, `table`, and `count`. In addition, it implements several JavaScript listeners for the following events: `error` (JavaScript error trace), `unhandledrejection` (when a JavaScript _Promise_ with no rejection handler is rejected), `securitypolicyviolation` (when the content security policy is violated), and `xhr-error` (error response from `XMLHttpRequest`). This way, the gathered logs are accessible in the property `_bwLogs` in the `console` object. The following picture shows an example of the gathered logs of a the https://bonigarcia.dev/selenium-webdriver-java/console-logs.html[sample page]:
 
 [[gather-console-logs-example]]
@@ -50,7 +56,7 @@ BrowserWatcher has a configuration page, displayed when clicked in its icon. Thi
 .BrowserWatcher popup configuration page (console log gathering)
 image::popup-logs-v2.png[scaledwidth=100%]
 
-=== Console Log Displaying
+==== Console Log Displaying
 In addition to log gathering, BrowserWatcher allows displaying the console logs (and listened events) as dialog notifications on the page. This feature can be enabled using the following button:
 
 [[popup-display]]
@@ -65,7 +71,7 @@ The following picture shows an example of these notifications:
 .Display logs example
 image::display-console-logs-example-v3.png[scaledwidth=100%]
 
-=== Tab recording
+==== Video recording
 BrowserWatcher allows recording a browser tab. This feature requires a page loaded in the current tab (in other words, it cannot record empty or configuration pages). Then, it can be started using the following button:
 
 [[popup-rec]]
@@ -75,7 +81,7 @@ image::popup-rec-v2.png[scaledwidth=100%]
 
 The recording is stopped using the same button. The recording file will be a WEBM file, available in your _Downloads_ folder.
 
-WARNING: This feature is based on the API https://developer.chrome.com/docs/extensions/reference/tabCapture/[tabCapture]. Therefore, this feature is not available in Firefox since this API is not implemented by Firefox yet.
+WARNING: This feature is based on the API https://developer.chrome.com/docs/extensions/reference/tabCapture/[tabCapture]. Therefore, this feature is not available in Firefox since this API is not implemented in Firefox.
 
 There are some alternative ways to start and stop the recordings. First, by using the keyboard shortcut `Alt+R` (for starting the recording) and `Alt+W` (for stopping the recording). Second, by executing the following JavaScript commands:
 
@@ -83,7 +89,7 @@ There are some alternative ways to start and stop the recordings. First, by usin
 * `window.postMessage({ type: "startRecording", name: "myrecording" });`: For starting the recording and specifyng a custom file recording (`myrecording.webm` in this example).
 * `window.postMessage({ type: "stopRecording" });` : For stopping the recording.
 
-=== Disabling CSP
+==== Disabling CSP
 https://content-security-policy.com/[Content Security Policy (CSP)] is the name of an HTTP response header that browsers use to improve the security of web pages. CSP helps to protect from attacks such as cross-site scripting (XSS). Nevertheless, developers might want to disable the CSP headers received from the server for testing purposes. For this reason, BrowserWatcher allows bypassing these CSP headers. This feature (i.e., disabling CSP headers) is enabled by clicking the following button:
 
 [[popup-csp]]
@@ -96,7 +102,7 @@ In addition, this feature can be enabled/disabled by executing the following Jav
 * `window.postMessage({ type: "disableCsp" });` : For disabling CSP.
 * `window.postMessage({ type: "enableCsp" });` : For enabling CSP (as it was by default).
 
-=== JavaScript and CSS injection
+==== JavaScript and CSS injection
 BrowserWatcher has an _options_ page, available by clicking on the following menu option:
 
 [[options]]
@@ -122,22 +128,38 @@ Alternatively, this feature can be enabled by executing the following JavaScript
 * `window.postMessage({ type: "injectJavaScriptLibs", lib: "jsLib" });`
 * `window.postMessage({ type: "injectCssSheets", css: "cssSheet" });`
 
-== WebDriverManager
-As of version 5.2.0, WebDriverManager provides seamless integration with BrowserWatcher. In other words, WebDriverManager allows injecting BrowserWatcher in browsers controlled with Selenium WebDriver and created through WebDriverManager with the methods `.watch()` and `.create()`. These browsers allow log gathering, displaying, and tab recording through BrowserWatcher.
+=== BrowserWatcher 2 (MV3)
+BrowserWatcher 2 also allows us to record the current browser tab. The recording can be started and stopped using the following popup:
 
-For example, the following test shows some basic use of log gathering using WebDriverManager and BrowserWatcher:
+[[popup-rec]]
+[.thumb]
+.BrowserWatcher popup configuration page (recording)
+image::popup-rec-mv3-v1.png[scaledwidth=100%]
+
+The recording is stopped using the same button. The recording file will be a WEBM file, available in your _Downloads_ folder.
+
+WARNING: This feature is based on the API https://developer.chrome.com/docs/extensions/reference/tabCapture/[tabCapture]. Therefore, this feature is only available in Chromium-based browser.
+
+There are some alternative ways to start and stop the recordings. First, by using the keyboard shortcut `Alt+R` (for starting the recording) and `Alt+W` (for stopping the recording). Second, by executing the following JavaScript commands:
+
+* `window.postMessage({ type: "startRecording" }, "*");` : For starting the recording. The recording file name will be auto generated, composed by the system timestamp plus the prefix `-browser-recording.webm`. 
+* `window.postMessage({ type: "startRecording", name: "myrecording" }, "*");`: For starting the recording and specifyng a custom file recording (`myrecording.webm` in this example).
+* `window.postMessage({ type: "stopRecording" }, "*");` : For stopping the recording.
+
+
+== WebDriverManager
+WebDriverManager provides seamless integration with BrowserWatcher. In other words, WebDriverManager allows injecting BrowserWatcher in browsers controlled with Selenium WebDriver and created through WebDriverManager with the methods `.watch()` and `.create()`. For example, the following test shows some basic use of video recording using WebDriverManager and BrowserWatcher:
 
 [source,java]
 ----
-class GatherLogsChromeTest {
+class RecordChromeTest {
 
-    static final Logger log = getLogger(lookup().lookupClass());
-
-    WebDriverManager wdm = WebDriverManager.chromedriver().watch();
     WebDriver driver;
+    WebDriverManager wdm;
 
     @BeforeEach
     void setup() {
+        wdm = WebDriverManager.chromedriver().watch();
         driver = wdm.create();
     }
 
@@ -147,21 +169,26 @@ class GatherLogsChromeTest {
     }
 
     @Test
-    void test() {
+    void test() throws InterruptedException {
         driver.get(
-                "https://bonigarcia.dev/selenium-webdriver-java/console-logs.html");
+                "https://bonigarcia.dev/selenium-webdriver-java/slow-calculator.html");
 
-        List<Map<String, Object>> logMessages = wdm.getLogs();
+        wdm.startRecording();
 
-        for (Map<String, Object> map : logMessages) {
-            log.debug("[{}] [{}] {}", map.get("datetime"),
-                    String.format("%1$-14s",
-                            map.get("source").toString().toUpperCase() + "."
-                                    + map.get("type").toString().toUpperCase()),
-                    map.get("message"));
-        }
+        // 1 + 3
+        driver.findElement(By.xpath("//span[text()='1']")).click();
+        driver.findElement(By.xpath("//span[text()='+']")).click();
+        driver.findElement(By.xpath("//span[text()='3']")).click();
+        driver.findElement(By.xpath("//span[text()='=']")).click();
 
-        assertThat(logMessages).hasSize(5);
+        // ... should be 4, wait for it
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.textToBe(By.className("screen"), "4"));
+
+        wdm.stopRecording();
+
+        Path recordingPath = wdm.getRecordingPath();
+        assertThat(recordingPath).exists();
     }
 
 }
@@ -175,8 +202,11 @@ There are other resources related to automated testing you can find helpful. For
 * García, Boni. https://www.oreilly.com/library/view/hands-on-selenium-webdriver/9781098109998/[Hands-On Selenium WebDriver with Java]. _O'Reilly Media, Inc._, 2022.
 * García, Boni. https://www.amazon.com/Mastering-Software-Testing-JUnit-Comprehensive-ebook/dp/B076ZQCK5Q/[Mastering Software Testing with JUnit 5]. _Packt Publishing Ltd_, 2017.
 
-Or the following journal papers:
+Or the following papers:
 
+* Leotta, M., et al., "https://www.sciencedirect.com/science/article/pii/S0950584924002003[A family of experiments to quantify the benefits of adopting WebDriverManager and Selenium-Jupiter]." _Information and Software Technology_ 178 (2025): 107595.
+* García, Boni, et al. "https://link.springer.com/chapter/10.1007/978-3-031-70245-7_10[Exploring Browser Automation: A Comparative Study of Selenium, Cypress, Puppeteer, and Playwright]." _International Conference on the Quality of Information and Communications Technology_. Springer Nature Switzerland, 2024.
+* Leotta, M., et al. "https://dl.acm.org/doi/10.1145/3661167.3661192[AI-generated test scripts for web E2E testing with ChatGPT and Copilot: a preliminary study]." Proceedings of the _28th International Conference on Evaluation and Assessment in Software Engineering_. 2024.
 * García, Boni, et al. "https://www.sciencedirect.com/science/article/pii/S0164121223001188[Enhancing Web Applications Observability through Instrumented Automated Browsers]." _Journal of Systems and Software_ (2023): 111723.
 * Leotta, M., et al. "https://ieeexplore.ieee.org/document/10132210[Challenges of End-to-End Testing with Selenium WebDriver and How to Face Them: A Survey]". In the 16th _IEEE Conference on Software Testing, Verification and Validation_ (ICST), 2023, Dublin, Ireland. April 2023.
 * Leotta, M., et al. "https://link.springer.com/chapter/10.1007/978-3-031-14179-9_3[An Empirical Study to Quantify the SetUp and Maintenance Benefits of Adopting WebDriverManager]." _15th International Conference on the Quality of Information and Communications Technology_ (QUATIC) 2022, Talavera de la Reina, Spain. September 2022.
@@ -189,4 +219,4 @@ Or the following journal papers:
 * García, Boni, and Juan Carlos Dueñas. "https://www.rintonpress.com/journals/jweonline.html#v14n56[Web browsing automation for applications quality control]." _Journal of web engineering_ (2015): 474-502.
 
 == About
-BrowserWatcher (Copyright © 2021-2023) is an open-source project created and maintained by https://bonigarcia.dev/[Boni García] (https://twitter.com/boni_gg[@boni_gg]), licensed under the terms of https://www.apache.org/licenses/LICENSE-2.0[Apache 2.0 License]. This documentation (also available in link:browserwatcher.pdf[PDF]) is released under the terms of https://creativecommons.org/licenses/by-nc-sa/2.0/[CC BY-NC-SA 2.0].
+BrowserWatcher (Copyright © 2021-2025) is an open-source project created and maintained by https://bonigarcia.dev/[Boni García] (https://twitter.com/boni_gg[@boni_gg]), licensed under the terms of https://www.apache.org/licenses/LICENSE-2.0[Apache 2.0 License]. This documentation (also available in link:browserwatcher.pdf[PDF]) is released under the terms of https://creativecommons.org/licenses/by-nc-sa/2.0/[CC BY-NC-SA 2.0].

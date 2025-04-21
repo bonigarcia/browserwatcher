@@ -4,20 +4,24 @@
 
 # [![][Logo]][GitHub Repository]
 
-[BrowserWatcher] is a [browser extension] aimed to monitor web browsers such as Chrome, Firefox, or Edge. Its main features are:
+[BrowserWatcher] is a [browser extension] aimed to monitor web browsers such as Chrome, Firefox, or Edge. BrowserWatcher 1.x has been implemented using manifest version 2 (MV2), and its main features are:
 
+* Browser video recording.
 * Console log gathering.
 * Console log displaying (as *growl* notifications).
-* Browser tab recording.
 * Content Security Policy (CSP) disabling.
 * JavaScript and CSS injection.
+
+BrowserWatcher 2.x has been implemented using manifest version 3 (MV3), and its feature is:
+
+* Browser video recording.
 
 ## Documentation
 The documentation of [BrowserWatcher] is hosted as with GitHub Pages. This site explains its features, examples, configuration, etc.
 
 ## About
 
-BrowserWatcher (Copyright &copy; 2021-2023) is a project created and maintained by [Boni Garcia] licensed under [Apache 2.0 License].
+BrowserWatcher (Copyright &copy; 2021-2025) is a project created and maintained by [Boni Garcia] licensed under [Apache 2.0 License].
 
 [Apache 2.0 License]: https://www.apache.org/licenses/LICENSE-2.0
 [Boni Garcia]: https://bonigarcia.dev/

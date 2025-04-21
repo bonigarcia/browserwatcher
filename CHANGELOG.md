@@ -1,5 +1,15 @@
 # Changelog
 
+## [2.0.0] - 2025-04-21
+### Changed
+- Migrate BrowserWatcher extension to manifest v3 (MV3)
+- Update tests to MV3 features (recording only)
+- Store recordings in all CI worker operating systems (linux, win, mac)
+
+### Removed
+- Remove non-supported features in MV3: console log, disabling CSP, JavaScript and CSS injection
+
+
 ## [1.2.0] - 2022-06-26
 ### Changed
 - Use label "source" instead of "wrapper" for gathered logs
