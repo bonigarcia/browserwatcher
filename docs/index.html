@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 2.0.18">
+<meta name="generator" content="Asciidoctor 2.0.23">
 <meta name="author" content="Boni García">
 <title>BrowserWatcher</title>
 <style>
@@ -775,7 +775,7 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <h1>BrowserWatcher</h1>
 <div class="details">
 <span id="author" class="author">Boni García</span><br>
-<span id="revdate">Version 1.2.0</span>
+<span id="revdate">Version 2.0.0</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -784,11 +784,16 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <li><a href="#setup">2. Setup</a></li>
 <li><a href="#features">3. Features</a>
 <ul class="sectlevel2">
-<li><a href="#console-log-gathering">3.1. Console Log Gathering</a></li>
-<li><a href="#console-log-displaying">3.2. Console Log Displaying</a></li>
-<li><a href="#tab-recording">3.3. Tab recording</a></li>
-<li><a href="#disabling-csp">3.4. Disabling CSP</a></li>
-<li><a href="#javascript-and-css-injection">3.5. JavaScript and CSS injection</a></li>
+<li><a href="#browserwatcher-1-mv2">3.1. BrowserWatcher 1 (MV2)</a>
+<ul class="sectlevel3">
+<li><a href="#console-log-gathering">3.1.1. Console Log Gathering</a></li>
+<li><a href="#console-log-displaying">3.1.2. Console Log Displaying</a></li>
+<li><a href="#video-recording">3.1.3. Video recording</a></li>
+<li><a href="#disabling-csp">3.1.4. Disabling CSP</a></li>
+<li><a href="#javascript-and-css-injection">3.1.5. JavaScript and CSS injection</a></li>
+</ul>
+</li>
+<li><a href="#browserwatcher-2-mv3">3.2. BrowserWatcher 2 (MV3)</a></li>
 </ul>
 </li>
 <li><a href="#webdrivermanager">4. WebDriverManager</a></li>
@@ -808,7 +813,8 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <div class="content">
 <div class="title">What is BrowserWatcher?</div>
 <div class="paragraph">
-<p>BrowserWatcher is a <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions">browser extension</a> designed to monitor web browsers such as Chrome, Firefox, or Edge. Its features are cross-browser console log gathering/displaying, tab recording, Content Security Policy (CSP) disabling, and JavaScript/CSS injection.</p>
+<p>BrowserWatcher is a <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions">browser extension</a> designed to monitor web browsers such as Chrome, Firefox, or Edge.
+BrowserWatcher 1.x has been implemented using manifest version 2 (MV2), and its features are cross-browser console log gathering/displaying, video recording, Content Security Policy (CSP) disabling, and JavaScript/CSS injection. BrowserWatcher 2.x has been migrated to manifest version 3 (MV3), and the feature maintained is video recording.</p>
 </div>
 </div>
 </div>
@@ -901,10 +907,27 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <div class="ulist">
 <ul>
 <li>
-<p><a href="https://github.com/bonigarcia/browserwatcher/releases/download/1.2.0/browserwatcher-1.2.0.crx">browserwatcher-1.2.0.crx</a>: Chrome Extension (CRX), for Chromium-based browsers, such as Chrome or Edge. To install it, you can drag and drop this file into the extensions page  (<em>chrome://extensions/</em>).</p>
+<p>BrowserWatcher 1 (MV2):</p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://github.com/bonigarcia/browserwatcher/releases/download/1.2.0/browserwatcher-1.2.0.crx">browserwatcher-2.0.0.crx</a>: Chrome Extension (CRX), for Chromium-based browsers, such as Chrome or Edge. To install it, you can drag and drop this file into the extensions page  (<em>chrome://extensions/</em>).</p>
 </li>
 <li>
-<p><a href="https://github.com/bonigarcia/browserwatcher/releases/download/1.2.0/browserwatcher-1.2.0.xpi">browserwatcher-1.2.0.xpi</a>: XPInstall (XPI), for Firefox. To install it, visit the <em>about:addons</em> page and click on <em>Install Add-on From File&#8230;&#8203;</em>.</p>
+<p><a href="https://github.com/bonigarcia/browserwatcher/releases/download/1.2.0/browserwatcher-1.2.0.xpi">browserwatcher-2.0.0.xpi</a>: XPInstall (XPI), for Firefox. To install it, visit the <em>about:addons</em> page and click on <em>Install Add-on From File&#8230;&#8203;</em>.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>BrowserWatcher 2 (MV3):</p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://github.com/bonigarcia/browserwatcher/releases/download/2.0.0/browserwatcher-2.0.0.crx">browserwatcher-2.0.0.crx</a>: Chrome Extension (CRX), for Chromium-based browsers, such as Chrome or Edge. To install it, you can drag and drop this file into the extensions page  (<em>chrome://extensions/</em>).</p>
+</li>
+</ul>
+</div>
 </li>
 </ul>
 </div>
@@ -926,7 +949,9 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <div class="title">Figure 1. BrowserWatcher installed in Chrome</div>
 </div>
 <div class="sect2">
-<h3 id="console-log-gathering"><a class="anchor" href="#console-log-gathering"></a>3.1. Console Log Gathering</h3>
+<h3 id="browserwatcher-1-mv2"><a class="anchor" href="#browserwatcher-1-mv2"></a>3.1. BrowserWatcher 1 (MV2)</h3>
+<div class="sect3">
+<h4 id="console-log-gathering"><a class="anchor" href="#console-log-gathering"></a>3.1.1. Console Log Gathering</h4>
 <div class="paragraph">
 <p>BrowserWatcher allows gathering the browser console following a cross-browser approach. Internally, it uses a <em>monkey patching</em> technique to override the JavaScript object <code>console</code>. In particular, the following methods are overridden: <code>log</code>, <code>warn</code>, <code>error</code>, <code>info</code>, <code>dir</code>, <code>time</code>, <code>timeEnd</code>, <code>table</code>, and <code>count</code>. In addition, it implements several JavaScript listeners for the following events: <code>error</code> (JavaScript error trace), <code>unhandledrejection</code> (when a JavaScript <em>Promise</em> with no rejection handler is rejected), <code>securitypolicyviolation</code> (when the content security policy is violated), and <code>xhr-error</code> (error response from <code>XMLHttpRequest</code>). This way, the gathered logs are accessible in the property <code>_bwLogs</code> in the <code>console</code> object. The following picture shows an example of the gathered logs of a the <a href="https://bonigarcia.dev/selenium-webdriver-java/console-logs.html">sample page</a>:</p>
 </div>
@@ -946,8 +971,8 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <div class="title">Figure 3. BrowserWatcher popup configuration page (console log gathering)</div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="console-log-displaying"><a class="anchor" href="#console-log-displaying"></a>3.2. Console Log Displaying</h3>
+<div class="sect3">
+<h4 id="console-log-displaying"><a class="anchor" href="#console-log-displaying"></a>3.1.2. Console Log Displaying</h4>
 <div class="paragraph">
 <p>In addition to log gathering, BrowserWatcher allows displaying the console logs (and listened events) as dialog notifications on the page. This feature can be enabled using the following button:</p>
 </div>
@@ -967,8 +992,8 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <div class="title">Figure 5. Display logs example</div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="tab-recording"><a class="anchor" href="#tab-recording"></a>3.3. Tab recording</h3>
+<div class="sect3">
+<h4 id="video-recording"><a class="anchor" href="#video-recording"></a>3.1.3. Video recording</h4>
 <div class="paragraph">
 <p>BrowserWatcher allows recording a browser tab. This feature requires a page loaded in the current tab (in other words, it cannot record empty or configuration pages). Then, it can be started using the following button:</p>
 </div>
@@ -988,7 +1013,7 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <i class="fa icon-warning" title="Warning"></i>
 </td>
 <td class="content">
-This feature is based on the API <a href="https://developer.chrome.com/docs/extensions/reference/tabCapture/">tabCapture</a>. Therefore, this feature is not available in Firefox since this API is not implemented by Firefox yet.
+This feature is based on the API <a href="https://developer.chrome.com/docs/extensions/reference/tabCapture/">tabCapture</a>. Therefore, this feature is not available in Firefox since this API is not implemented in Firefox.
 </td>
 </tr>
 </table>
@@ -1010,8 +1035,8 @@ This feature is based on the API <a href="https://developer.chrome.com/docs/exte
 </ul>
 </div>
 </div>
-<div class="sect2">
-<h3 id="disabling-csp"><a class="anchor" href="#disabling-csp"></a>3.4. Disabling CSP</h3>
+<div class="sect3">
+<h4 id="disabling-csp"><a class="anchor" href="#disabling-csp"></a>3.1.4. Disabling CSP</h4>
 <div class="paragraph">
 <p><a href="https://content-security-policy.com/">Content Security Policy (CSP)</a> is the name of an HTTP response header that browsers use to improve the security of web pages. CSP helps to protect from attacks such as cross-site scripting (XSS). Nevertheless, developers might want to disable the CSP headers received from the server for testing purposes. For this reason, BrowserWatcher allows bypassing these CSP headers. This feature (i.e., disabling CSP headers) is enabled by clicking the following button:</p>
 </div>
@@ -1035,8 +1060,8 @@ This feature is based on the API <a href="https://developer.chrome.com/docs/exte
 </ul>
 </div>
 </div>
-<div class="sect2">
-<h3 id="javascript-and-css-injection"><a class="anchor" href="#javascript-and-css-injection"></a>3.5. JavaScript and CSS injection</h3>
+<div class="sect3">
+<h4 id="javascript-and-css-injection"><a class="anchor" href="#javascript-and-css-injection"></a>3.1.5. JavaScript and CSS injection</h4>
 <div class="paragraph">
 <p>BrowserWatcher has an <em>options</em> page, available by clicking on the following menu option:</p>
 </div>
@@ -1079,27 +1104,67 @@ This feature is based on the API <a href="https://developer.chrome.com/docs/exte
 </div>
 </div>
 </div>
+<div class="sect2">
+<h3 id="browserwatcher-2-mv3"><a class="anchor" href="#browserwatcher-2-mv3"></a>3.2. BrowserWatcher 2 (MV3)</h3>
+<div class="paragraph">
+<p>BrowserWatcher 2 also allows us to record the current browser tab. The recording can be started and stopped using the following popup:</p>
+</div>
+<div id="popup-rec" class="imageblock thumb">
+<div class="content">
+<img src="img/popup-rec-mv3-v1.png" alt="popup rec mv3 v1">
+</div>
+<div class="title">Figure 11. BrowserWatcher popup configuration page (recording)</div>
+</div>
+<div class="paragraph">
+<p>The recording is stopped using the same button. The recording file will be a WEBM file, available in your <em>Downloads</em> folder.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+This feature is based on the API <a href="https://developer.chrome.com/docs/extensions/reference/tabCapture/">tabCapture</a>. Therefore, this feature is only available in Chromium-based browser.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>There are some alternative ways to start and stop the recordings. First, by using the keyboard shortcut <code>Alt+R</code> (for starting the recording) and <code>Alt+W</code> (for stopping the recording). Second, by executing the following JavaScript commands:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>window.postMessage({ type: "startRecording" }, "*");</code> : For starting the recording. The recording file name will be auto generated, composed by the system timestamp plus the prefix <code>-browser-recording.webm</code>.</p>
+</li>
+<li>
+<p><code>window.postMessage({ type: "startRecording", name: "myrecording" }, "*");</code>: For starting the recording and specifyng a custom file recording (<code>myrecording.webm</code> in this example).</p>
+</li>
+<li>
+<p><code>window.postMessage({ type: "stopRecording" }, "*");</code> : For stopping the recording.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
 </div>
 <div class="sect1">
 <h2 id="webdrivermanager"><a class="anchor" href="#webdrivermanager"></a>4. WebDriverManager</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>As of version 5.2.0, WebDriverManager provides seamless integration with BrowserWatcher. In other words, WebDriverManager allows injecting BrowserWatcher in browsers controlled with Selenium WebDriver and created through WebDriverManager with the methods <code>.watch()</code> and <code>.create()</code>. These browsers allow log gathering, displaying, and tab recording through BrowserWatcher.</p>
-</div>
-<div class="paragraph">
-<p>For example, the following test shows some basic use of log gathering using WebDriverManager and BrowserWatcher:</p>
+<p>WebDriverManager provides seamless integration with BrowserWatcher. In other words, WebDriverManager allows injecting BrowserWatcher in browsers controlled with Selenium WebDriver and created through WebDriverManager with the methods <code>.watch()</code> and <code>.create()</code>. For example, the following test shows some basic use of video recording using WebDriverManager and BrowserWatcher:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="type">class</span> <span class="class">GatherLogsChromeTest</span> {
+<pre class="CodeRay highlight"><code data-lang="java"><span class="type">class</span> <span class="class">RecordChromeTest</span> {
 
-    <span class="directive">static</span> <span class="directive">final</span> <span class="predefined-type">Logger</span> log = getLogger(lookup().lookupClass());
-
-    WebDriverManager wdm = WebDriverManager.chromedriver().watch();
     WebDriver driver;
+    WebDriverManager wdm;
 
     <span class="annotation">@BeforeEach</span>
     <span class="type">void</span> setup() {
+        wdm = WebDriverManager.chromedriver().watch();
         driver = wdm.create();
     }
 
@@ -1109,21 +1174,26 @@ This feature is based on the API <a href="https://developer.chrome.com/docs/exte
     }
 
     <span class="annotation">@Test</span>
-    <span class="type">void</span> test() {
+    <span class="type">void</span> test() <span class="directive">throws</span> <span class="exception">InterruptedException</span> {
         driver.get(
-                <span class="string"><span class="delimiter">&quot;</span><span class="content">https://bonigarcia.dev/selenium-webdriver-java/console-logs.html</span><span class="delimiter">&quot;</span></span>);
+                <span class="string"><span class="delimiter">&quot;</span><span class="content">https://bonigarcia.dev/selenium-webdriver-java/slow-calculator.html</span><span class="delimiter">&quot;</span></span>);
 
-        <span class="predefined-type">List</span>&lt;<span class="predefined-type">Map</span>&lt;<span class="predefined-type">String</span>, <span class="predefined-type">Object</span>&gt;&gt; logMessages = wdm.getLogs();
+        wdm.startRecording();
 
-        <span class="keyword">for</span> (<span class="predefined-type">Map</span>&lt;<span class="predefined-type">String</span>, <span class="predefined-type">Object</span>&gt; map : logMessages) {
-            log.debug(<span class="string"><span class="delimiter">&quot;</span><span class="content">[{}] [{}] {}</span><span class="delimiter">&quot;</span></span>, map.get(<span class="string"><span class="delimiter">&quot;</span><span class="content">datetime</span><span class="delimiter">&quot;</span></span>),
-                    <span class="predefined-type">String</span>.format(<span class="string"><span class="delimiter">&quot;</span><span class="content">%1$-14s</span><span class="delimiter">&quot;</span></span>,
-                            map.get(<span class="string"><span class="delimiter">&quot;</span><span class="content">source</span><span class="delimiter">&quot;</span></span>).toString().toUpperCase() + <span class="string"><span class="delimiter">&quot;</span><span class="content">.</span><span class="delimiter">&quot;</span></span>
-                                    + map.get(<span class="string"><span class="delimiter">&quot;</span><span class="content">type</span><span class="delimiter">&quot;</span></span>).toString().toUpperCase()),
-                    map.get(<span class="string"><span class="delimiter">&quot;</span><span class="content">message</span><span class="delimiter">&quot;</span></span>));
-        }
+        <span class="comment">// 1 + 3</span>
+        driver.findElement(By.xpath(<span class="string"><span class="delimiter">&quot;</span><span class="content">//span[text()='1']</span><span class="delimiter">&quot;</span></span>)).click();
+        driver.findElement(By.xpath(<span class="string"><span class="delimiter">&quot;</span><span class="content">//span[text()='+']</span><span class="delimiter">&quot;</span></span>)).click();
+        driver.findElement(By.xpath(<span class="string"><span class="delimiter">&quot;</span><span class="content">//span[text()='3']</span><span class="delimiter">&quot;</span></span>)).click();
+        driver.findElement(By.xpath(<span class="string"><span class="delimiter">&quot;</span><span class="content">//span[text()='=']</span><span class="delimiter">&quot;</span></span>)).click();
 
-        assertThat(logMessages).hasSize(<span class="integer">5</span>);
+        <span class="comment">// ... should be 4, wait for it</span>
+        WebDriverWait wait = <span class="keyword">new</span> WebDriverWait(driver, <span class="predefined-type">Duration</span>.ofSeconds(<span class="integer">10</span>));
+        wait.until(ExpectedConditions.textToBe(By.className(<span class="string"><span class="delimiter">&quot;</span><span class="content">screen</span><span class="delimiter">&quot;</span></span>), <span class="string"><span class="delimiter">&quot;</span><span class="content">4</span><span class="delimiter">&quot;</span></span>));
+
+        wdm.stopRecording();
+
+        Path recordingPath = wdm.getRecordingPath();
+        assertThat(recordingPath).exists();
     }
 
 }</code></pre>
@@ -1151,10 +1221,19 @@ This feature is based on the API <a href="https://developer.chrome.com/docs/exte
 </ul>
 </div>
 <div class="paragraph">
-<p>Or the following journal papers:</p>
+<p>Or the following papers:</p>
 </div>
 <div class="ulist">
 <ul>
+<li>
+<p>Leotta, M., et al., "<a href="https://www.sciencedirect.com/science/article/pii/S0950584924002003">A family of experiments to quantify the benefits of adopting WebDriverManager and Selenium-Jupiter</a>." <em>Information and Software Technology</em> 178 (2025): 107595.</p>
+</li>
+<li>
+<p>García, Boni, et al. "<a href="https://link.springer.com/chapter/10.1007/978-3-031-70245-7_10">Exploring Browser Automation: A Comparative Study of Selenium, Cypress, Puppeteer, and Playwright</a>." <em>International Conference on the Quality of Information and Communications Technology</em>. Springer Nature Switzerland, 2024.</p>
+</li>
+<li>
+<p>Leotta, M., et al. "<a href="https://dl.acm.org/doi/10.1145/3661167.3661192">AI-generated test scripts for web E2E testing with ChatGPT and Copilot: a preliminary study</a>." Proceedings of the <em>28th International Conference on Evaluation and Assessment in Software Engineering</em>. 2024.</p>
+</li>
 <li>
 <p>García, Boni, et al. "<a href="https://www.sciencedirect.com/science/article/pii/S0164121223001188">Enhancing Web Applications Observability through Instrumented Automated Browsers</a>." <em>Journal of Systems and Software</em> (2023): 111723.</p>
 </li>
@@ -1193,15 +1272,15 @@ This feature is based on the API <a href="https://developer.chrome.com/docs/exte
 <h2 id="about"><a class="anchor" href="#about"></a>6. About</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>BrowserWatcher (Copyright © 2021-2023) is an open-source project created and maintained by <a href="https://bonigarcia.dev/">Boni García</a> (<a href="https://twitter.com/boni_gg">@boni_gg</a>), licensed under the terms of <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 License</a>. This documentation (also available in <a href="browserwatcher.pdf">PDF</a>) is released under the terms of <a href="https://creativecommons.org/licenses/by-nc-sa/2.0/">CC BY-NC-SA 2.0</a>.</p>
+<p>BrowserWatcher (Copyright © 2021-2025) is an open-source project created and maintained by <a href="https://bonigarcia.dev/">Boni García</a> (<a href="https://twitter.com/boni_gg">@boni_gg</a>), licensed under the terms of <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 License</a>. This documentation (also available in <a href="browserwatcher.pdf">PDF</a>) is released under the terms of <a href="https://creativecommons.org/licenses/by-nc-sa/2.0/">CC BY-NC-SA 2.0</a>.</p>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 1.2.0<br>
-Updated on 21-06-2023
+Version 2.0.0<br>
+Updated on 21-04-2025
 </div>
 </div>
 </body>
