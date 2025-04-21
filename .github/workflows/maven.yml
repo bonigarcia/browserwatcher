@@ -33,7 +33,7 @@ jobs:
       run: mvn -B test -Dtest=RecordingTest
     - name: Store recordings on Windows
       if: always() && matrix.os == 'windows-latest'
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4.6.2
       with:
         name: webm-files
         path: |
