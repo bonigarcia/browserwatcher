@@ -17,7 +17,7 @@
     <properties>
         <selenium.version>4.34.0</selenium.version>
         <wdm.version>6.1.1</wdm.version>
-        <commons-io.version>2.19.0</commons-io.version>
+        <commons-io.version>2.20.0</commons-io.version>
         <httpclient5.version>5.5</httpclient5.version>
 
         <maven-surefire-plugin.version>3.5.3</maven-surefire-plugin.version>
