@@ -17,6 +17,7 @@
 
 let mediaRecorder;
 let recordedChunks = [];
+let base64 = false;
 
 chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
     if (message.type === 'start-recording') {
@@ -55,23 +56,52 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
                 }
             };
 
-            mediaRecorder.onstop = () => {
+            mediaRecorder.onstop = async () => {
                 const blob = new Blob(recordedChunks, { type: webmMimeType });
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                const recordingName = message.name || `recording-${new Date().toISOString()}`;
+                // Recording name
+                const rawRecordingName = message.name || `recording-${new Date().toISOString()}`;
+                const safeRecordingName = rawRecordingName.replace(/[:\/\\?%*|"<>.]/g, "_");
 
-                a.href = url;
-                a.download =  recordingName + '.webm';
-                document.body.appendChild(a);
-                a.click();
-                setTimeout(() => {
-                    document.body.removeChild(a);
-                    URL.revokeObjectURL(url);
-                }, 100);
+                if (base64) {
+                    // Convert Blob to Base64
+                    const base64Data = await blobToBase64(blob);
+
+                    // Send Base64 back to background
+                    chrome.runtime.sendMessage({
+                        type: 'recording-complete',
+                        base64: base64Data,
+                        name: message.name || safeRecordingName
+                    });
+
+                    function blobToBase64(blob) {
+                        return new Promise((resolve, reject) => {
+                            const reader = new FileReader();
+                            reader.onloadend = () => resolve(reader.result.split(",")[1]); // strip "data:..."
+                            reader.onerror = reject;
+                            reader.readAsDataURL(blob);
+                        });
+                    }
+                    base64 = false;
+                }
+                else {
+                    // Download webm
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    const recordingName = message.name || safeRecordingName;
+
+                    a.href = url;
+                    a.download = recordingName;
+                    document.body.appendChild(a);
+                    a.click();
+                    setTimeout(() => {
+                        document.body.removeChild(a);
+                        URL.revokeObjectURL(url);
+                    }, 100);
+                }
             };
 
             mediaRecorder.start(100);
+
         } catch (error) {
             console.error('Recording error:', error);
             chrome.runtime.sendMessage({
@@ -81,6 +111,14 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
         }
     }
     else if (message.type === 'stop-recording') {
+        stopRecorder();
+    }
+    else if (message.type === 'stop-recording-base64') {
+        base64 = true;
+        stopRecorder();
+    }
+
+    function stopRecorder() {
         if (mediaRecorder && mediaRecorder.state !== 'inactive') {
             mediaRecorder.stop();
             mediaRecorder.stream.getTracks().forEach(track => track.stop());

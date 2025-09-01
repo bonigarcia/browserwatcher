@@ -16,6 +16,7 @@
  */
 
 let isRecording = false;
+let pendingStopResponse = null;
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     const handleAsync = async () => {
@@ -33,8 +34,21 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             isRecording = false;
             sendResponse({status: 'recording-stopped'});
         }
+        else if (message.action === 'stop-recording-base64') {
+            await stopRecordingBase64();
+            isRecording = false;
+            pendingStopResponse = sendResponse;
+        }
         else if (message.action === 'get-recording-state') {
             sendResponse({isRecording});
+        }
+        else if (message.type === 'recording-complete') {
+            pendingStopResponse({
+                status: 'recording-stopped',
+                base64: message.base64,
+                name: message.name
+            });
+            pendingStopResponse = null;
         }
     };
 
@@ -75,6 +89,11 @@ async function startRecording(recordingName) {
     });
 }
 
+
 async function stopRecording() {
     await chrome.runtime.sendMessage({type: 'stop-recording'});
+}
+
+async function stopRecordingBase64() {
+    await chrome.runtime.sendMessage({type: 'stop-recording-base64'});
 }

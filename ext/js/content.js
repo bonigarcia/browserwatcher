@@ -18,12 +18,23 @@
 window.addEventListener("message", function(event) {
     if (event.data.type && event.data.type == "startRecording") {
         chrome.runtime.sendMessage({action: "start-recording", name: event.data.name}, function(response) {
-            console.log("Start recording response: ", response);
+            window.postMessage(
+                { type: "startRecordingResponse", result: response }, "*"
+            );
         });
     }
     else if (event.data.type && event.data.type == "stopRecording") {
         chrome.runtime.sendMessage({action: 'stop-recording'}, function(response) {
-            console.log("Stop recording response: ", response);
+            window.postMessage(
+                { type: "stopRecordingResponse", result: response }, "*"
+            );
+        });
+    }
+    else if (event.data.type && event.data.type == "stopRecordingBase64") {
+        chrome.runtime.sendMessage({action: 'stop-recording-base64'}, function(response) {
+            window.postMessage(
+                { type: "stopRecordingResponse", result: response }, "*"
+            );
         });
     }
 });

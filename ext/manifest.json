@@ -2,7 +2,7 @@
     "description": "Browser extension for web monitoring",
     "manifest_version": 3,
     "name": "BrowserWatcher",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "homepage_url": "https://github.com/bonigarcia/browserwatcher",
     "icons": {
         "80": "img/browserwatcher-80.png"
