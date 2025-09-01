@@ -768,7 +768,7 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <h1>BrowserWatcher</h1>
 <div class="details">
 <span id="author" class="author">Boni García</span><br>
-<span id="revdate">Version 2.0.0</span>
+<span id="revdate">Version 2.1.0</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -908,7 +908,7 @@ BrowserWatcher 1.x has been implemented using manifest version 2 (MV2), and its 
 <div class="ulist">
 <ul>
 <li>
-<p><a href="https://github.com/bonigarcia/browserwatcher/releases/download/2.0.0/browserwatcher-2.0.0.crx">browserwatcher-2.0.0.crx</a>: Chrome Extension (CRX), for Chromium-based browsers, such as Chrome or Edge. To install it, you can drag and drop this file into the extensions page  (<em>chrome://extensions/</em>).</p>
+<p><a href="https://github.com/bonigarcia/browserwatcher/releases/download/2.1.0/browserwatcher-2.1.0.crx">browserwatcher-2.1.0.crx</a>: Chrome Extension (CRX), for Chromium-based browsers, such as Chrome or Edge. To install it, you can drag and drop this file into the extensions page  (<em>chrome://extensions/</em>).</p>
 </li>
 </ul>
 </div>
@@ -985,7 +985,10 @@ This feature is based on the API <a href="https://developer.chrome.com/docs/exte
 <p><code>window.postMessage({ type: "startRecording", name: "myrecording" }, "*");</code>: For starting the recording and specifyng a custom file recording (<code>myrecording.webm</code> in this example).</p>
 </li>
 <li>
-<p><code>window.postMessage({ type: "stopRecording" }, "*");</code> : For stopping the recording.</p>
+<p><code>window.postMessage({ type: "stopRecording" }, "*");</code> : For stopping the recording and download the webm file from the browser.</p>
+</li>
+<li>
+<p><code>window.postMessage({ type: "stopRecordingBase64" }, "*");</code> : For stopping the recording and get the recording encoded as Base64 in the response.</p>
 </li>
 </ul>
 </div>
@@ -1279,8 +1282,8 @@ This feature is based on the API <a href="https://developer.chrome.com/docs/exte
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 2.0.0<br>
-Updated on 21-04-2025
+Version 2.1.0<br>
+Updated on 01-09-2025
 </div>
 </div>
 </body>
