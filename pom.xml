@@ -36,6 +36,8 @@
         <project.reporting.outputEncoding>${project.encondig}</project.reporting.outputEncoding>
 
         <maven.build.timestamp.format>dd-MM-yyyy</maven.build.timestamp.format>
+
+        <doc.version>${project.version}</doc.version>
     </properties>
 
     <dependencies>
@@ -132,7 +134,7 @@
                     <attributes>
                         <endpoint-url>https://bonigarcia.dev</endpoint-url>
                         <sourcedir>${project.build.sourceDirectory}</sourcedir>
-                        <project-version>${project.version}</project-version>
+                        <project-version>${doc.version}</project-version>
                     </attributes>
                     <outputDirectory>${basedir}/docs</outputDirectory>
                 </configuration>
