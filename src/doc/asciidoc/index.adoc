@@ -58,7 +58,9 @@ There are some alternative ways to start and stop the recordings. First, by usin
 
 * `window.postMessage({ type: "startRecording" }, "*");` : For starting the recording. The recording file name will be auto generated, composed by the system timestamp plus the prefix `-browser-recording.webm`. 
 * `window.postMessage({ type: "startRecording", name: "myrecording" }, "*");`: For starting the recording and specifyng a custom file recording (`myrecording.webm` in this example).
-* `window.postMessage({ type: "stopRecording" }, "*");` : For stopping the recording.
+* `window.postMessage({ type: "stopRecording" }, "*");` : For stopping the recording and download the webm file from the browser.
+* `window.postMessage({ type: "stopRecordingBase64" }, "*");` : For stopping the recording and get the recording encoded as Base64 in the response.
+
 
 === BrowserWatcher 1 (MV2)
 ==== Console Log Gathering

@@ -1,5 +1,10 @@
 # Changelog
 
+## [2.1.0] - 2025-01-01
+### Added
+- Include feature to record screen in Base64
+
+
 ## [2.0.0] - 2025-04-21
 ### Changed
 - Migrate BrowserWatcher extension to manifest v3 (MV3)
