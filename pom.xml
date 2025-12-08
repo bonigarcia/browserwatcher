@@ -15,7 +15,7 @@
     </parent>
 
     <properties>
-        <selenium.version>4.38.0</selenium.version>
+        <selenium.version>4.39.0</selenium.version>
         <wdm.version>6.3.3</wdm.version>
         <commons-io.version>2.21.0</commons-io.version>
         <httpclient5.version>5.5.1</httpclient5.version>
